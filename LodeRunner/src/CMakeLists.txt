@@ -3,5 +3,4 @@
 							 "Controller.cpp"
 							 "Player.cpp"
 							 "Enemy.cpp"
-							 "Coord.cpp"
-							 "io.cpp")
+							 "Coord.cpp")
