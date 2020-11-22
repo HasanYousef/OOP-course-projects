@@ -81,7 +81,7 @@ Notable Algorithms:
         in this way we get the first point in the EquilateralTriangle:
 
 Bug:
-        there are a bug in the Triangles that sometimes the top vertex dosnt reach the age of the 
+        there are a bug in the Triangles that sometimes the top vertex doesn't reach the age of the 
         Bounding Rectangle another bug that sometimes we have two top vertexs not just one
 
 Another Notes:
