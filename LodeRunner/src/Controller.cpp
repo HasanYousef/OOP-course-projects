@@ -21,7 +21,7 @@ void Controller::run() {
 		m_board = Board(m_originBoard);
 		m_level++;
 		run_level();
-		if (m_health == 0) {
+		if (m_player.get_health() == 0) {
 			//LOST
 		}
 	}

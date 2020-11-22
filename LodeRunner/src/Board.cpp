@@ -38,10 +38,22 @@ void Board::print() {
 //what char exists in the board with the same given indexes
 char Board::get_char(const Coord& coord) const {
 	//if one of the given indexes is out of the board return wall char
-	if (coord.m_col < 0 || coord.m_col >= m_size 
-		|| coord.m_row < 0 || coord.m_row >= m_size)
+	if (!coord.is_valid(m_size))
 		return WALL;
 	return m_map[coord.m_col][coord.m_row];
+}
+
+//-----------------get_ground-----------------
+Coord Board::get_ground(const Coord& coord) const {
+	int counter = 0;
+	while (m_map[coord.m_row - counter][coord.m_col] == EMPTY)
+		counter++;
+	return Coord(coord.m_col, coord.m_row - counter);
+}
+
+//-----------------set_char-----------------
+void Board::set_char(const Coord& coord, char ch) {
+	m_map[coord.m_row][coord.m_col] = ch;
 }
 
 //-----------------get_size-----------------

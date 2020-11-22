@@ -16,6 +16,8 @@ public:
 	Board(const Board&);
 	void print();
 	char get_char(const Coord&) const;
+	Coord get_ground(const Coord&) const;
+	void set_char(const Coord&, char);
 	int get_size() const;
 private:
 	int m_size;						//the size of the 2d array (NxN)
