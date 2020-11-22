@@ -9,12 +9,18 @@
 Board::Board(ifstream& mapStream) {
 	//reading the size of the map that is gonna be read
 	mapStream >> m_size;
-	//readin the map's chars line by line
+	char tempCh;
+	//reading the map's chars line by line
 	for (int row = 0; row < m_size; row++) {
-		for (int col = 0; col < m_size; col++)
-			mapStream.get(m_map[row][col]);
+		vector<char> tempVector;
+		for (int col = 0; col < m_size; col++) {
+			mapStream.get(tempCh);
+			tempVector.push_back(tempCh);
+		}
+		m_map.push_back(tempVector);
 	}
 }
+
 //-----------------deep_copier-----------------
 //it deep copy the given board
 Board::Board(const Board& other) {

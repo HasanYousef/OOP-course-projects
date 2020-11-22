@@ -15,23 +15,16 @@ Controller::Controller() {
 	m_level = 0;
 	m_score = 0;
 	m_remainingMoney = 0;
-
-
+	m_mapsStream.close();
 }
 
 //-----------------run-----------------
 void Controller::run() {
 	while (m_level <= NUM_OF_LEVELS) {
 		m_originBoard = Board(m_mapsStream);
-		m_board = Board(m_originBoard);
+		//m_board = Board(m_originBoard);
 		m_level++;
-		for (int row = 0; row < m_board.get_size(); row++) {
-			for (int col = 0; col < m_board.get_size(); col++)
-				cout << m_board.get_char(Coord(col, row));
-			cout << endl;
-		}
-		cin >> m_level;
-		//run_level();
+		run_level();
 		/*if (m_player.get_health() == 0) {
 			//LOST
 		}*/
@@ -58,9 +51,9 @@ void Controller::locate_objects() {
 			Coord currCoord(col, row);
 			currChar = m_originBoard.get_char(currCoord);
 			if (currChar == PLAYER)
-				;// m_player(currCoord);
+				m_player = Player(currCoord);
 			else if (currChar == ENEMY)
-				;// m_enemies.back(Enemy(currCoord));
+				m_enemies.back(Enemy(currCoord));
 			else if (currChar == MONEY)
 				m_remainingMoney++;
 		}

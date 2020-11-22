@@ -25,6 +25,6 @@ private:
 	ifstream m_mapsStream;	//the maps file stream
 	Board m_originBoard = Board(),
 		m_board = Board();
-	//Player m_player = Player();
-	//vector <Enemy> m_enemies = {};	//storing the enemies as a vector
+	Player m_player;
+	vector <Enemy> m_enemies = {};	//storing the enemies as a vector
 };
