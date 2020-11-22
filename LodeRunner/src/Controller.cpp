@@ -6,12 +6,17 @@
 //and it's stream will be stored in the map stream variable
 Controller::Controller() {
 	// opens the text file that contains the initial maps
-	m_mapsStream = ifstream("Board.txt");
+	m_mapsStream = ifstream("C:\\Users\\hasan\\Desktop\\OOP-course-projects\\LodeRunner\\src\\Board.txt");
 	//if the file didn't open print an error message and exit
 	if (!m_mapsStream.is_open()) {
 		cerr << "Cannot open the map file\n";
 		exit(EXIT_FAILURE);
 	}
+	m_level = 0;
+	m_score = 0;
+	m_remainingMoney = 0;
+
+
 }
 
 //-----------------run-----------------
@@ -20,10 +25,16 @@ void Controller::run() {
 		m_originBoard = Board(m_mapsStream);
 		m_board = Board(m_originBoard);
 		m_level++;
-		run_level();
-		if (m_player.get_health() == 0) {
-			//LOST
+		for (int row = 0; row < m_board.get_size(); row++) {
+			for (int col = 0; col < m_board.get_size(); col++)
+				cout << m_board.get_char(Coord(col, row));
+			cout << endl;
 		}
+		cin >> m_level;
+		//run_level();
+		/*if (m_player.get_health() == 0) {
+			//LOST
+		}*/
 	}
 	//WON
 }
@@ -47,9 +58,9 @@ void Controller::locate_objects() {
 			Coord currCoord(col, row);
 			currChar = m_originBoard.get_char(currCoord);
 			if (currChar == PLAYER)
-				m_player(currCoord);
+				;// m_player(currCoord);
 			else if (currChar == ENEMY)
-				m_enemies.back(Enemy(currCoord));
+				;// m_enemies.back(Enemy(currCoord));
 			else if (currChar == MONEY)
 				m_remainingMoney++;
 		}

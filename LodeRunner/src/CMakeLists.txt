@@ -2,4 +2,5 @@
                              "Board.cpp"
 							 "Controller.cpp"
 							 "Player.cpp"
-							 "Enemy.cpp")
+							 "Enemy.cpp"
+							 "Coord.cpp")

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Board.h"
 
 //-----------------structor-----------------
@@ -45,10 +46,14 @@ char Board::get_char(const Coord& coord) const {
 
 //-----------------get_ground-----------------
 Coord Board::get_ground(const Coord& coord) const {
-	int counter = 0;
-	while (m_map[coord.m_row - counter][coord.m_col] == EMPTY)
-		counter++;
-	return Coord(coord.m_col, coord.m_row - counter);
+	int h = 0;
+	while (m_map[coord.m_row - h][coord.m_col] == EMPTY 
+		|| m_map[coord.m_row - h][coord.m_col] == ENEMY 
+		|| m_map[coord.m_row - h][coord.m_col] == MONEY)
+		h++;
+	if (m_map[coord.m_row - h][coord.m_col] == WALL)
+		h--;
+	return Coord(coord.m_col, coord.m_row - h);
 }
 
 //-----------------set_char-----------------

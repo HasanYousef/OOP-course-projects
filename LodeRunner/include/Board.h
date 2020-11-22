@@ -11,7 +11,7 @@ using namespace std;
 class Board
 {
 public:
-	Board() : m_size(0), m_map(NULL) {}	//deffault structor
+	Board() : m_size(0) {}	//deffault structor
 	Board(ifstream&);
 	Board(const Board&);
 	void print();
