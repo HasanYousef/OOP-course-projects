@@ -1,6 +1,8 @@
 #pragma once
 
-const int NUM_OF_LEVELS = 2;
+//game consts
+const int NUM_OF_LEVELS = 2,
+INIT_HEALTH = 3;
 
 //directions
 const int

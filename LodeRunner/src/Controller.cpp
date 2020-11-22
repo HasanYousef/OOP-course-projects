@@ -14,6 +14,49 @@ Controller::Controller() {
 	}
 }
 
+//-----------------run-----------------
+void Controller::run() {
+	while (m_level <= NUM_OF_LEVELS) {
+		m_originBoard = Board(m_mapsStream);
+		m_board = Board(m_originBoard);
+		m_level++;
+		run_level();
+		if (m_health == 0) {
+			//LOST
+		}
+	}
+	//WON
+}
+
+//-----------------run_level-----------------
+//
+void Controller::run_level() {
+	locate_objects();
+	while (true) {
+		//m_player
+	}
+}
+
+//-----------------locate_objects-----------------
+//
+void Controller::locate_objects() {
+	int boardSize = m_originBoard.get_size();
+	char currChar;
+	for (int row = 0; row < boardSize; row++) {
+		for (int col = 0; col < boardSize; col++) {
+			Coord currCoord(col, row);
+			currChar = m_originBoard.get_char(currCoord);
+			if (currChar == PLAYER)
+				m_player(currCoord);
+			else if (currChar == ENEMY)
+				m_enemies.back(Enemy(currCoord));
+			else if (currChar == MONEY)
+				m_remainingMoney++;
+		}
+	}
+}
+
+/*
 //-----------------next_frame-----------------
 void Controller::next_frame() {
 	while (m_player.move(m_board));
@@ -22,18 +65,4 @@ void Controller::next_frame() {
 		m_enemies[enemyIndex].move(m_board);
 
 }
-
-//-----------------get_health-----------------
-int Controller::get_health() const {
-	return m_player.get_health();
-}
-
-//-----------------get_score-----------------
-int Controller::get_score() const {
-	return m_score;
-}
-
-//-----------------get_level-----------------
-int Controller::get_level() const {
-	return m_level;
-}
+*/
