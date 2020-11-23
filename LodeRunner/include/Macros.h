@@ -1,5 +1,8 @@
 #pragma once
 
+//Board.txt directory
+const char BOARD_PATH[] = "C:\\Users\\hasan\\Desktop\\OOP-course-projects\\LodeRunner\\src\\Board.txt";
+
 //game consts
 const int NUM_OF_LEVELS = 2,
 INIT_HEALTH = 3;

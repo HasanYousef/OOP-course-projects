@@ -57,7 +57,7 @@ bool Player::is_wall(int col, int row, const Board& board)
 
 //------------------------------------------------------------
 //here we return the helth number of the Player
-int Player::get_lives()const {
+int Player::get_health()const {
 	return m_health;
 }
 

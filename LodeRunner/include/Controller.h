@@ -8,6 +8,7 @@ using namespace std;
 #include "Player.h"
 #include "Enemy.h"
 #include "Coord.h"
+#include "Macros.h"
 
 //the Controller class controls the game's objects' relations
 class Controller {
@@ -19,6 +20,8 @@ public:
 private:
 	void run_level();
 	void locate_objects();
+	void lost_menu();
+	void won_menu();
 	int m_level,
 		m_score,
 		m_remainingMoney;	//storing how many money packs are remaining

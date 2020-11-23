@@ -12,7 +12,7 @@ public:
 	Player(const Coord& coord) : m_coord(coord), m_health(INIT_HEALTH) {}
 	Coord Player_Movement(const Board&);
 	bool is_wall(int, int,const Board&);
-	int get_lives() const;
+	int get_health() const;
 	void die();
 	void set_life();
 private:

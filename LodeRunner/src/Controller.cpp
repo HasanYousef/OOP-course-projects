@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Controller.h"
 
 //-----------------structor-----------------
@@ -6,7 +7,7 @@
 //and it's stream will be stored in the map stream variable
 Controller::Controller() {
 	// opens the text file that contains the initial maps
-	m_mapsStream = ifstream("C:\\Users\\hasan\\Desktop\\OOP-course-projects\\LodeRunner\\src\\Board.txt");
+	m_mapsStream = ifstream(BOARD_PATH);
 	//if the file didn't open print an error message and exit
 	if (!m_mapsStream.is_open()) {
 		cerr << "Cannot open the map file\n";
@@ -15,21 +16,20 @@ Controller::Controller() {
 	m_level = 0;
 	m_score = 0;
 	m_remainingMoney = 0;
-	m_mapsStream.close();
 }
 
 //-----------------run-----------------
 void Controller::run() {
 	while (m_level <= NUM_OF_LEVELS) {
 		m_originBoard = Board(m_mapsStream);
-		//m_board = Board(m_originBoard);
+		m_board = Board(m_originBoard);
 		m_level++;
 		run_level();
-		/*if (m_player.get_health() == 0) {
-			//LOST
-		}*/
+		if (m_player.get_health() == 0) {
+			lost_menu();
+		}
 	}
-	//WON
+	won_menu();
 }
 
 //-----------------run_level-----------------
@@ -60,13 +60,10 @@ void Controller::locate_objects() {
 	}
 }
 
-/*
-//-----------------next_frame-----------------
-void Controller::next_frame() {
-	while (m_player.move(m_board));
-
-	for (int enemyIndex = 0; enemyIndex < m_enemies.size(); enemyIndex++)
-		m_enemies[enemyIndex].move(m_board);
+void Controller::lost_menu() {
 
 }
-*/
+
+void Controller::won_menu() {
+
+}
