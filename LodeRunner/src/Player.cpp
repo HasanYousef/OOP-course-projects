@@ -2,6 +2,10 @@
 
 #include "Player.h"
 
+Coord Player::get_coord() {
+	return m_coord;
+}
+
 //------------------------------------------------------------
 //here we do the Player Movement we take the board class,
 //we read from the user a input and we check if the input is 
@@ -9,7 +13,7 @@
 //that we have to move on it its valued or not if yes we reset
 //the coordinates of the player and return the new once
 //if its not valied we do nothing
-Coord Player::Player_Movement(const Board& board)
+Coord Player::move(const Board& board)
 {
 	int row = m_coord.m_row,
 		col = m_coord.m_col;

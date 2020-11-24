@@ -21,9 +21,9 @@ public:
 private:
 	void run_level();
 	void locate_objects();
-	void lost_menu();
-	void won_menu();
+	void reset_game();
 	void open_maps_stream();
+	void move_enemies();
 	int m_level,
 		m_score,
 		m_remainingMoney;	//storing how many money packs are remaining

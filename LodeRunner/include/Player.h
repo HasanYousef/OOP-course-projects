@@ -11,8 +11,8 @@ class Player {
 public:
 	Player() : m_coord(), m_health(INIT_HEALTH) {}
 	Player(const Coord& coord) : m_coord(coord), m_health(INIT_HEALTH) {}
-	Coord Player_Movement(const Board&);
-	bool is_wall(int, int,const Board&);
+	Coord get_coord();
+	Coord move(const Board&);
 	int get_health() const;
 	void die();
 private:

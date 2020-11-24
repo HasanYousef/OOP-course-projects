@@ -14,24 +14,32 @@ Controller::Controller() {
 
 //-----------------run-----------------
 void Controller::run() {
-	while (m_level <= NUM_OF_LEVELS) {
+	m_level = 1;
+	while (true) {
 		m_originBoard = Board(m_mapsStream);
 		m_board = Board(m_originBoard);
-		m_level++;
 		run_level();
 		if (m_player.get_health() == 0) {
-			lost_menu();
+			cout << "YOU LOST!\n";
+			reset_game();
 		}
+		else if (m_level == NUM_OF_LEVELS) {
+			cout << "YOU WON!\n";
+			reset_game();
+		}
+		m_level++;
 	}
-	won_menu();
 }
 
 //-----------------run_level-----------------
 //
 void Controller::run_level() {
-	locate_objects();
 	while (true) {
-		//m_player
+		Coord currPlayerCoord = m_player.get_coord();
+		do {
+			currPlayerCoord = m_player.move(m_board);
+		} while (currPlayerCoord != m_player.get_coord());
+		move_enemies();
 	}
 }
 
@@ -54,12 +62,14 @@ void Controller::locate_objects() {
 	}
 }
 
-void Controller::lost_menu() {
-
-}
-
-void Controller::won_menu() {
-
+void Controller::reset_game() {
+	cout << "RESTART? (y/n) ";
+	char answ;
+	cin.get(answ);
+	if (answ == 'y')
+		exit(EXIT_SUCCESS);
+	open_maps_stream();
+	m_level = 0;
 }
 
 void Controller::open_maps_stream() {
@@ -70,4 +80,8 @@ void Controller::open_maps_stream() {
 		cerr << "Cannot open the map file\n";
 		exit(EXIT_FAILURE);
 	}
+}
+
+void Controller::move_enemies() {
+	//
 }
