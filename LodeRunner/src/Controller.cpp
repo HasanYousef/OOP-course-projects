@@ -6,13 +6,7 @@
 //in the Controller structor, the maps file will be open
 //and it's stream will be stored in the map stream variable
 Controller::Controller() {
-	// opens the text file that contains the initial maps
-	m_mapsStream = ifstream(BOARD_PATH);
-	//if the file didn't open print an error message and exit
-	if (!m_mapsStream.is_open()) {
-		cerr << "Cannot open the map file\n";
-		exit(EXIT_FAILURE);
-	}
+	open_maps_stream();
 	m_level = 0;
 	m_score = 0;
 	m_remainingMoney = 0;
@@ -66,4 +60,14 @@ void Controller::lost_menu() {
 
 void Controller::won_menu() {
 
+}
+
+void Controller::open_maps_stream() {
+	// opens the text file that contains the initial maps
+	m_mapsStream = ifstream(BOARD_PATH);
+	//if the file didn't open print an error message and exit
+	if (!m_mapsStream.is_open()) {
+		cerr << "Cannot open the map file\n";
+		exit(EXIT_FAILURE);
+	}
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Player.h"
 
 //------------------------------------------------------------
@@ -9,37 +11,36 @@
 //if its not valied we do nothing
 Coord Player::Player_Movement(const Board& board)
 {
-	auto move = Keyboard::getch();
 	int row = m_coord.m_row,
 		col = m_coord.m_col;
-	switch (move)
+	switch (_getch())
 	{
 	case KB_UP://if we want to move up (Ladder case)
 		if (board.get_char(Coord(col, row + 1)) == LADDER)
 		{
 			m_coord.m_row = m_coord.m_row + 1;//we reset the points
-			board.get_ground(m_coord);//get into the ground if its needs
+			m_coord = board.get_ground(m_coord);//get into the ground if its needs
 			return m_coord;//return the new points of the player
 		}
 	case KB_DOWN://if we want to move down
 		if (is_wall(m_coord.m_col,m_coord.m_row - 1,board))
 		{
 			m_coord.m_row = m_coord.m_row - 1;//we reset the points
-			board.get_ground(m_coord);//get into the ground if its needs
+			m_coord = board.get_ground(m_coord);//get into the ground if its needs
 			return m_coord;//return the new points of the player
 		}
 	case KB_RIGHT://if we want to move right
 		if (is_wall(m_coord.m_col + 1, m_coord.m_row , board))
 		{
 			m_coord.m_col = m_coord.m_col + 1;//we reset the points
-			board.get_ground(m_coord);//get into the ground if its needs
+			m_coord = board.get_ground(m_coord);//get into the ground if its needs
 			return m_coord;//return the new points of the player
 		}
 	case KB_LEFT://if we want to move left
 		if (is_wall(m_coord.m_col - 1, m_coord.m_row, board))
 		{
 			m_coord.m_col = m_coord.m_col + 1;//we reset the points
-			board.get_ground(m_coord);//get into the ground if its needs
+			m_coord = board.get_ground(m_coord);//get into the ground if its needs
 			return m_coord;//return the new points of the player
 		}
 	default://if its a unvalued inpute
@@ -68,9 +69,4 @@ void Player::die() {
 	m_health = m_health - 1;
 }
 
-//------------------------------------------------------------
-//here we set the health of the player 
-void Player::set_life() {
-	m_health = INIT_HEALTH;
-}
 

@@ -1,11 +1,12 @@
 #pragma once
-//---Include-----
+
+#include <conio.h>
+
 #include "io.h"
 #include "coord.h"
 #include "Macros.h"
 #include "Board.h"
-#include "io.h"
-//---------------
+
 class Player {
 public:
 	Player() : m_coord(), m_health(INIT_HEALTH) {}
@@ -14,8 +15,9 @@ public:
 	bool is_wall(int, int,const Board&);
 	int get_health() const;
 	void die();
-	void set_life();
 private:
 	int m_health;
 	Coord m_coord;
+	//---help-functions-------------------
+	bool is_wall(int, int, const Board&);
 };

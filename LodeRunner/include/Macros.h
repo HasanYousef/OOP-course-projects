@@ -15,6 +15,12 @@ RIGHT = 2,
 DOWN = 3,
 LEFT = 4;
 
+//player movment keyboard consts
+const int KB_UP = 72,
+KB_DOWN = 80,
+KB_LEFT = 75,
+KB_RIGHT = 77;
+
 //board chars
 const char
 EMPTY = ' ',

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -22,6 +23,7 @@ private:
 	void locate_objects();
 	void lost_menu();
 	void won_menu();
+	void open_maps_stream();
 	int m_level,
 		m_score,
 		m_remainingMoney;	//storing how many money packs are remaining
