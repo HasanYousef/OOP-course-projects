@@ -38,12 +38,15 @@ void Controller::run() {
 void Controller::run_level() {
 	while (true) {
 		m_board.print();
-		Coord currPlayerCoord = m_player.get_coord();
-		do {
-			m_player.move(m_board);
-		} while (currPlayerCoord == m_player.get_coord());
+		print_ui();
+		Coord oldPlayerCoord = m_player.get_coord(),
+			currPlayerCoord = m_player.move(m_board);
+		while (oldPlayerCoord == currPlayerCoord) {
+			oldPlayerCoord = m_player.get_coord();
+			currPlayerCoord = m_player.move(m_board);
+		}
 		//we move the charachters
-		move_player(currPlayerCoord);
+		move_player(oldPlayerCoord);
 		move_enemies();
 		//if the enemy hit the player
 		if (get_hit()) {
@@ -61,6 +64,7 @@ void Controller::run_level() {
 				return;
 			}
 		}
+		system("cls");
 	}
 }
 
@@ -106,20 +110,33 @@ void Controller::open_maps_stream() {
 }
 
 //----------------------------------------------------------------
-void Controller::move_player(const struct Coord currPlayerCoord)
+void Controller::move_player(const struct Coord oldPlayerCoord)
 {
 	if (m_board.get_char(m_player.get_coord()) == LADDER) {
 		m_board.set_char(m_player.get_coord(), PLAYER_ON_LADDER);
         //we check if the player taked a coin
-		if (m_originBoard.get_char(m_player.get_coord()) == MONEY) {
-			m_board.set_char(currPlayerCoord, EMPTY);
+		if (m_originBoard.get_char(oldPlayerCoord) == MONEY) {
+			m_board.set_char(oldPlayerCoord, EMPTY);
 			return;
 		}//if the old elment not a coin
-		m_board.set_char(currPlayerCoord, m_originBoard.get_char(m_player.get_coord()));
+		m_board.set_char(oldPlayerCoord, m_originBoard.get_char(oldPlayerCoord));
 		return;
 	}//if its on a ROPE or on a Ground
+	if (m_originBoard.get_char(oldPlayerCoord) == PLAYER) {
+		m_board.set_char(m_player.get_coord(), PLAYER);
+		m_board.set_char(oldPlayerCoord, EMPTY);
+		if (m_originBoard.get_char(oldPlayerCoord) == MONEY) {
+			m_board.set_char(oldPlayerCoord, EMPTY);
+			return;
+		}//if the old elment not a coin
+		return;
+	}
 	m_board.set_char(m_player.get_coord(), PLAYER);
-	m_board.set_char(currPlayerCoord, m_originBoard.get_char(m_player.get_coord()));
+	m_board.set_char(oldPlayerCoord, m_originBoard.get_char(oldPlayerCoord));
+	if (m_originBoard.get_char(oldPlayerCoord) == MONEY) {
+		m_board.set_char(oldPlayerCoord, EMPTY);
+		return;
+	}//if the old elment not a coin
 }
 
 //---------------------------------------------
@@ -152,6 +169,10 @@ bool Controller::get_hit()
 //same element of the coin return false if not
 bool Controller::getcoin()
 {
-	return (m_board.get_char(m_player.get_coord()) == MONEY);
+	return (m_originBoard.get_char(m_player.get_coord()) == MONEY);
 }
 
+void Controller::print_ui() {
+	cout << BOTTOM_LINE << endl
+		<< "remaining money: " << m_remainingMoney << "    ";
+}

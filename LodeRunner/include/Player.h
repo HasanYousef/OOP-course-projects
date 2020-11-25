@@ -1,7 +1,7 @@
 #pragma once
 
-#include <conio.h>
-
+#include <iostream>
+#include "conio.h"
 #include "io.h"
 #include "coord.h"
 #include "Macros.h"

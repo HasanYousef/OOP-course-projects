@@ -27,6 +27,7 @@ private:
 	void locate_objects();
 	void reset_game();
 	void open_maps_stream();
+	void print_ui();
 	int m_level,
 		m_score,
 		m_remainingMoney;	//storing how many money packs are remaining

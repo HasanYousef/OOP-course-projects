@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Player.h"
-#include <iostream>
 
 Coord Player::get_coord() {
 	return m_coord;
@@ -18,37 +17,38 @@ Coord Player::move(const Board& board)
 {
 	int row = m_coord.m_row,
 		col = m_coord.m_col;
-	int move = _getch();
-	switch (move)
+	int read_buff = _getch();
+
+	switch (_getch())
 	{
 	case KB_UP://if we want to move up (Ladder case)
-		if (board.get_char(Coord(col, row + 1)) == LADDER)
-		{
-			m_coord.m_row = m_coord.m_row + 1;//we reset the points
-			m_coord = board.get_ground(m_coord);//get into the ground if its needs
-			return m_coord;//return the new points of the player
-		}
-	case KB_DOWN://if we want to move down
-		if (is_wall(m_coord.m_col,m_coord.m_row - 1,board))
+		if (board.get_char(Coord(col, row - 1)) == LADDER)
 		{
 			m_coord.m_row = m_coord.m_row - 1;//we reset the points
 			m_coord = board.get_ground(m_coord);//get into the ground if its needs
-			return m_coord;//return the new points of the player
 		}
+		return m_coord;//return the new points of the player
+	case KB_DOWN://if we want to move down
+		if (!is_wall(m_coord.m_col,m_coord.m_row + 1,board))
+		{
+			m_coord.m_row = m_coord.m_row + 1;//we reset the points
+			m_coord = board.get_ground(m_coord);//get into the ground if its needs
+		}
+		return m_coord;//return the new points of the player
 	case KB_RIGHT://if we want to move right
-		if (is_wall(m_coord.m_col + 1, m_coord.m_row , board))
+		if (!is_wall(m_coord.m_col + 1, m_coord.m_row , board))
 		{
 			m_coord.m_col = m_coord.m_col + 1;//we reset the points
 			m_coord = board.get_ground(m_coord);//get into the ground if its needs
-			return m_coord;//return the new points of the player
 		}
+		return m_coord;//return the new points of the player
 	case KB_LEFT://if we want to move left
-		if (is_wall(m_coord.m_col - 1, m_coord.m_row, board))
+		if (!is_wall(m_coord.m_col - 1, m_coord.m_row, board))
 		{
-			m_coord.m_col = m_coord.m_col + 1;//we reset the points
+			m_coord.m_col = m_coord.m_col - 1;//we reset the points
 			m_coord = board.get_ground(m_coord);//get into the ground if its needs
-			return m_coord;//return the new points of the player
 		}
+		return m_coord;//return the new points of the player
 	default://if its a unvalued inpute
 		return m_coord;//we return the same points
 	}
@@ -59,7 +59,7 @@ Coord Player::move(const Board& board)
 //valued or not (if its a WALL or not)
 bool Player::is_wall(int col, int row, const Board& board)
 {
-	return board.get_char(Coord(col, row)) != WALL;
+	return (board.get_char(Coord(col, row)) == WALL);
 }
 
 //------------------------------------------------------------

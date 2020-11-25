@@ -48,19 +48,17 @@ char Board::get_char(const Coord& coord) const {
 	//if one of the given indexes is out of the board return wall char
 	if (!coord.is_valid(m_size))
 		return WALL;
-	return m_map[coord.m_col][coord.m_row];
+	return m_map[coord.m_row][coord.m_col];
 }
 
 //-----------------get_ground-----------------
 Coord Board::get_ground(const Coord& coord) const {
 	int h = 0;
-	while (m_map[coord.m_row - h][coord.m_col] == EMPTY 
-		|| m_map[coord.m_row - h][coord.m_col] == ENEMY 
-		|| m_map[coord.m_row - h][coord.m_col] == MONEY)
+	while (m_map[coord.m_row + h + 1][coord.m_col] != WALL 
+		&& m_map[coord.m_row + h][coord.m_col] != LADDER 
+		&& m_map[coord.m_row + h][coord.m_col] != ROPE)
 		h++;
-	if (m_map[coord.m_row - h][coord.m_col] == WALL)
-		h--;
-	return Coord(coord.m_col, coord.m_row - h);
+	return Coord(coord.m_col, coord.m_row + h);
 }
 
 //-----------------set_char-----------------
