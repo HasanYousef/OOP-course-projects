@@ -3,16 +3,18 @@
 #include "coord.h"
 #include "Macros.h"
 #include "Board.h"
+#include <vector>
 
 class Enemy {
 public:
 	//---Constructors-------
-	Enemy() : m_Ecoord() {}
-	Enemy(const Coord& coord) : m_Ecoord(coord) {}
+	Enemy() : m_coord() {}
+	Enemy(const Coord& coord) : m_coord(coord) {}
 	//---functions----------
-	Coord Enemy_Movement();
-	Coord Get_E_Coord() const;
+	Coord move(const Board& board);
+	Coord get_coord() const;
+	int find_shortest_path(const Board& board, vector<vector<bool>>& helpBoard, const Coord& curr, int fromDir);
 private:
 	//---enemy-indexes-----
-	Coord m_Ecoord;
+	Coord m_coord;
 };

@@ -13,7 +13,8 @@ NO_MOVE = 0,
 UP = 1,
 RIGHT = 2,
 DOWN = 3,
-LEFT = 4;
+LEFT = 4,
+NO_PATH = -1;
 
 //player movment keyboard consts
 const int KB_UP = 72,
