@@ -9,7 +9,7 @@
 Board::Board(ifstream& mapStream) {
 	//reading the size of the map that is gonna be read
 	mapStream >> m_size;
-	char tempCh;
+	mapStream.get();
 	//reading the map's chars line by line
 	for (int row = 0; row <= m_size; row++) {
 		string tempRow;
@@ -37,10 +37,8 @@ string Board::get_row(int row) const {
 //prints all the map in the console
 void Board::print() const {
 	//printing the map line by line
-	for (int row = 0; row < m_size; row++) {
-		for (int col = 0; col < m_size; col++)
-			cout << m_map[row][col];
-	}
+	for (int row = 0; row < m_size; row++)
+		cout << m_map[row] << endl;
 }
 
 //-----------------get_char-----------------

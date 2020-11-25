@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Player.h"
+#include <iostream>
 
 Coord Player::get_coord() {
 	return m_coord;
@@ -17,7 +18,8 @@ Coord Player::move(const Board& board)
 {
 	int row = m_coord.m_row,
 		col = m_coord.m_col;
-	switch (_getch())
+	int move = _getch();
+	switch (move)
 	{
 	case KB_UP://if we want to move up (Ladder case)
 		if (board.get_char(Coord(col, row + 1)) == LADDER)

@@ -37,6 +37,7 @@ void Controller::run() {
 //
 void Controller::run_level() {
 	while (true) {
+		m_board.print();
 		Coord currPlayerCoord = m_player.get_coord();
 		do {
 			m_player.move(m_board);
