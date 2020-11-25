@@ -19,11 +19,14 @@ public:
 	void run();
 	//void next_frame();
 private:
+	void move_player(const struct Coord);
+	void move_enemies();
+	bool get_hit();
+	bool getcoin();
 	void run_level();
 	void locate_objects();
 	void reset_game();
 	void open_maps_stream();
-	void move_enemies();
 	int m_level,
 		m_score,
 		m_remainingMoney;	//storing how many money packs are remaining

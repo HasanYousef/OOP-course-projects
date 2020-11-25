@@ -11,28 +11,31 @@ Board::Board(ifstream& mapStream) {
 	mapStream >> m_size;
 	char tempCh;
 	//reading the map's chars line by line
-	for (int row = 0; row < m_size; row++) {
-		vector<char> tempVector;
-		for (int col = 0; col < m_size; col++) {
-			mapStream.get(tempCh);
-			tempVector.push_back(tempCh);
-		}
-		m_map.push_back(tempVector);
+	for (int row = 0; row <= m_size; row++) {
+		string tempRow;
+		getline(mapStream, tempRow);
+		m_map.push_back(tempRow);
 	}
 }
 
 //-----------------deep_copier-----------------
 //it deep copy the given board
 Board::Board(const Board& other) {
-	m_size = other.m_size;
-	for (int index = 0; index < other.m_map.size(); index++) {
-		m_map[index] = other.m_map[index];
+	m_size = other.get_size();
+	for (int row = 0; row <= m_size; row++) {
+		m_map.push_back(other.get_row(row));
 	}
+}
+
+//-----------------deep_copier-----------------
+//it deep copy the given board
+string Board::get_row(int row) const {
+	return(m_map[row]);
 }
 
 //-----------------print-----------------
 //prints all the map in the console
-void Board::print() {
+void Board::print() const {
 	//printing the map line by line
 	for (int row = 0; row < m_size; row++) {
 		for (int col = 0; col < m_size; col++)

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
 using namespace std;
 
 #include "Macros.h"
@@ -15,12 +16,13 @@ public:
 	Board() : m_size(0) {}	//deffault structor
 	Board(ifstream&);
 	Board(const Board&);
-	void print();
+	string get_row(int) const;
+	void print() const;
 	char get_char(const Coord&) const;
 	Coord get_ground(const Coord&) const;
 	void set_char(const Coord&, char);
 	int get_size() const;
 private:
 	int m_size;						//the size of the 2d array (NxN)
-	vector <vector<char>> m_map;	//the 2d array
+	vector <string> m_map;			//the 2d array
 };
