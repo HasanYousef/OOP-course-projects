@@ -9,83 +9,42 @@ Coord Enemy::get_coord() const
 }
 
 //---------------------------------------------
-Coord Enemy::move(const Board& board)
+Coord Enemy::move(const Board& board, const Coord& pCoord)
 {
-	int boardSize = board.get_size();
-	int leftLen = NO_PATH,
-		rightLen = NO_PATH,
-		upLen = NO_PATH,
-		downLen = NO_PATH;
-	vector <vector<bool>> helpBoard;
-	for (int row = 0; row < boardSize; row++) {
-		vector <bool> temp;
-		for (int col = 0; col < boardSize; col++) {
-			temp.push_back(false);
+	Coord leftCoord(m_coord.m_col + 1, m_coord.m_row),
+		rightCoord(m_coord.m_col - 1, m_coord.m_row);
+
+	if (pCoord.m_row == m_coord.m_row) {
+		if (board.get_char(leftCoord) != WALL)
+			return leftCoord;
+		if (board.get_char(rightCoord) != WALL)
+			return rightCoord;
+	}
+	if (board.get_char(m_coord) == LADDER) {
+		if (pCoord.m_row < m_coord.m_row)
+			return Coord(m_coord.m_col, m_coord.m_row - 1);
+		return Coord(m_coord.m_col, m_coord.m_row + 1);
+	}
+	else {
+		if (there_is_laddder(board, -1)) {
+			m_coord = rightCoord;
+			return rightCoord;
 		}
-		helpBoard.push_back(temp);
+		else {
+			m_coord = leftCoord;
+			return leftCoord;
+		}
 	}
-	Coord lefCoord(m_coord.m_col - 1, m_coord.m_row),
-		rightCoord(m_coord.m_col + 1, m_coord.m_row),
-		upCoord(m_coord.m_col, m_coord.m_row - 1),
-		downCoord(m_coord.m_col, m_coord.m_row + 1);
-	helpBoard[m_coord.m_row][m_coord.m_col] = true;
-	leftLen = find_shortest_path(board, helpBoard, lefCoord);
-	rightLen = find_shortest_path(board, helpBoard, rightCoord);
-	upLen = find_shortest_path(board, helpBoard, upCoord);
-	downLen = find_shortest_path(board, helpBoard, downCoord);
-
-	int shortest = leftLen;
-	Coord bestDir = lefCoord;
-	if ((rightLen < shortest && rightLen != NO_PATH) || shortest == NO_PATH) {
-		shortest = rightLen;
-		bestDir = rightCoord;
-	}
-	if ((upLen < shortest && upLen != NO_PATH) || shortest == NO_PATH) {
-		shortest = upLen;
-		bestDir = upCoord;
-	}
-	if ((downLen < shortest && downLen != NO_PATH) || shortest == NO_PATH) {
-		shortest = downLen;
-		bestDir = downCoord;
-	}
-
-	if (shortest == NO_PATH)
-		return m_coord;
-	m_coord = board.get_ground(bestDir);
-	return bestDir;
+	//if there is something wrong (should not be if the input is correct) return the same coord
+	return m_coord;
 }
 
-
-int Enemy::find_shortest_path(const Board& board, vector<vector<bool>>& helpBoard, const Coord& curr)
-{
-	char currChar = board.get_char(board.get_ground(curr));
-	if (currChar == WALL || helpBoard[curr.m_row][curr.m_col])
-		return NO_PATH;
-	if (currChar == PLAYER || currChar == PLAYER_ON_LADDER)
-		return 0;
-	helpBoard[curr.m_row][curr.m_col] = true;
-	int leftLen, rightLen, upLen, downLen;
-	leftLen = rightLen = upLen = downLen = NO_PATH;
-	Coord lefCoord(curr.m_col - 1, curr.m_row),
-		rightCoord(curr.m_col + 1, curr.m_row),
-		upCoord(curr.m_col, curr.m_row - 1),
-		downCoord(curr.m_col, curr.m_row + 1);
-	leftLen = find_shortest_path(board, helpBoard, lefCoord);
-	rightLen = find_shortest_path(board, helpBoard, rightCoord);
-	if(board.get_char(upCoord) == LADDER)
-		upLen = find_shortest_path(board, helpBoard, upCoord);
-	if (board.get_char(downCoord) != WALL)
-		downLen = find_shortest_path(board, helpBoard, downCoord);
-	
-	int shortest = leftLen;
-	if ((rightLen < shortest && rightLen != NO_PATH) || shortest == NO_PATH)
-		shortest = rightLen;
-	if ((upLen < shortest && upLen != NO_PATH) || shortest == NO_PATH)
-		shortest = upLen;
-	if ((downLen < shortest && downLen != NO_PATH) || shortest == NO_PATH)
-		shortest = downLen;
-	if (shortest != NO_PATH)
-		shortest++;
-	return shortest;
-	//return shortest == NO_PATH ? NO_PATH : shortest + 1;
+bool Enemy::there_is_laddder(const Board& board, int dir) {
+	Coord coord(m_coord);
+	while (board.get_char(coord) != WALL) {
+		if (board.get_char(coord) == LADDER || board.get_char(coord) == ROPE)
+			return true;
+		coord = Coord(coord.m_col + dir, coord.m_row);
+	}
+	return false;
 }

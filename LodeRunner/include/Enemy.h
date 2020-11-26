@@ -11,10 +11,10 @@ public:
 	Enemy() : m_coord() {}
 	Enemy(const Coord& coord) : m_coord(coord) {}
 	//---functions----------
-	Coord move(const Board& board);
+	Coord move(const Board& board, const Coord& coord);
 	Coord get_coord() const;
-	int find_shortest_path(const Board& board, vector<vector<bool>>& helpBoard, const Coord& curr);
 private:
+	bool there_is_laddder(const Board& board, int dir);
 	//---enemy-indexes-----
 	Coord m_coord;
 };

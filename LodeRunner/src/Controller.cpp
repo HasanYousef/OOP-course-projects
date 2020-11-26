@@ -35,10 +35,21 @@ void Controller::run() {
 }
 
 //-----------------run_level-----------------
-//
+//here we run the current level we on it we
+//print the board after that we read player
+//movement until we get new coord after that 
+//we check if the player get a money after
+//that we call the player move func that its 
+//put the player on the new elment same thing
+//for the move_enemies after that we check if
+//the player get hit from the enemy 
 void Controller::run_level() {
+	bool origprint = false;
 	while (true) {
-		m_board.print();
+		if (!origprint) {
+			m_board.print();
+		}
+		origprint = false;
 		print_ui();
 		Coord oldPlayerCoord = m_player.get_coord(),
 			currPlayerCoord = m_player.move(m_board);
@@ -60,17 +71,26 @@ void Controller::run_level() {
 		//if the enemy hit the player
 		if (get_hit()) {
 			m_player.die();
-			m_originBoard.print(); //we back from start
 			if (m_player.get_health() == 0) {
-				return;
+				reset_game();
 			}
+			origprint = true;
 		}
 		system("cls");
+		if (origprint) {
+			m_originBoard.print();
+			m_enemies.clear();
+			locate_objects();
+		}
 	}
 }
 
 //-----------------locate_objects-----------------
-//
+//this func move on the board (array) and locate
+//the object we have for example if the elment x.y
+//have a enemy we add to the vector of enemy a enemy
+//if we find a coin we add to the integer of 
+//m_remainingMoney 1 this is how its work
 void Controller::locate_objects() {
 	int boardSize = m_originBoard.get_size();
 	char currChar;
@@ -88,13 +108,19 @@ void Controller::locate_objects() {
 	}
 }
 
-//---------------------------------------------
+//-----------------------------------------------
+//here when the player get die we ask the player
+//if he want to reset the game or not if yes we 
+//reset it if no we close the game
 void Controller::reset_game() {
 	cout << "RESTART? (y/n) ";
 	char answ;
 	cin.get(answ);
 	if (answ == 'n')
 		exit(EXIT_SUCCESS);
+	m_level = 0;
+	m_score = 0;
+	m_remainingMoney = 0;
 	open_maps_stream();
 	m_level = 0;
 }
@@ -111,6 +137,13 @@ void Controller::open_maps_stream() {
 }
 
 //----------------------------------------------------------------
+//this func take the old coord of the player and in this func we 
+//want to move the player to the new elment the indexes of the new
+//element are saved on the player private coord we do here that
+//we set the player on the new elment that we have and check if
+//the player on ladder we print it S if no we print it @ and we
+//check the old element if its was a coin or a player or a enemy
+//we print empty else we print the char from origin board
 void Controller::move_player(const struct Coord oldPlayerCoord)
 {
 	if (m_board.get_char(m_player.get_coord()) == LADDER) {
@@ -144,17 +177,26 @@ void Controller::move_player(const struct Coord oldPlayerCoord)
 }
 
 //---------------------------------------------
+//this void func let the enemies move we move
+//on every elment on the vector of enemies on
+//every elment we call the move func of the 
+//enemy that we build it on the enemy class
+//its return the coord that we have to move 
+//on it and we move the enemy to the coord
+//and give the old enemy the char its have 
+//to by the origin board
 void Controller::move_enemies()
 {
 	Coord old_place;
+	//to move on all the enemies
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
-		old_place = m_enemies[enemy].get_coord();
-		char oldChar = m_originBoard.get_char(old_place);
-		Coord newCoord =  m_enemies[enemy].move(m_board);
-		m_board.set_char(m_board.get_ground(newCoord), ENEMY);
+		old_place = m_enemies[enemy].get_coord();//save old coord
+		char oldChar = m_originBoard.get_char(old_place);//get char of old coord
+		Coord newCoord =  m_enemies[enemy].move(m_board, m_player.get_coord());
+		m_board.set_char(m_board.get_ground(newCoord), ENEMY);//set the enemy 
 		if (oldChar == ENEMY || oldChar == PLAYER)
 			oldChar = EMPTY;
-		m_board.set_char(old_place, oldChar);
+		m_board.set_char(old_place, oldChar);//set the origin char
 	}
 }
 
@@ -179,7 +221,13 @@ bool Controller::getcoin()
 	return (m_originBoard.get_char(m_player.get_coord()) == MONEY);
 }
 
+//-----------------------------------------------
+//this func print a line under the map and under 
+//the line we print how mony we have, the helth
+//of the player and the current level
 void Controller::print_ui() {
 	cout << BOTTOM_LINE << endl
-		<< "remaining money: " << m_remainingMoney << "    ";
+		<< "remaining money: " << m_remainingMoney << "\n"
+		<< "health: " << m_player.get_health() << "\n"
+		<< "level: " << m_level << endl;
 }
