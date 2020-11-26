@@ -15,6 +15,7 @@ public:
 	Coord move(const Board&);
 	int get_health() const;
 	void die();
+	bool fall_from_ladder(const Board& board, int el);
 private:
 	int m_health;
 	Coord m_coord;

@@ -38,6 +38,9 @@ Coord Player::move(const Board& board)
 	case KB_RIGHT://if we want to move right
 		if (!is_wall(m_coord.m_col + 1, m_coord.m_row , board))
 		{
+			if (fall_from_ladder(board, 1)) {//if we on ladder we cant fall
+				return m_coord;
+			}
 			m_coord.m_col = m_coord.m_col + 1;//we reset the points
 			m_coord = board.get_ground(m_coord);//get into the ground if its needs
 		}
@@ -45,6 +48,9 @@ Coord Player::move(const Board& board)
 	case KB_LEFT://if we want to move left
 		if (!is_wall(m_coord.m_col - 1, m_coord.m_row, board))
 		{
+			if (fall_from_ladder(board, -1)) {//if we on ladder we cant fall
+				return m_coord;
+			}
 			m_coord.m_col = m_coord.m_col - 1;//we reset the points
 			m_coord = board.get_ground(m_coord);//get into the ground if its needs
 		}
@@ -75,4 +81,11 @@ void Player::die() {
 	m_health = m_health - 1;
 }
 
-
+//------------------------------------------------------------
+//this func check if the player on the top of the ladder
+//returne false if not and true if its on last H 
+bool Player::fall_from_ladder(const Board& board, int el) {
+	return board.get_char(m_coord) == PLAYER_ON_LADDER &&
+		board.get_char(Coord(m_coord.m_col + el, m_coord.m_row + 1)) != WALL
+		&& board.get_char(Coord(m_coord.m_col + el, m_coord.m_row)) != ROPE;
+}

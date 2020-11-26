@@ -30,6 +30,7 @@ void Controller::run() {
 		}
 		m_score += 50 * m_level;
 		m_level++;
+		m_enemies.clear();
 	}
 }
 
@@ -45,6 +46,14 @@ void Controller::run_level() {
 			oldPlayerCoord = m_player.get_coord();
 			currPlayerCoord = m_player.move(m_board);
 		}
+		//if the player get a coin
+		if (getcoin()) {
+			m_score += (m_level * 2);
+			m_remainingMoney--;
+			if (m_remainingMoney == 0) {//if we get all coins
+				return;
+			}
+		}
 		//we move the charachters
 		move_player(oldPlayerCoord);
 		move_enemies();
@@ -53,14 +62,6 @@ void Controller::run_level() {
 			m_player.die();
 			m_originBoard.print(); //we back from start
 			if (m_player.get_health() == 0) {
-				return;
-			}
-		}
-		//if the player get a coin
-		if (getcoin()) {
-			m_score += (m_level * 2);
-			m_remainingMoney--;
-			if (m_remainingMoney == 0) {//if we get all coins
 				return;
 			}
 		}
@@ -120,6 +121,9 @@ void Controller::move_player(const struct Coord oldPlayerCoord)
 			return;
 		}//if the old elment not a coin
 		m_board.set_char(oldPlayerCoord, m_originBoard.get_char(oldPlayerCoord));
+		if (m_originBoard.get_char(oldPlayerCoord) == PLAYER) {
+			m_board.set_char(oldPlayerCoord, EMPTY);
+		}
 		return;
 	}//if its on a ROPE or on a Ground
 	if (m_originBoard.get_char(oldPlayerCoord) == PLAYER) {
@@ -147,8 +151,8 @@ void Controller::move_enemies()
 		old_place = m_enemies[enemy].get_coord();
 		char oldChar = m_originBoard.get_char(old_place);
 		Coord newCoord =  m_enemies[enemy].move(m_board);
-		m_board.set_char(newCoord, ENEMY);
-		if (oldChar == ENEMY)
+		m_board.set_char(m_board.get_ground(newCoord), ENEMY);
+		if (oldChar == ENEMY || oldChar == PLAYER)
 			oldChar = EMPTY;
 		m_board.set_char(old_place, oldChar);
 	}
