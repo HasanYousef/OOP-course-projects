@@ -145,9 +145,12 @@ void Controller::move_enemies()
 	Coord old_place;
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
 		old_place = m_enemies[enemy].get_coord();
-		m_enemies[enemy].move(m_board);
-		m_board.set_char(m_enemies[enemy].get_coord(), ENEMY);
-		m_board.set_char(old_place, m_originBoard.get_char(old_place));
+		char oldChar = m_originBoard.get_char(old_place);
+		Coord newCoord =  m_enemies[enemy].move(m_board);
+		m_board.set_char(newCoord, ENEMY);
+		if (oldChar == ENEMY)
+			oldChar = EMPTY;
+		m_board.set_char(old_place, oldChar);
 	}
 }
 

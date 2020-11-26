@@ -54,7 +54,8 @@ char Board::get_char(const Coord& coord) const {
 //-----------------get_ground-----------------
 Coord Board::get_ground(const Coord& coord) const {
 	int h = 0;
-	while (m_map[coord.m_row + h + 1][coord.m_col] != WALL 
+	while (m_map[coord.m_row + h][coord.m_col] != WALL
+		&& m_map[coord.m_row + h + 1][coord.m_col] != WALL 
 		&& m_map[coord.m_row + h][coord.m_col] != LADDER 
 		&& m_map[coord.m_row + h][coord.m_col] != ROPE)
 		h++;

@@ -28,6 +28,7 @@ Coord Enemy::move(const Board& board)
 		rightCoord(m_coord.m_col + 1, m_coord.m_row),
 		upCoord(m_coord.m_col, m_coord.m_row - 1),
 		downCoord(m_coord.m_col, m_coord.m_row + 1);
+	helpBoard[m_coord.m_row][m_coord.m_col] = true;
 	leftLen = find_shortest_path(board, helpBoard, lefCoord);
 	rightLen = find_shortest_path(board, helpBoard, rightCoord);
 	upLen = find_shortest_path(board, helpBoard, upCoord);
@@ -35,21 +36,22 @@ Coord Enemy::move(const Board& board)
 
 	int shortest = leftLen;
 	Coord bestDir = lefCoord;
-	if (rightLen < shortest) {
+	if ((rightLen < shortest && rightLen != NO_PATH) || shortest == NO_PATH) {
 		shortest = rightLen;
 		bestDir = rightCoord;
 	}
-	if (upLen < shortest) {
+	if ((upLen < shortest && upLen != NO_PATH) || shortest == NO_PATH) {
 		shortest = upLen;
 		bestDir = upCoord;
 	}
-	if (downLen < shortest) {
+	if ((downLen < shortest && downLen != NO_PATH) || shortest == NO_PATH) {
 		shortest = downLen;
 		bestDir = downCoord;
 	}
 
 	if (shortest == NO_PATH)
 		return m_coord;
+	m_coord = board.get_ground(bestDir);
 	return bestDir;
 }
 
@@ -59,7 +61,7 @@ int Enemy::find_shortest_path(const Board& board, vector<vector<bool>>& helpBoar
 	char currChar = board.get_char(board.get_ground(curr));
 	if (currChar == WALL || helpBoard[curr.m_row][curr.m_col])
 		return NO_PATH;
-	if (currChar == PLAYER)
+	if (currChar == PLAYER || currChar == PLAYER_ON_LADDER)
 		return 0;
 	helpBoard[curr.m_row][curr.m_col] = true;
 	int leftLen, rightLen, upLen, downLen;
@@ -72,7 +74,8 @@ int Enemy::find_shortest_path(const Board& board, vector<vector<bool>>& helpBoar
 	rightLen = find_shortest_path(board, helpBoard, rightCoord);
 	if(board.get_char(upCoord) == LADDER)
 		upLen = find_shortest_path(board, helpBoard, upCoord);
-	downLen = find_shortest_path(board, helpBoard, downCoord);
+	if (board.get_char(downCoord) != WALL)
+		downLen = find_shortest_path(board, helpBoard, downCoord);
 	
 	int shortest = leftLen;
 	if ((rightLen < shortest && rightLen != NO_PATH) || shortest == NO_PATH)
