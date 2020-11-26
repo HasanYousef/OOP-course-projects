@@ -192,7 +192,7 @@ void Controller::move_enemies()
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
 		old_place = m_enemies[enemy].get_coord();//save old coord
 		char oldChar = m_originBoard.get_char(old_place);//get char of old coord
-		Coord newCoord =  m_enemies[enemy].move(m_board, m_player.get_coord());
+		Coord newCoord =  m_enemies[enemy].move(m_originBoard, m_player.get_coord());
 		m_board.set_char(m_board.get_ground(newCoord), ENEMY);//set the enemy 
 		if (oldChar == ENEMY || oldChar == PLAYER)
 			oldChar = EMPTY;
