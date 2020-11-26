@@ -89,3 +89,7 @@ bool Player::fall_from_ladder(const Board& board, int el) {
 		board.get_char(Coord(m_coord.m_col + el, m_coord.m_row + 1)) != WALL
 		&& board.get_char(Coord(m_coord.m_col + el, m_coord.m_row)) != ROPE;
 }
+
+void Player::set_health(int currHealth) {
+	m_health = currHealth;
+}

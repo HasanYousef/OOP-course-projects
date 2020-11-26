@@ -47,6 +47,7 @@ void Controller::run_level() {
 	bool origprint = false;
 	while (true) {
 		if (!origprint) {
+			system("cls");
 			m_board.print();
 		}
 		origprint = false;
@@ -80,7 +81,9 @@ void Controller::run_level() {
 		if (origprint) {
 			m_originBoard.print();
 			m_enemies.clear();
+			int currHealth = m_player.get_health();
 			locate_objects();
+			m_player.set_health(currHealth);
 		}
 	}
 }
@@ -92,6 +95,7 @@ void Controller::run_level() {
 //if we find a coin we add to the integer of 
 //m_remainingMoney 1 this is how its work
 void Controller::locate_objects() {
+	m_remainingMoney = 0;
 	int boardSize = m_originBoard.get_size();
 	char currChar;
 	for (int row = 0; row < boardSize; row++) {
@@ -118,11 +122,12 @@ void Controller::reset_game() {
 	cin.get(answ);
 	if (answ == 'n')
 		exit(EXIT_SUCCESS);
-	m_level = 0;
+	m_enemies.clear();
 	m_score = 0;
-	m_remainingMoney = 0;
+	m_player = Player();
 	open_maps_stream();
-	m_level = 0;
+	locate_objects();
+	m_level = 1;
 }
 
 //---------------------------------------------

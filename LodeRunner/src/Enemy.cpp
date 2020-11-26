@@ -12,7 +12,8 @@ Coord Enemy::get_coord() const
 Coord Enemy::move(const Board& board, const Coord& pCoord)
 {
 	Coord leftCoord(m_coord.m_col - 1, m_coord.m_row),
-		rightCoord(m_coord.m_col + 1, m_coord.m_row);
+		rightCoord(m_coord.m_col + 1, m_coord.m_row),
+		upCoord(m_coord.m_col, m_coord.m_row - 1);
 
 	if (pCoord.m_row == m_coord.m_row) {
 		if (board.get_char(leftCoord) != WALL
@@ -32,8 +33,8 @@ Coord Enemy::move(const Board& board, const Coord& pCoord)
 		return m_coord;
 	}
 	if (board.get_char(m_coord) == LADDER) {
-		if (pCoord.m_row < m_coord.m_row) {
-			m_coord = Coord(m_coord.m_col, m_coord.m_row - 1);
+		if (pCoord.m_row < m_coord.m_row && board.get_char(upCoord) == LADDER) {
+			m_coord = upCoord;
 			return m_coord;
 		}
 		m_coord = Coord(m_coord.m_col, m_coord.m_row + 1);

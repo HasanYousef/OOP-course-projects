@@ -15,6 +15,7 @@ public:
 	Coord move(const Board&);
 	int get_health() const;
 	void die();
+	void set_health(int);
 private:
 	int m_health;
 	Coord m_coord;
