@@ -144,9 +144,9 @@ void Controller::move_enemies()
 {
 	Coord old_place;
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
-		old_place = m_enemies[enemy].Get_E_Coord();
-		m_enemies[enemy].Enemy_Movement();
-		m_board.set_char(m_enemies[enemy].Get_E_Coord(), ENEMY);
+		old_place = m_enemies[enemy].get_coord();
+		m_enemies[enemy].move(m_board);
+		m_board.set_char(m_enemies[enemy].get_coord(), ENEMY);
 		m_board.set_char(old_place, m_originBoard.get_char(old_place));
 	}
 }
@@ -157,7 +157,7 @@ void Controller::move_enemies()
 bool Controller::get_hit() 
 {
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
-		if (m_player.get_coord() == m_enemies[enemy].Get_E_Coord()) {
+		if (m_player.get_coord() == m_enemies[enemy].get_coord()) {
 			return true;
 		}
 	}
