@@ -6,8 +6,8 @@ authors:
 	Hasan Yousef  322309220
 
 about the program:
-	This program is about a classic game that call Lode Runner its a 2D puzzle platform
-        video game the player start on a map that have a Ladder and Rope the player have to
+	This program is about a classic game that call Lode Runner it's a 2D platformer
+        video game, the player start on a map that have a Ladder and Rope the player have to
         collect all the coins that we have on the map to get to the next level but this is not
         that easy because the player will get chasing by the enemies every time the player get
         hit from the enemy the health of the player will will get low and there are a number
@@ -45,6 +45,9 @@ About the files:
         Board.h/.cpp:
                 this class of the Board (map) of the game by this class we stream the map of the game and we can
                 get char of elemet and size of array also set char on elment and many things help us on anthor classes.
+		Money.h:
+				includes the Money struct that stores the coord of a specific money-pack and if it is taken by
+				the player or not.
         Board.txt: 
                 in this file we have the map of the game and the levels.
         main.cpp:
@@ -53,9 +56,10 @@ About the files:
 
 Data Structures:
         the Data Structures that we have on the program its the vector of the board (map of the level)
-        we use a 2d vector (have rows and cols) that let us to do the size we want also we have a vector
+        we use a 2d vector (have rows and cols) that let us to do the size we want, we have a vector
         for the enemies that we put the enemies on it becuse we dont know how many enemies there are so 
-        we save him on a vector (objects of enemies). 
+        we save him on a vector (objects of enemies), the controller also has a vector of the Money-packs
+		that stores for each money-pack it's coord and if it is taken or not.
 
 Notable Algorithms:
         Only one algorithm we used is in Enemy class in movement the algorithm work in this way:
@@ -67,14 +71,13 @@ Notable Algorithms:
         Ladder and the player on the ground the enemy will go down, if the enemy on a rope and the
         player on the ground (inder the enemy) the enemy will jump to the ground, this mean that
         the algorithm is a approximation.
-        
+        it is also good to mention that the enemy can jump from an edge or a rope if the player is
+		lower than the enemy.
 
 Bug:
-        Resetting the game (after dying 3 times) will cause a bug which will make the game stay
-		in the level 1 even after finishing it.
-		in the second level there is a problem with the enemy (can't kill the player).
-
-		no more time to fix these bugs.
+        if the player is in not in the enemy's row and the enemy is in a ladder, the enemy will
+		keep going up and down or left and right (if there is floor) in the same 2 blocks, until
+		the player will be in the same row again.
 
 Another Notes:
       

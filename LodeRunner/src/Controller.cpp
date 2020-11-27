@@ -50,6 +50,7 @@ void Controller::run_level() {
 	while (true) {
 		if (!origprint) {
 			system("cls");
+			set_gold_on_map();
 			m_board.print();
 		}
 		origprint = false;
@@ -63,7 +64,7 @@ void Controller::run_level() {
 		//if the player get a coin
 		if (getcoin()) {
 			m_score += (m_level * 2);
-			m_remainingMoney--;
+			get_money();
 			if (m_remainingMoney == 0) {//if we get all coins
 				return;
 			}
@@ -82,6 +83,7 @@ void Controller::run_level() {
 		system("cls");
 		if (origprint) {
 			m_originBoard.print();
+			m_money_packs.clear();
 			m_enemies.clear();
 			int currHealth = m_player.get_health();
 			m_board = Board(m_originBoard);
@@ -109,8 +111,10 @@ void Controller::locate_objects() {
 				m_player = Player(currCoord);
 			else if (currChar == ENEMY)
 				m_enemies.push_back(Enemy(currCoord));
-			else if (currChar == MONEY)
+			else if (currChar == MONEY) {
+				m_money_packs.push_back(Money(Coord(col, row)));
 				m_remainingMoney++;
+			}
 		}
 	}
 }
@@ -221,4 +225,28 @@ void Controller::print_ui() {
 		<< "Score: " << m_score << "\n"
 		<< "Health: " << m_player.get_health() << "\n"
 		<< "Level: " << m_level << endl;
+}
+
+void Controller::get_money() {
+	for (int index = 0; index < m_money_packs.size(); index++) {
+		if (m_money_packs[index].m_coord == m_player.get_coord()) {
+			m_money_packs[index].m_isTaken = true;
+			m_remainingMoney--;
+			return;
+		}
+	}
+}
+
+void Controller::set_gold_on_map() {
+	for (int index = 0; index < m_money_packs.size(); index++) {
+		Coord moneyCoord = m_money_packs[index].m_coord;
+		if (m_money_packs[index].m_isTaken
+			&& (m_board.get_char(moneyCoord) == MONEY)) {
+			m_board.set_char(moneyCoord, EMPTY);
+		}
+		if (!m_money_packs[index].m_isTaken
+			&& (m_board.get_char(moneyCoord) == EMPTY)) {
+			m_board.set_char(moneyCoord, MONEY);
+		}
+	}
 }

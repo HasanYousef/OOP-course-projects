@@ -3,7 +3,6 @@
 #include "coord.h"
 #include "Macros.h"
 #include "Board.h"
-#include <vector>
 
 class Enemy {
 public:
@@ -14,8 +13,8 @@ public:
 	Coord move(const Board& board, const Coord& coord);
 	Coord get_coord() const;
 private:
-	bool there_is_laddder(const Board& board, int dir);
-	bool Enemy::canGoSide(const Board& b, int dir);
+	int ladder_dis(const Board& board, int dir);
+	bool can_go_side(const Board& b, int dir);
 	//---enemy-indexes-----
 	Coord m_coord;
 };
