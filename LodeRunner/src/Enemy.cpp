@@ -13,22 +13,26 @@ Coord Enemy::move(const Board& board, const Coord& pCoord)
 {
 	Coord leftCoord(m_coord.m_col - 1, m_coord.m_row),
 		rightCoord(m_coord.m_col + 1, m_coord.m_row),
-		upCoord(m_coord.m_col, m_coord.m_row - 1);
-
+		upCoord(m_coord.m_col, m_coord.m_row - 1),
+		downCoord(m_coord.m_col, m_coord.m_row + 1);
+	if (pCoord == m_coord)
+		return m_coord;
 	if (pCoord.m_row == m_coord.m_row) {
 		if (board.get_char(leftCoord) != WALL
-			&& pCoord.m_col < m_coord.m_col) {
+			&& pCoord.m_col < m_coord.m_col
+			&& canGoSide(board, +1)) {
 			m_coord = leftCoord;
 			return leftCoord;
 		}
 		if (board.get_char(rightCoord) != WALL
-			&& pCoord.m_col > m_coord.m_col) {
+			&& pCoord.m_col > m_coord.m_col
+			&& canGoSide(board, -1)) {
 			m_coord = rightCoord;
 			return rightCoord;
 		}
 	}
 	if (board.get_char(m_coord) == ROPE
-		&& pCoord.m_row > m_coord.m_row) {
+		&& pCoord.m_row < m_coord.m_row) {
 		m_coord = board.get_ground(Coord(m_coord.m_col, m_coord.m_row + 1));
 		return m_coord;
 	}
@@ -37,8 +41,10 @@ Coord Enemy::move(const Board& board, const Coord& pCoord)
 			m_coord = upCoord;
 			return m_coord;
 		}
-		m_coord = Coord(m_coord.m_col, m_coord.m_row + 1);
-		return m_coord;
+		else if (board.get_char(downCoord) == LADDER) {
+			m_coord = Coord(m_coord.m_col, m_coord.m_row + 1);
+			return m_coord;
+		}
 	}
 	else {
 		if (there_is_laddder(board, -1)) {
@@ -62,4 +68,15 @@ bool Enemy::there_is_laddder(const Board& board, int dir) {
 		coord = Coord(coord.m_col + dir, coord.m_row);
 	}
 	return false;
+}
+
+bool Enemy::canGoSide(const Board& b, int dir) {
+	char leftCorner = b.get_char(Coord(m_coord.m_col - 1, m_coord.m_row + 1)),
+		rightCorner = b.get_char(Coord(m_coord.m_col + 1, m_coord.m_row + 1));
+	if (b.get_char(Coord(m_coord.m_col + dir, m_coord.m_row)) == ROPE)
+		return true;
+	if (dir > 0) {
+		return (leftCorner == WALL);
+	}
+	return rightCorner == WALL;
 }

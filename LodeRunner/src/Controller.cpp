@@ -21,12 +21,14 @@ void Controller::run() {
 		locate_objects();
 		run_level();
 		if (m_player.get_health() == 0) {
+			system("cls");
 			cout << "YOU LOST!\n";
-			reset_game();
+			exit(EXIT_SUCCESS);
 		}
 		else if (m_level == NUM_OF_LEVELS) {
+			system("cls");
 			cout << "YOU WON!\n";
-			reset_game();
+			exit(EXIT_SUCCESS);
 		}
 		m_score += 50 * m_level;
 		m_level++;
@@ -73,7 +75,7 @@ void Controller::run_level() {
 		if (get_hit()) {
 			m_player.die();
 			if (m_player.get_health() == 0) {
-				reset_game();
+				break;
 			}
 			origprint = true;
 		}
@@ -82,6 +84,7 @@ void Controller::run_level() {
 			m_originBoard.print();
 			m_enemies.clear();
 			int currHealth = m_player.get_health();
+			m_board = Board(m_originBoard);
 			locate_objects();
 			m_player.set_health(currHealth);
 		}
@@ -112,24 +115,6 @@ void Controller::locate_objects() {
 	}
 }
 
-//-----------------------------------------------
-//here when the player get die we ask the player
-//if he want to reset the game or not if yes we 
-//reset it if no we close the game
-void Controller::reset_game() {
-	cout << "RESTART? (y/n) ";
-	char answ;
-	cin.get(answ);
-	if (answ == 'n')
-		exit(EXIT_SUCCESS);
-	m_enemies.clear();
-	m_score = 0;
-	m_player = Player();
-	open_maps_stream();
-	locate_objects();
-	m_level = 1;
-}
-
 //---------------------------------------------
 void Controller::open_maps_stream() {
 	// opens the text file that contains the initial maps
@@ -151,7 +136,7 @@ void Controller::open_maps_stream() {
 //we print empty else we print the char from origin board
 void Controller::move_player(const struct Coord oldPlayerCoord)
 {
-	if (m_board.get_char(m_player.get_coord()) == LADDER) {
+	if (m_originBoard.get_char(m_player.get_coord()) == LADDER) {
 		m_board.set_char(m_player.get_coord(), PLAYER_ON_LADDER);
         //we check if the player taked a coin
 		if (m_originBoard.get_char(oldPlayerCoord) == MONEY) {
@@ -164,10 +149,11 @@ void Controller::move_player(const struct Coord oldPlayerCoord)
 		}
 		return;
 	}//if its on a ROPE or on a Ground
-	if (m_originBoard.get_char(oldPlayerCoord) == PLAYER) {
+	if (m_originBoard.get_char(oldPlayerCoord) == PLAYER ||
+		m_originBoard.get_char(oldPlayerCoord) == ENEMY) {
 		m_board.set_char(m_player.get_coord(), PLAYER);
 		m_board.set_char(oldPlayerCoord, EMPTY);
-		if (m_originBoard.get_char(oldPlayerCoord) == MONEY) {
+		if (m_board.get_char(oldPlayerCoord) == MONEY) {
 			m_board.set_char(oldPlayerCoord, EMPTY);
 			return;
 		}//if the old elment not a coin
@@ -198,10 +184,10 @@ void Controller::move_enemies()
 		old_place = m_enemies[enemy].get_coord();//save old coord
 		char oldChar = m_originBoard.get_char(old_place);//get char of old coord
 		Coord newCoord =  m_enemies[enemy].move(m_originBoard, m_player.get_coord());
-		m_board.set_char(m_board.get_ground(newCoord), ENEMY);//set the enemy 
-		if (oldChar == ENEMY || oldChar == PLAYER)
+		if (oldChar == ENEMY || oldChar == PLAYER || oldChar == MONEY)
 			oldChar = EMPTY;
 		m_board.set_char(old_place, oldChar);//set the origin char
+		m_board.set_char(m_board.get_ground(newCoord), ENEMY);//set the enemy 
 	}
 }
 
@@ -223,7 +209,7 @@ bool Controller::get_hit()
 //same element of the coin return false if not
 bool Controller::getcoin()
 {
-	return (m_originBoard.get_char(m_player.get_coord()) == MONEY);
+	return (m_board.get_char(m_player.get_coord()) == MONEY);
 }
 
 //-----------------------------------------------
@@ -232,7 +218,7 @@ bool Controller::getcoin()
 //of the player and the current level
 void Controller::print_ui() {
 	cout << BOTTOM_LINE << endl
-		<< "remaining money: " << m_remainingMoney << "\n"
-		<< "health: " << m_player.get_health() << "\n"
-		<< "level: " << m_level << endl;
+		<< "Score: " << m_score << "\n"
+		<< "Health: " << m_player.get_health() << "\n"
+		<< "Level: " << m_level << endl;
 }

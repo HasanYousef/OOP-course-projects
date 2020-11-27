@@ -25,7 +25,6 @@ private:
 	bool getcoin();
 	void run_level();
 	void locate_objects();
-	void reset_game();
 	void open_maps_stream();
 	void print_ui();
 	int m_level,

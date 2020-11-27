@@ -15,6 +15,7 @@ public:
 	Coord get_coord() const;
 private:
 	bool there_is_laddder(const Board& board, int dir);
+	bool Enemy::canGoSide(const Board& b, int dir);
 	//---enemy-indexes-----
 	Coord m_coord;
 };
