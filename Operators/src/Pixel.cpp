@@ -14,21 +14,6 @@ unsigned char Pixel::get_color() const {
 	return m_color;
 }
 
-Pixel& Pixel::operator=(const Pixel& right) {
-	m_color = right.get_color();
-	return *this;
-}
-
-//??????????????????????????????????????????????????????????????????///
-Pixel& Pixel::operator|=(const Pixel& right) {
-	*this = (*this | right);
-	return *this;
-}
-Pixel& Pixel::operator&=(const Pixel & right) {
-	*this = (*this & right);
-	return *this;
-}
-
 // GLOBAL OPERATORS
 
 bool operator==(const Pixel& left, const Pixel& right) {
@@ -66,4 +51,13 @@ Pixel operator|(const Pixel& left, const Pixel& right) {
 
 Pixel operator&(const Pixel& left, const Pixel& right) {
 	return left >= right ? Pixel(right) : Pixel(left);
+}
+
+Pixel& operator|=(Pixel& left, const Pixel& right) {
+	left = left | right;
+	return left;
+}
+Pixel& operator&=(Pixel& left, const Pixel& right) {
+	left = left & right;
+	return left;
 }

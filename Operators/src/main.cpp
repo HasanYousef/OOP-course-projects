@@ -4,8 +4,6 @@
 #include "Pixel.h"
 
 int main() {
-	Pixel l(), r();
-
 
 	return EXIT_SUCCESS;
 }

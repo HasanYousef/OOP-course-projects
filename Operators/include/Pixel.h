@@ -8,10 +8,6 @@ public:
 	Pixel(unsigned char pixel = ' ');
 	unsigned char get_color() const;
 
-	Pixel& operator=(const Pixel&);
-	Pixel& operator|=(const Pixel&);
-	Pixel& operator&=(const Pixel&);
-
 private:
 	unsigned char m_color = unsigned char();
 };
@@ -27,3 +23,5 @@ bool operator>=(const Pixel&, const Pixel&);
 std::ostream& operator<<(std::ostream&, const Pixel&);
 Pixel operator|(const Pixel&, const Pixel&);
 Pixel operator&(const Pixel&, const Pixel&);
+Pixel& operator|=(Pixel&, const Pixel&);
+Pixel& operator&=(Pixel&, const Pixel&);

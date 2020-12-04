@@ -3,10 +3,13 @@
 #include "ImageDataStructure.cpp"
 
 //--------------------------------------------------
+Image::Image() : m_height(0), m_width(0), m_datastruct(){
+	
+}
+
 Image::Image(int H, int W) {
 	m_height = (H >= 0) ? H : 0;
 	m_width = (W >= 0) ? W : 0;
-	m_pixelColor = WHITE;
 	m_datastruct = ImageDataStructure(H, W, WHITE);
 }
 
@@ -14,8 +17,7 @@ Image::Image(int H, int W) {
 Image::Image(int H, int W, unsigned char pixel) {
 	m_height = (H >= 0) ? H : 0;
 	m_width = (W >= 0) ? W : 0;
-	m_pixelColor = pixel;	
-	m_datastruct = ImageDataStructure(H, W, WHITE);
+	m_datastruct = ImageDataStructure(H, W, pixel);
 }
 
 //-------------------------------------------------
@@ -35,8 +37,8 @@ int Image::get_width() const {
 
 //---Local---Operators-----------------------------
 //-------------------------------------------------
-unsigned int Image::operator()(int row, int col) const {
-	return m_datastruct(row, col);
+Pixel Image::operator()(unsigned int col, unsigned int row) const {
+	return m_datastruct(col, row);
 }
 
 //------------------------------------------------
@@ -44,13 +46,11 @@ void Image::operator=(const Image& other) {
 	m_datastruct.free(m_height);
 	m_height = other.get_height();
 	m_width = other.get_width();
-	m_pixelColor = other.m_pixelColor;
-	m_datastruct = ImageDataStructure(
-		           m_height, m_width, m_pixelColor);
+	m_datastruct = ImageDataStructure(other.m_datastruct, m_height, m_width);
 }
 
 //------------------------------------------------
-int unsigned& Image::operator()(int row, int col) {
+Pixel& Image::operator()(unsigned int col, unsigned int row) {
 	return m_datastruct(row, col);
 }
 
@@ -61,13 +61,13 @@ int unsigned& Image::operator()(int row, int col) {
 bool operator==(const Image& first, const Image& second)
 {
 	if (first.get_width() != second.get_width() ||
-		first.get_height() != second.get_height()){
+		first.get_height() != second.get_height()) {
 		return false;
 	}
 	//we check the pixels colors 
 	for (int row = 0; row < second.get_height(); row++) {
 		for (int col = 0; col < first.get_width(); col++) {
-			if (first(row,col) != second(row, col)) {
+			if (first(row, col) != second(row, col)) {
 				return false;
 			}
 		}
@@ -155,6 +155,61 @@ Image operator*=(const Image& image, int n) {
 }
 
 //--------------------------------------------------------
+std::ostream& operator<<(std::ostream& os, const Image& image)
+{
+	for (int row = 0; row < image.get_height(); row++) {
+		for (int col = 0; col < image.get_width(); col++) {
+			os << image(col, row);
+		}
+	}
+	return os;
+}
+
+Image operator&(const Image& left, const Image& right) {
+	int minHeight = left.get_height() < right.get_height() ? left.get_height() : right.get_height(),
+		minWidth = left.get_width() < right.get_width() ? left.get_width() : right.get_width();
+	Image newImg(minHeight, minWidth);
+
+	for (int row = 0; row < minHeight; row++) {
+		for (int col = 0; col < minWidth; col++) {
+			newImg(row, col) = left(row, col) & right(row, col);
+		}
+	}
+	return newImg;
+}
+
+Image operator|(const Image& left, const Image& right) {
+	int leftHeight = left.get_height(),
+		rightHeight = right.get_height(),
+		leftWidth = left.get_width(),
+		rightWidth = right.get_width();
+	int maxHeight = rightHeight > leftWidth ? rightHeight : leftWidth,
+		maxWidth = leftWidth > rightWidth ? leftWidth : rightWidth;
+	Image newImg(maxHeight, maxWidth);
+
+	for (int row = 0; row < maxHeight; row++) {
+		for (int col = 0; col < maxWidth; col++) {
+			if (row < leftHeight && row < rightHeight
+				&& col < leftWidth && col < rightWidth)
+				newImg(row, col) = left(row, col) | right(row, col);
+			else if (row < leftHeight && col < leftWidth)
+				newImg(row, col) = left(row, col);
+			else if (row < rightHeight && col < rightHeight)
+				newImg(row, col) = right(row, col);
+		}
+	}
+	return newImg;
+}
+
+Image& operator|=(Image& left, const Image& right) {
+	left = left | right;
+	return left;
+}
+
+Image& operator&=(Image& left, const Image& right) {
+	left = left & right;
+	return left;
+}
 
 
 

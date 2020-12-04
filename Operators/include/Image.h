@@ -1,14 +1,13 @@
 #pragma once
 
-#include "Pixle.h"
+#include "Pixel.h"
 #include "Macros.h"
 #include "ImageDataStructure.h"
 
 class Image {
 public:
 	//---Constructors--------------------
-	Image::Image() :m_height(0), m_width(0),
-		m_pixelColor(WHITE), m_datastruct(0, 0, WHITE) {}
+	Image();
 	Image(int, int);
 	Image(int, int, unsigned char pixel);
 	Image(const Image&);
@@ -17,14 +16,12 @@ public:
 	int get_width() const;
 
 	//---Local---operators--------------
-	unsigned int operator()(int, int) const;
-	unsigned int& operator()(int, int);
+	Pixel operator()(unsigned int, unsigned int) const;
+	Pixel& operator()(unsigned int, unsigned int);
 	void operator=(const Image&);
 
 private:
-	int m_height,
-		m_width;
-	unsigned char m_pixelColor;
+	int m_height, m_width;
 	ImageDataStructure m_datastruct;
 };
 
@@ -37,4 +34,5 @@ Image operator+(const Image& A, const Image& B);
 Image operator+=(const Image& A, const Image& B);
 Image operator*(const Image& image, int n);
 Image operator*=(const Image& image, int n);
+std::ostream& operator<<(std::ostream& os, const Image& image);
 

@@ -1,6 +1,6 @@
 ﻿target_sources (Operators PRIVATE 
 "main.cpp"
 "Image.cpp"
-"ImageDataStruct.cpp"
+"ImageDataStructure.cpp"
 "Pixel.cpp"
 )
