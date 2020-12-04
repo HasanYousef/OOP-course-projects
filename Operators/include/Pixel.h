@@ -8,17 +8,18 @@ public:
 	Pixel(unsigned char pixel = ' ');
 	unsigned char get_color() const;
 
-	Pixel& operator=|(const Pixel&);
+	Pixel& operator|=(const Pixel&);
+	Pixel& operator&=(const Pixel&);
 
 private:
-	const unsigned char m_color;
+	unsigned char m_color = unsigned char();
 };
 
 // GLOBAL OPERATORS
 
 bool operator==(const Pixel&, const Pixel&);
 bool operator!=(const Pixel&, const Pixel&);
-bool operator<(const Pixel&, const Pixel&;
+bool operator<(const Pixel&, const Pixel&);
 bool operator<=(const Pixel&, const Pixel&);
 bool operator>(const Pixel&, const Pixel&);
 bool operator>=(const Pixel&, const Pixel&);

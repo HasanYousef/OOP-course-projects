@@ -1,1 +1,4 @@
-﻿target_sources (Operators PRIVATE "main.cpp")
+﻿target_sources (Operators PRIVATE 
+"main.cpp"
+"Pixel.cpp"
+)

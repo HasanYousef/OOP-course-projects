@@ -4,7 +4,7 @@
 #include <ostream>
 
 // Pixel builder and converter from unsigned char to Pixel
-Pixel::Pixel(unsigned char pixel = ' ') {
+Pixel::Pixel(unsigned char pixel) {
 	// the color should be one of the 3
 	if (pixel == WHITE || pixel == GRAY || pixel == BLACK)
 		m_color = pixel;
@@ -15,12 +15,12 @@ unsigned char Pixel::get_color() const {
 }
 
 //??????????????????????????????????????????????????????????????????///
-Pixel& Pixel::operator=|(const Pixel& right) {
+Pixel& Pixel::operator|=(const Pixel& right) {
 	*this = *this | right;
 	return *this;
 }
-Pixel& Pixel::operator=&(const Pixel & right) {
-	*this = *this & right;
+Pixel& Pixel::operator&=(const Pixel & right) {
+	m_color = (*this & right).get_color();
 	return *this;
 }
 
