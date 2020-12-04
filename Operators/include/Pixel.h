@@ -8,6 +8,7 @@ public:
 	Pixel(unsigned char pixel = ' ');
 	unsigned char get_color() const;
 
+	Pixel& operator=(const Pixel&);
 	Pixel& operator|=(const Pixel&);
 	Pixel& operator&=(const Pixel&);
 
