@@ -1,6 +1,5 @@
 #pragma once
 #include "Image.h"
-#include "ImageDataStructure.cpp"
 
 //--------------------------------------------------
 Image::Image() : m_height(0), m_width(0), m_datastruct(){
@@ -51,7 +50,7 @@ void Image::operator=(const Image& other) {
 
 //------------------------------------------------
 Pixel& Image::operator()(unsigned int col, unsigned int row) {
-	return m_datastruct(row, col);
+	return m_datastruct(col, row);
 }
 
 //===========================================================//

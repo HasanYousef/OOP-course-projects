@@ -1,10 +1,6 @@
 #pragma once
 
-
 #include "Pixel.h"
-#include "Macros.h"
-
-#include <minmax.h>
 
 class ImageDataStructure {
 public:
@@ -12,6 +8,8 @@ public:
 	ImageDataStructure(const ImageDataStructure&, int, int);
 	Pixel operator()(unsigned int, unsigned int) const;
 	Pixel& operator()(unsigned int, unsigned int);
+
+	Pixel& operator[](unsigned int);
 	void free(int);
 private:
 	Pixel** m_arr;

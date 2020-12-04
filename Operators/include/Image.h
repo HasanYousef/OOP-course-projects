@@ -4,6 +4,9 @@
 #include "Macros.h"
 #include "ImageDataStructure.h"
 
+
+#include <minmax.h>
+
 class Image {
 public:
 	//---Constructors--------------------

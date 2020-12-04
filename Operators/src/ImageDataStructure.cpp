@@ -1,11 +1,9 @@
 #pragma once
 
-
 #include <iostream>
 #include "ImageDataStructure.h"
 
 //--------------------------------------------------
-
 ImageDataStructure::ImageDataStructure(int H, int W, unsigned char pixle) {
 	//allocate the rows in the arr
 	*m_arr = new(std::nothrow) Pixel[H];
@@ -54,7 +52,7 @@ ImageDataStructure::ImageDataStructure(const ImageDataStructure& image, int H, i
 
 //--------------------------------------------------
 Pixel ImageDataStructure::operator()(unsigned int col, unsigned int row) const {
-	return m_arr[row][col].get_color();
+	return m_arr[row][col];
 }
 
 //--------------------------------------------------
@@ -69,4 +67,7 @@ void ImageDataStructure::free(int rows) {
 	}
 	delete m_arr;
 }
+
+
+
 
