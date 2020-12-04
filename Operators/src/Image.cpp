@@ -6,6 +6,7 @@ Image::Image() : m_height(0), m_width(0), m_datastruct(){
 	
 }
 
+//--------------------------------------------------
 Image::Image(int H, int W) {
 	m_height = (H >= 0) ? H : 0;
 	m_width = (W >= 0) ? W : 0;
@@ -22,6 +23,12 @@ Image::Image(int H, int W, unsigned char pixel) {
 //-------------------------------------------------
 Image::Image(const Image& other) {
 	*this = other;
+}
+
+//-------------------------------------------------
+Image::~Image()
+{
+	m_datastruct.free(m_height);
 }
 
 //-------------------------------------------------
@@ -149,6 +156,18 @@ Image operator*(const Image& image, int n)
 }
 
 //--------------------------------------------------------
+Image operator*(int n, const Image& image)
+{
+	int replay = 0;
+	Image newimage(image.get_height(), image.get_width());
+	while (replay < n) {
+		newimage += image;
+		replay++;
+	}
+	return newimage;
+}
+
+//--------------------------------------------------------
 Image operator*=(const Image& image, int n) {
 	return image * n;
 }
@@ -160,6 +179,7 @@ std::ostream& operator<<(std::ostream& os, const Image& image)
 		for (int col = 0; col < image.get_width(); col++) {
 			os << image(col, row);
 		}
+		os << 'n';
 	}
 	return os;
 }

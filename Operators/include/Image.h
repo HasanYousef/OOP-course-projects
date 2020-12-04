@@ -14,6 +14,7 @@ public:
 	Image(int, int);
 	Image(int, int, unsigned char pixel);
 	Image(const Image&);
+	~Image();
 	//---Functions----------------------
 	int get_height() const;
 	int get_width() const;
