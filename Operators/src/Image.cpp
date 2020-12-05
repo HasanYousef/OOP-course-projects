@@ -22,13 +22,7 @@ Image::Image(int H, int W, unsigned char pixel) {
 }
 
 //-------------------------------------------------
-Image::Image(const Image& other) {
-	*this = other;
-}
-
-//-------------------------------------------------
-Image::~Image()
-{
+Image::~Image() {
 	m_datastruct.free(m_height);
 }
 
@@ -99,6 +93,9 @@ Image operator~(const Image& image) {
 			else if (image(col, row) == BLACK) {
 				newimage(col, row) = WHITE;
 			}
+			else {
+				newimage(col, row) = GRAY;
+			}
 		}
 	}
 	return newimage;
@@ -121,39 +118,23 @@ Image operator+(const Image& A, const Image& B)
 			newimage(col, row) = B(col - A.get_width(), row);
 		}
 	}
-	//WHITE pixels
-	if (A.get_height() > B.get_height()) {
-		for (int row = B.get_height(); row < newimage.get_height(); row++) {
-			for (int col = A.get_width(); col < newimage.get_width(); col++) {
-				newimage(col, row) = B(col - A.get_width(), row - B.get_height());
-			}
-		}
-	}
-	else {
-		for (int row = A.get_height(); row < newimage.get_height(); row++) {
-			for (int col = 0; col < A.get_width(); col++) {
-				newimage(col, row) = WHITE;
-			}
-		}
-	}
+
 	return newimage;
 }
 
 //--------------------------------------------------------
-Image operator+=(const Image& A, const Image& B) {
-	return (A + B);
+Image operator+=(Image& A, const Image& B) {
+	A = A + B;
+	return A;
 }
 
 //--------------------------------------------------------
 Image operator*(const Image& image, int n)
 {
-	if (n == 0) {
-		return Image(0, 0);
-	}
 	int replay = 0;
-	Image newimage(image.get_height(), image.get_width());
+	Image newimage(0, 0);
 	while (replay < n) {
-		newimage = newimage + image;
+		newimage += image;
 		replay++;
 	}
 	return newimage;
@@ -162,11 +143,8 @@ Image operator*(const Image& image, int n)
 //--------------------------------------------------------
 Image operator*(int n, const Image& image)
 {
-	if (n == 0) {
-		return Image(0, 0);
-	}
 	int replay = 0;
-	Image newimage(image.get_height(), image.get_width());
+	Image newimage(0, 0);
 	while (replay < n) {
 		newimage = newimage + image;
 		replay++;
@@ -198,7 +176,7 @@ Image operator&(const Image& left, const Image& right) {
 
 	for (int row = 0; row < minHeight; row++) {
 		for (int col = 0; col < minWidth; col++) {
-			newImg(row, col) = left(row, col) & right(row, col);
+			newImg(col, row) = left(col, row) & right(col, row);
 		}
 	}
 	return newImg;
@@ -217,11 +195,11 @@ Image operator|(const Image& left, const Image& right) {
 		for (int col = 0; col < maxWidth; col++) {
 			if (row < leftHeight && row < rightHeight
 				&& col < leftWidth && col < rightWidth)
-				newImg(row, col) = left(row, col) | right(row, col);
+				newImg(col, row) = left(col, row) | right(col, row);
 			else if (row < leftHeight && col < leftWidth)
-				newImg(row, col) = left(row, col);
+				newImg(col, row) = left(col, row);
 			else if (row < rightHeight && col < rightHeight)
-				newImg(row, col) = right(row, col);
+				newImg(col, row) = right(col, row);
 		}
 	}
 	return newImg;
@@ -236,6 +214,3 @@ Image& operator&=(Image& left, const Image& right) {
 	left = left & right;
 	return left;
 }
-
-
-

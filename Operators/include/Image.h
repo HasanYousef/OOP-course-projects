@@ -13,7 +13,8 @@ public:
 	Image();
 	Image(int, int);
 	Image(int, int, unsigned char pixel);
-	Image(const Image&);
+	Image(const Image& other) : m_height(other.m_height),
+		m_width(other.m_width), m_datastruct(other.m_datastruct, m_height, m_width) {}
 	~Image();
 	//---Functions----------------------
 	int get_height() const;
@@ -35,8 +36,11 @@ bool operator==(const Image& first, const Image& second);
 bool operator!=(const Image& first, const Image& second);
 Image operator~(const Image& image);
 Image operator+(const Image& A, const Image& B);
-Image operator+=(const Image& A, const Image& B);
+Image operator+=(Image& A, const Image& B);
 Image operator*(const Image& image, int n);
 Image operator*=(const Image& image, int n);
 std::ostream& operator<<(std::ostream& os, const Image& image);
-
+Image operator&(const Image&, const Image&);
+Image operator|(const Image&, const Image&);
+Image& operator|=(Image&, const Image&);
+Image& operator&=(Image&, const Image&);

@@ -32,7 +32,7 @@ int main() {
 	}
 
 	cout << (Pixel)BLACK << endl;
-	/*
+
 	cout << "\n--------------------------------------\n"
 		<< "Image tests:\n";
 
@@ -40,12 +40,15 @@ int main() {
 
 	Image image2(10, 20, GRAY);
 
-	Image image3(20, 20, BLACK);
+	Image image3(20, 15, BLACK);
 
-	const auto temp = Image();
-
-	cout << (temp + image2 * 5) << endl << (temp + image2 * 5).get_width();
-
+	image2 |= image1;
+	image2 *= 3;
+	image1 += image2;
+	image3 &= image1;
+	image3 *= 2;
+	cout << image1 << image2 << image3;
+	/*
 	cout << temp << endl;
 
 	cout << image1 << endl << image2 << endl << image3 << endl;
@@ -56,8 +59,8 @@ int main() {
 	cout << image1 << endl << image2 << endl << image3 << endl;
 
 	cout << image1 << endl << ~image1 << endl;
-	//
-	//image2 |= image3;
+
+	image2 |= image3;
 
 	cout << image2 << endl;
 
@@ -65,7 +68,7 @@ int main() {
 
 	cout << image2 << endl;
 
-	//image2 &= image1;
+	image2 &= image1;
 
 	cout << image2 << endl;
 	*/
