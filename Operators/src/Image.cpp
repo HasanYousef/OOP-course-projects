@@ -143,13 +143,7 @@ Image operator*(const Image& image, int n)
 //--------------------------------------------------------
 Image operator*(int n, const Image& image)
 {
-	int replay = 0;
-	Image newimage(0, 0);
-	while (replay < n) {
-		newimage = newimage + image;
-		replay++;
-	}
-	return newimage;
+	return image * n;
 }
 
 //--------------------------------------------------------

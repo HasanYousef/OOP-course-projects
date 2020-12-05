@@ -48,8 +48,6 @@ int main() {
 	image3 &= image1;
 	image3 *= 2;
 	cout << image1 << image2 << image3;
-	/*
-	cout << temp << endl;
 
 	cout << image1 << endl << image2 << endl << image3 << endl;
 
@@ -71,6 +69,6 @@ int main() {
 	image2 &= image1;
 
 	cout << image2 << endl;
-	*/
+	
 	return EXIT_SUCCESS;
 }
