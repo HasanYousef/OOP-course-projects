@@ -9,7 +9,7 @@ public:
 	Pixel operator()(unsigned int, unsigned int) const;
 	Pixel& operator()(unsigned int, unsigned int);
 
-	Pixel& operator[](unsigned int);
+	//Pixel& operator[](unsigned int);
 	void free(int);
 private:
 	Pixel** m_arr;

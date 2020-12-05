@@ -1,5 +1,6 @@
 #pragma once
 #include "Image.h"
+#include <ostream>
 
 //--------------------------------------------------
 Image::Image() : m_height(0), m_width(0), m_datastruct(){
@@ -17,7 +18,7 @@ Image::Image(int H, int W) {
 Image::Image(int H, int W, unsigned char pixel) {
 	m_height = (H >= 0) ? H : 0;
 	m_width = (W >= 0) ? W : 0;
-	m_datastruct = ImageDataStructure(H, W, pixel);
+	m_datastruct = ImageDataStructure(m_height, m_width, pixel);
 }
 
 //-------------------------------------------------
@@ -73,7 +74,7 @@ bool operator==(const Image& first, const Image& second)
 	//we check the pixels colors 
 	for (int row = 0; row < second.get_height(); row++) {
 		for (int col = 0; col < first.get_width(); col++) {
-			if (first(row, col) != second(row, col)) {
+			if (first(col, row) != second(col, row)) {
 				return false;
 			}
 		}
@@ -89,14 +90,14 @@ bool operator!=(const Image& first, const Image& second) {
 //-------------------------------------------------
 Image operator~(const Image& image) {
 	Image newimage;
-	newimage(image.get_height(), image.get_width());
+	newimage = Image(image.get_height(), image.get_width());
 	for (int row = 0; row < image.get_height(); row++) {
 		for (int col = 0; col < image.get_width(); col++) {
-			if (image(row, col) == WHITE) {
-				newimage(row, col) = BLACK;
+			if (image(col, row) == WHITE) {
+				newimage(col, row) = BLACK;
 			}
-			else if (image(row, col) == BLACK) {
-				newimage(row, col) = WHITE;
+			else if (image(col, row) == BLACK) {
+				newimage(col, row) = WHITE;
 			}
 		}
 	}
@@ -107,31 +108,31 @@ Image operator~(const Image& image) {
 Image operator+(const Image& A, const Image& B)
 {
 	Image newimage(max(A.get_height(), B.get_height()),
-		A.get_width() + B.get_width());
+		(A.get_width() + B.get_width()));
 	//Copy A image
 	for (int row = 0; row < A.get_height(); row++) {
 		for (int col = 0; col < A.get_width(); col++) {
-			newimage(row, col) = A(row, col);
+			newimage(col, row) = A(col, row);
 		}
 	}
 	//Copy B image
 	for (int row = 0; row < B.get_height(); row++) {
-		for (int col = A.get_width(); col < B.get_width(); col++) {
-			newimage(row, col) = B(row, col);
+		for (int col = A.get_width(); col < newimage.get_width(); col++) {
+			newimage(col, row) = B(col - A.get_width(), row);
 		}
 	}
 	//WHITE pixels
 	if (A.get_height() > B.get_height()) {
-		for (int row = B.get_height(); row < A.get_height(); row++) {
-			for (int col = A.get_width(); col < B.get_width() + A.get_width(); col++) {
-				newimage(row, col) = B(row, col);
+		for (int row = B.get_height(); row < newimage.get_height(); row++) {
+			for (int col = A.get_width(); col < newimage.get_width(); col++) {
+				newimage(col, row) = B(col - A.get_width(), row - B.get_height());
 			}
 		}
 	}
 	else {
-		for (int row = B.get_height(); row < newimage.get_height(); row++) {
-			for (int col = 0; col < B.get_width(); col++) {
-				newimage(row, col) = B(row, col);
+		for (int row = A.get_height(); row < newimage.get_height(); row++) {
+			for (int col = 0; col < A.get_width(); col++) {
+				newimage(col, row) = WHITE;
 			}
 		}
 	}
@@ -146,10 +147,13 @@ Image operator+=(const Image& A, const Image& B) {
 //--------------------------------------------------------
 Image operator*(const Image& image, int n)
 {
+	if (n == 0) {
+		return Image(0, 0);
+	}
 	int replay = 0;
 	Image newimage(image.get_height(), image.get_width());
 	while (replay < n) {
-		newimage += image;
+		newimage = newimage + image;
 		replay++;
 	}
 	return newimage;
@@ -158,10 +162,13 @@ Image operator*(const Image& image, int n)
 //--------------------------------------------------------
 Image operator*(int n, const Image& image)
 {
+	if (n == 0) {
+		return Image(0, 0);
+	}
 	int replay = 0;
 	Image newimage(image.get_height(), image.get_width());
 	while (replay < n) {
-		newimage += image;
+		newimage = newimage + image;
 		replay++;
 	}
 	return newimage;
@@ -179,7 +186,7 @@ std::ostream& operator<<(std::ostream& os, const Image& image)
 		for (int col = 0; col < image.get_width(); col++) {
 			os << image(col, row);
 		}
-		os << 'n';
+		os << std::endl;
 	}
 	return os;
 }

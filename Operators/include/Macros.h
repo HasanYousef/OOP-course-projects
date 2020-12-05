@@ -1,5 +1,5 @@
 #pragma once
 
-const unsigned char WHITE = (unsigned char)32,
+const unsigned char BLACK = (unsigned char)32,
 					GRAY = (unsigned char)176,
-					BLACK = (unsigned char)219;
+	                WHITE = (unsigned char)219;
