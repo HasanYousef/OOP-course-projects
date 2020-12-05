@@ -3,11 +3,6 @@
 #include <ostream>
 
 //--------------------------------------------------
-Image::Image() : m_height(0), m_width(0), m_datastruct(){
-	
-}
-
-//--------------------------------------------------
 Image::Image(int H, int W) {
 	m_height = (H >= 0) ? H : 0;
 	m_width = (W >= 0) ? W : 0;
@@ -44,9 +39,11 @@ Pixel Image::operator()(unsigned int col, unsigned int row) const {
 
 //------------------------------------------------
 void Image::operator=(const Image& other) {
+	//deleting the old image
 	m_datastruct.free(m_height);
 	m_height = other.get_height();
 	m_width = other.get_width();
+	//copying the image data
 	m_datastruct = ImageDataStructure(other.m_datastruct, m_height, m_width);
 }
 
@@ -61,6 +58,7 @@ Pixel& Image::operator()(unsigned int col, unsigned int row) {
 //-------------------------------------------------
 bool operator==(const Image& first, const Image& second)
 {
+	//if the 2 images dont have the same width or height then they are not equal
 	if (first.get_width() != second.get_width() ||
 		first.get_height() != second.get_height()) {
 		return false;
@@ -85,6 +83,8 @@ bool operator!=(const Image& first, const Image& second) {
 Image operator~(const Image& image) {
 	Image newimage;
 	newimage = Image(image.get_height(), image.get_width());
+	//for each pixel if the pixel black should be converted to white,
+	//if white should be black and if it is gray it should be gray
 	for (int row = 0; row < image.get_height(); row++) {
 		for (int col = 0; col < image.get_width(); col++) {
 			if (image(col, row) == WHITE) {
@@ -131,6 +131,7 @@ Image operator+=(Image& A, const Image& B) {
 //--------------------------------------------------------
 Image operator*(const Image& image, int n)
 {
+	//multiplying an image by n is adding the same image n times
 	int replay = 0;
 	Image newimage(0, 0);
 	while (replay < n) {
@@ -147,13 +148,16 @@ Image operator*(int n, const Image& image)
 }
 
 //--------------------------------------------------------
-Image operator*=(const Image& image, int n) {
-	return image * n;
+Image operator*=(Image& image, int n) {
+	//multiply the image then save it
+	image = image * n;
+	return image;
 }
 
 //--------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const Image& image)
 {
+	//prints all the pixels in the givel image
 	for (int row = 0; row < image.get_height(); row++) {
 		for (int col = 0; col < image.get_width(); col++) {
 			os << image(col, row);
@@ -167,7 +171,7 @@ Image operator&(const Image& left, const Image& right) {
 	int minHeight = left.get_height() < right.get_height() ? left.get_height() : right.get_height(),
 		minWidth = left.get_width() < right.get_width() ? left.get_width() : right.get_width();
 	Image newImg(minHeight, minWidth);
-
+	//running all over the new image pixels to set them
 	for (int row = 0; row < minHeight; row++) {
 		for (int col = 0; col < minWidth; col++) {
 			newImg(col, row) = left(col, row) & right(col, row);
@@ -183,15 +187,20 @@ Image operator|(const Image& left, const Image& right) {
 		rightWidth = right.get_width();
 	int maxHeight = rightHeight > leftWidth ? rightHeight : leftWidth,
 		maxWidth = leftWidth > rightWidth ? leftWidth : rightWidth;
+	//making a new image in the size of the max width and height
 	Image newImg(maxHeight, maxWidth);
 
+	//running all over the new image pixels to set them
 	for (int row = 0; row < maxHeight; row++) {
 		for (int col = 0; col < maxWidth; col++) {
+			//if this is a mutual pixel
 			if (row < leftHeight && row < rightHeight
 				&& col < leftWidth && col < rightWidth)
 				newImg(col, row) = left(col, row) | right(col, row);
+			//if this is pixel exist in the left image
 			else if (row < leftHeight && col < leftWidth)
 				newImg(col, row) = left(col, row);
+			//if this is pixel exist in the right image
 			else if (row < rightHeight && col < rightHeight)
 				newImg(col, row) = right(col, row);
 		}

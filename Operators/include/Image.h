@@ -3,16 +3,15 @@
 #include "Pixel.h"
 #include "Macros.h"
 #include "ImageDataStructure.h"
-
-
 #include <minmax.h>
 
 class Image {
 public:
 	//---Constructors--------------------
-	Image();
-	Image(int, int);
+	Image() : m_height(0), m_width(0), m_datastruct() {}
+	Image(int, int);	//
 	Image(int, int, unsigned char pixel);
+	//deep copy constructor
 	Image(const Image& other) : m_height(other.m_height),
 		m_width(other.m_width), m_datastruct(other.m_datastruct, m_height, m_width) {}
 	~Image();
@@ -27,7 +26,7 @@ public:
 
 private:
 	int m_height, m_width;
-	ImageDataStructure m_datastruct;
+	ImageDataStructure m_datastruct; //storing pixels data
 };
 
 //---globals operators------------------------------------
@@ -38,7 +37,7 @@ Image operator~(const Image& image);
 Image operator+(const Image& A, const Image& B);
 Image operator+=(Image& A, const Image& B);
 Image operator*(const Image& image, int n);
-Image operator*=(const Image& image, int n);
+Image operator*=(Image& image, int n);
 std::ostream& operator<<(std::ostream& os, const Image& image);
 Image operator&(const Image&, const Image&);
 Image operator|(const Image&, const Image&);

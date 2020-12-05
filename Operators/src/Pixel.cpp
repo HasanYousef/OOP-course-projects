@@ -24,6 +24,7 @@ bool operator!=(const Pixel& left, const Pixel& right) {
 	return !(left == right);
 }
 
+//is brighter
 bool operator<(const Pixel& left, const Pixel& right) {
 	return left.get_color() < right.get_color();
 }
@@ -32,6 +33,7 @@ bool operator<=(const Pixel& left, const Pixel& right) {
 	return (left < right || left == right);
 }
 
+//is darker
 bool operator>(const Pixel& left, const Pixel& right) {
 	return !(left <= right);
 }
@@ -40,15 +42,17 @@ bool operator>=(const Pixel& left, const Pixel& right) {
 	return !(left < right);
 }
 
+//print pixel
 std::ostream& operator<<(std::ostream& os, const Pixel& pixel) {
 	os << pixel.get_color();
 	return os;
 }
-
+//will return the darker pixel
 Pixel operator|(const Pixel& left, const Pixel& right) {
 	return left >= right ? Pixel(left) : Pixel(right);
 }
 
+//will return the brighter pixel
 Pixel operator&(const Pixel& left, const Pixel& right) {
 	return left >= right ? Pixel(right) : Pixel(left);
 }

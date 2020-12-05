@@ -5,7 +5,7 @@
 
 class Pixel {
 public:
-	Pixel(unsigned char pixel = ' ');
+	Pixel(unsigned char pixel = BLACK);
 	unsigned char get_color() const;
 
 private:
@@ -16,12 +16,12 @@ private:
 
 bool operator==(const Pixel&, const Pixel&);
 bool operator!=(const Pixel&, const Pixel&);
-bool operator<(const Pixel&, const Pixel&);
+bool operator<(const Pixel&, const Pixel&);				//is smaller
 bool operator<=(const Pixel&, const Pixel&);
-bool operator>(const Pixel&, const Pixel&);
+bool operator>(const Pixel&, const Pixel&);				//is bigger
 bool operator>=(const Pixel&, const Pixel&);
-std::ostream& operator<<(std::ostream&, const Pixel&);
-Pixel operator|(const Pixel&, const Pixel&);
-Pixel operator&(const Pixel&, const Pixel&);
-Pixel& operator|=(Pixel&, const Pixel&);
-Pixel& operator&=(Pixel&, const Pixel&);
+std::ostream& operator<<(std::ostream&, const Pixel&);	//print pixel
+Pixel operator|(const Pixel&, const Pixel&)				//pick darker
+Pixel operator&(const Pixel&, const Pixel&)				//pick brighter;
+Pixel& operator|=(Pixel&, const Pixel&);				//pick darker
+Pixel& operator&=(Pixel&, const Pixel&);				//pick brighter

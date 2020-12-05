@@ -4,6 +4,7 @@
 #include "ImageDataStructure.h"
 
 //--------------------------------------------------
+//making pixels data structure with the same given color
 ImageDataStructure::ImageDataStructure(int H, int W, unsigned char pixle) {
 	//allocate the rows in the arr
 	m_arr = new(std::nothrow) Pixel * [H];
@@ -41,7 +42,8 @@ Pixel& ImageDataStructure::operator()(unsigned int col, unsigned int row) {
 	return m_arr[row][col];
 }
 
-//--------------------------------------------------
+//-------------------------------------------------
+//deep deleting the pixes rows
 void ImageDataStructure::free(int rows) {
 	for (int row = 0; row < rows; row++) {
 		delete m_arr[row];
