@@ -2,8 +2,8 @@ Lode Runner
 #########################################################################################
 
 authors:
-	Omar Yousef   211869284
-	Hasan Yousef  322309220
+	Omar Yousef
+	Hasan Yousef
 
 about the program:
 	This program is about a classic game that call Lode Runner it's a 2D platformer
