@@ -10,6 +10,8 @@ public:
 	void run();
 
 private:
+	sf::Vector2f indexes_to_location(int col, int row);
+
 	sf::RenderWindow m_window;
 	Board m_board;
 };

@@ -2,11 +2,10 @@
 
 #include "Board.h"
 
-	// MAYBE THERE IS NO NEED FOR THIS
 Board::Board() :
-m_height(0), m_width(0) {}
+	m_height(0), m_width(0) {}
 
-Board::Board(int height, int width) :
+Board::Board(int height = 0, int width = 0) :
 m_height(height), m_width(width) {
 	for (int row = 0; row <= m_height; row++) {
 		std::vector<WorldObject> tempRow;
@@ -38,10 +37,6 @@ void Board::draw(sf::RenderWindow& window) const {
 	for (int row = 0; row < m_height; row++)
 		for (int col = 0; col < m_width; col++)
 			m_worldObjects[row][col].draw(window);
-}
-
-sf::Vector2f Board::indexes_to_location(int col, int row) {
-
 }
 
 void Board::initializeTextures() {

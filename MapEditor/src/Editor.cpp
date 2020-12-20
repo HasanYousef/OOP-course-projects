@@ -27,3 +27,11 @@ void Editor::run() {
 		}
 	}
 }
+
+sf::Vector2f Editor::indexes_to_location(int col, int row) {
+	/*
+	auto location = m_window.mapPixelToCoords(
+		{ event.mouseButton.x, event.mouseButton.y });
+	return sf::Vector2f();
+	*/
+}
