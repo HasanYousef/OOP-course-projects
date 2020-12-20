@@ -2,7 +2,8 @@
 
 const int NUM_OF_TYPES = 7,
 TEXTURE_SIZE = 16,
-BOARD_UI_X = 200;
+BOARD_UI_X = 200,
+TEXTSIZE = 20;
 
 enum ObjectType
 {

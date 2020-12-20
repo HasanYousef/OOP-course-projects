@@ -22,11 +22,23 @@ void Editor::run() {
 				auto location = m_window.mapPixelToCoords(
 					{ event.mouseButton.x, event.mouseButton.y });
 				if (location.x < BOARD_UI_X)
-					17; // UI handle click
+					handle_panel_click(location);
 				else
 					m_board.set_object(m_clickMode, location);
 			}
 			}
 		}
+	}
+}
+
+void Editor::handle_panel_click(const sf::Vector2f &location) {
+	if (m_saveButton.handle_click(location)) {
+
+	}
+	else if (m_clearButton.handle_click(location)) {
+
+	}
+	for (int buttonIndex = 0; buttonIndex < NUM_OF_TYPES; buttonIndex++) {
+		if(m_)
 	}
 }
