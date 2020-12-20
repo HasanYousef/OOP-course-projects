@@ -39,6 +39,12 @@ void Board::draw(sf::RenderWindow& window) const {
 			m_worldObjects[row][col].draw(window);
 }
 
+void Board::set_object(ObjectType type, const sf::Vector2f& location) {
+	int col = int(location.x - BOARD_UI_X) % TEXTURE_SIZE;
+	int row = int(location.y) % TEXTURE_SIZE;
+	m_worldObjects[row][col] = WorldObject(type, m_textures[type], location);
+}
+
 void Board::initializeTextures() {
 	m_textures[NUM_OF_TYPES];
 	m_textures[ObjectType::Space].loadFromFile("space.png");

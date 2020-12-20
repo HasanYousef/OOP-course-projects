@@ -13,6 +13,7 @@ public:
 	Board(int, int);
 	Board(std::ifstream&, int, int);
 	void draw(sf::RenderWindow& window) const;
+	void set_object(ObjectType, int, int);
 
 private:
 	void initializeTextures();

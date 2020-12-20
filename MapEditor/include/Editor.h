@@ -10,8 +10,9 @@ public:
 	void run();
 
 private:
-	sf::Vector2f indexes_to_location(int col, int row);
+	void handle_board_click(const sf::Vector2f&);
 
 	sf::RenderWindow m_window;
 	Board m_board;
+	ClickMode m_mode;
 };

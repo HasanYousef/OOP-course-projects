@@ -15,6 +15,17 @@ enum ObjectType
 	Enemy
 };
 
+enum ClickMode
+{
+	AddWall,
+	AddLadder,
+	AddRope,
+	AddMoney,
+	AddPlayer,
+	AddEnemy,
+	Remove
+};
+
 //board chars
 const char
 SPACE = ' ',

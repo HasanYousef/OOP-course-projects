@@ -3,12 +3,19 @@
 #include "WorldObject.h"
 
 WorldObject::WorldObject(ObjectType type = ObjectType::Space,
-	const sf::Texture &texture,
+	sf::Texture &texture,
 	const sf::Vector2f &position) :
 	m_objectType(type), m_texture(texture), m_position(position) {}
 
 void WorldObject::draw(sf::RenderWindow& window) const {
 	window.draw(create());
+}
+
+WorldObject& WorldObject::operator=(const WorldObject& other) {
+	m_objectType = other.m_objectType;
+	m_texture = other.m_texture;
+	m_position = other.m_position;
+	return *this;
 }
 
 	// NO NEEEEEEEEED FOR THIS PROBABLY
