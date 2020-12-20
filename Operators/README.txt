@@ -2,8 +2,8 @@ Operators
 #########################################################################################
 
 authors:
-	Omar Yousef   211869284
-	Hasan Yousef  322309220
+	Omar Yousef
+	Hasan Yousef
 
 about the program:
 	This program is about the operators the program make a image and this image can have more than one color
