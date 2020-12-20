@@ -24,13 +24,9 @@ void Editor::run() {
 				if (location.x < BOARD_UI_X)
 					17; // UI handle click
 				else
-					handle_board_click(location);
+					m_board.set_object(m_clickMode, location);
 			}
 			}
 		}
 	}
-}
-
-void Editor::handle_board_click(const sf::Vector2f& location) {
-	m_board.set_object(m_mode, location);
 }

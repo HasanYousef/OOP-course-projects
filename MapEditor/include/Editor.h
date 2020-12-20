@@ -14,5 +14,5 @@ private:
 
 	sf::RenderWindow m_window;
 	Board m_board;
-	ClickMode m_mode;
+	ObjectType m_clickMode;
 };
