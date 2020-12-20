@@ -3,7 +3,7 @@
 #include "WorldObject.h"
 
 WorldObject::WorldObject(ObjectType type = ObjectType::Space,
-	const sf::Texture &texture = nullptr,
+	const sf::Texture &texture,
 	const sf::Vector2f &position) :
 	m_objectType(type), m_texture(texture), m_position(position) {}
 

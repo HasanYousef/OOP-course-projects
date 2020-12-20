@@ -4,9 +4,9 @@
 
 #include "Board.h"
 
-class EditorWindow {
+class Editor {
 public:
-	EditorWindow();
+	Editor();
 	void run();
 
 private:

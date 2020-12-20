@@ -1,7 +1,7 @@
-﻿configure_file ("wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
+﻿configure_file ("space.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("ladder.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("rope.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("money.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("player.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
-

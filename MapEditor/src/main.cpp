@@ -1,8 +1,8 @@
-#include "EditorWindow.h"
+#include "Editor.h"
 
 int main()
 {
-	auto editor = EditorWindow();
+	auto editor = Editor();
 	editor.run();
 
 	return EXIT_SUCCESS;

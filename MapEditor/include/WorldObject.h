@@ -6,8 +6,7 @@
 
 class WorldObject {
 public:
-	WorldObject() : {}
-	WorldObject(ObjectType, const sf::Texture&, const sf:Vector2f&);
+	WorldObject(ObjectType, const sf::Texture&, const sf::Vector2f&);
 	void draw(sf::RenderWindow&) const;
 	bool handleClick(const sf::Vector2f&);
 
@@ -16,5 +15,5 @@ private:
 
 	ObjectType m_objectType = ObjectType::Space;
 	sf::Vector2f m_position;
-	const sf::Texture& m_texture = nullptr;
+	const sf::Texture& m_texture;
 };

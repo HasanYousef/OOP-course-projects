@@ -1,2 +1,4 @@
 ﻿target_sources (MapEditor PRIVATE "main.cpp"
-                                  "EditorWindow.cpp")
+                                  "Editor.cpp"
+								  "Board.cpp"
+								  "WorldObject.cpp")
