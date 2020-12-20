@@ -1,4 +1,4 @@
-enum class Object
+enum ObjectType
 {
 	Space,
 	Wall,

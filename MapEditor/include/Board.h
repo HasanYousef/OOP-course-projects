@@ -11,5 +11,5 @@ public:
 private:
 	size_t m_height,
 		m_width;
-	std::vector<std::vector<WorldObject>> m_worldObjects;
+	std::vector<WorldObject> m_worldObjects;
 };
