@@ -1,6 +1,9 @@
+#pragma once
+
+const int NUM_OF_TYPES = 6;
+
 enum ObjectType
 {
-	Space,
 	Wall,
 	Ladder,
 	Rope,

@@ -3,9 +3,9 @@
 #include "WorldObject.h"
 
 WorldObject::WorldObject(ObjectType type = ObjectType::Space,
-	const sf::Texture &texture = nullptr) :
-	m_objectType(type), m_texture(texture) {}
-
+	const sf::Texture &texture = nullptr,
+	const sf::Vector2f &position) :
+	m_objectType(type), m_texture(texture), m_position(position) {}
 
 void WorldObject::draw(sf::RenderWindow& window) const {
 	window.draw(create());
