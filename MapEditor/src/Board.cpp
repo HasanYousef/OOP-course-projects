@@ -12,7 +12,7 @@ m_height(height), m_width(width) {
 		for (int col = 0; col <= m_width; col++) {
 			tempRow.push_back(WorldObject(ObjectType::Space,
 				m_textures[ObjectType::Space],
-				indexes_to_location(col,row)));
+				sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE)));
 		}
 		m_worldObjects.push_back(tempRow);
 	}
