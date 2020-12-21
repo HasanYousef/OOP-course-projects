@@ -9,7 +9,7 @@ if (MSVC)
     add_compile_options (/permissive-)
 endif ()
 
-add_executable (MapEditor WIN32 "")
+add_executable (MapEditor "")
 
 add_subdirectory (include)
 add_subdirectory (src)

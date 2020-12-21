@@ -5,7 +5,7 @@
 #include "macros.h"
 #include "Button.h"
 
-class TextureButton : Button {
+class TextureButton : public Button {
 public:
 	TextureButton(const sf::Texture&, const sf::Vector2f&, ObjectType);
 	ObjectType getType() const;

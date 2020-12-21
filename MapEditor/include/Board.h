@@ -12,6 +12,7 @@ public:
 	Board();
 	Board(int, int);
 	Board(std::ifstream&, int, int);
+	void setNew(int, int);
 	void draw(sf::RenderWindow& window) const;
 	void set_object(ObjectType, const sf::Vector2f&);
 
