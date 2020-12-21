@@ -4,9 +4,9 @@
 
 class TextButton : public Button {
 public:
-	TextButton(const std::string& string, const sf::Vector2f& size, const sf::Font&);
-	void setPosition(sf::Vector2f);
-	std::string getType() const;
-protected:
-	sf::Text m_text;
+	TextButton(const std::string&, const sf::Vector2f&, const sf::Font&);
+	void draw(sf::RenderWindow& window) const;
+private:
+	std::string m_text;
+	sf::Font m_font;
 };

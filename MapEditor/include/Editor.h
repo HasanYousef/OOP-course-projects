@@ -16,7 +16,6 @@ public:
 
 private:
 	void handleClick(const sf::Vector2f&);
-	void initButtons();
 	void initBoard();
 	void initializeTextures();
 

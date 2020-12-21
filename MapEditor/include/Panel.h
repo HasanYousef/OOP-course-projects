@@ -8,9 +8,10 @@
 
 class Panel {
 public:
-	Panel();
+	Panel() {};
+	void initPanel(sf::Texture* []);
 	ActionType handleClick(const sf::Vector2f&) const;
-	void draw(const sf::RenderWindow&) const;
+	void draw(sf::RenderWindow&) const;
 
 private:
 	std::vector<TextureButton> m_textureButtons;

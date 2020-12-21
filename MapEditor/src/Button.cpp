@@ -1,6 +1,22 @@
 #pragma once
+
 #include "Button.h"
 
+sf::RectangleShape Button::create() const {
+	auto result = sf::RectangleShape({ BUTTON_WIDTH, BUTTON_HEIGHT });
+	result.setPosition(m_position);
+	result.setFillColor(sf::Color::Blue);
+	return result;
+}
+
+//------------------------------------------------------
+//this bool funck check if the mouse is on the botton
+//or not if yes we return true if no we return false
+bool Button::handleClick(const sf::Vector2f location) const {
+	return (create().getGlobalBounds().contains(location));
+}
+
+/*
 //------------------------------------------------------
 //this is the constructor that take the texture and the
 //size of the rectangle also we take the type of the 
@@ -18,13 +34,6 @@ void Button::draw(const sf::RenderWindow& window) const {
 }
 
 //------------------------------------------------------
-//this bool funck check if the mouse is on the botton
-//or not if yes we return true if no we return false
-bool Button::handleClick(const sf::Vector2f location) const {
-	return (m_button.getGlobalBounds().contains(location));
-}
-
-//------------------------------------------------------
 //this func take Vector2f to set the botton on the
 //Vector2f points that we want on the window
 void Button::setPosition(sf::Vector2f points) {
@@ -36,3 +45,4 @@ void Button::setPosition(sf::Vector2f points) {
 sf::Vector2f Button::getPosition() const {
 	return m_button.getPosition();
 }
+*/

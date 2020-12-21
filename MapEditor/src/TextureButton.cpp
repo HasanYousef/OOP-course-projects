@@ -3,10 +3,21 @@
 #include "TextureButton.h"
 
 //------------------------------------------------------
-TextureButton::TextureButton(const sf::Texture& texture, const sf::Vector2f& size, ObjectType type) {
-	m_type = type;
-	m_button.setSize(size);
-	m_button.setTexture(&texture);
+TextureButton::TextureButton(const sf::Texture* texture,
+	const sf::Vector2f& position,
+	ObjectType type) :
+	m_texture(texture), 
+	m_type(type) {
+	m_position = position;
+}
+
+void TextureButton::draw(sf::RenderWindow& window) const {
+	window.draw(create());
+
+	auto result = sf::Sprite(*m_texture);
+	result.setPosition(m_position);
+	result.setOrigin(sf::Vector2f(result.getTexture()->getSize() / 2u));
+	window.draw(result);
 }
 
 //------------------------------------------------------

@@ -7,16 +7,8 @@
 class Button {
 public:
 	Button() {}
-	//------------------------------------------------------
-	Button(sf::Vector2f);
-	//------------------------------------------------------
-	void draw(const sf::RenderWindow&) const;
-	//------------------------------------------------------
-	bool handleClick(const sf::Vector2f) const;
-	//------------------------------------------------------
-	void setPosition(sf::Vector2f);
-	//------------------------------------------------------
-	sf::Vector2f getPosition() const;
+	sf::RectangleShape create() const;
+	bool handleClick(const sf::Vector2f location) const;
 protected:
-	sf::RectangleShape m_button;
+	sf::Vector2f m_position;
 };

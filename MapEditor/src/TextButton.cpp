@@ -2,6 +2,26 @@
 
 #include "TextButton.h"
 
+TextButton::TextButton(const std::string& text,
+	const sf::Vector2f& position,
+	const sf::Font& font) :
+	m_text(text),
+	m_font(font) {
+	m_position = position;
+}
+
+void TextButton::draw(sf::RenderWindow& window) const {
+	window.draw(create());
+
+	auto text = sf::Text(m_text, m_font);
+	text.setPosition(m_position);
+	const auto rect = text.getLocalBounds();
+	text.setOrigin(rect.width / 2, rect.height / 2);
+	window.draw(text);
+}
+
+
+/*
 //------------------------------------------------------
 TextButton::TextButton(const std::string& string, const sf::Vector2f& size, const sf::Font& font) {
 	m_text.setString(string);
@@ -21,3 +41,5 @@ void TextButton::setPosition(sf::Vector2f points) {
 std::string TextButton::getType() const {
 	return m_text.getString();
 }
+
+*/

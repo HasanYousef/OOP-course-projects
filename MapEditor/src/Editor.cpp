@@ -6,23 +6,19 @@ Editor::Editor() :
 	m_window(sf::VideoMode(640, 500), "Map Editor") {}
 
 void Editor::run() {
+	m_panel.initPanel(m_textures);
+
 	/* try to open file to read */
 	fs::path p = "C:board.txt";
 	std::ifstream ifile(fs::absolute(p));
 
 	// if file exists
-	if (ifile) {
+	if (ifile)
 		m_board.readFromStream(ifile, m_textures);
-	}
 	// if file doesn't exist
-	else {
-		int height, width;
-		std::cin >> height >> width;
-		m_board.setNew(height, width, m_textures);
-	}
+	else
+		initBoard();
 	ifile.close();
-
-	initButtons();
 
 	while (m_window.isOpen()) {
 		m_window.clear();
@@ -60,12 +56,11 @@ void Editor::handleClick(const sf::Vector2f &location) {
 		m_clickMode = ObjectType(int(act));
 }
 
-void Editor::initButtons() {
-
-}
-
 void Editor::initBoard() {
-
+	int height, width;
+	std::cout << "Enter the height and the width of the map that you want to create:\n";
+	std::cin >> height >> width;
+	m_board.setNew(height, width, m_textures);
 }
 
 void Editor::initializeTextures() {
