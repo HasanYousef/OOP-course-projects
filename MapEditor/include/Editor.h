@@ -2,9 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "macros.h"
 #include "Board.h"
-#include "Button.h"
-#include "EditButton.h"
+#include "TextButton.h"
+#include "TextureButton.h"
 
 class Editor {
 public:
@@ -17,7 +18,7 @@ private:
 	sf::RenderWindow m_window;
 	Board m_board;
 	ObjectType m_clickMode;
-	EditButton m_editButtons[];
-	Button m_saveButton;
-	Button m_clearButton;
+	TextureButton m_textureButtons[NUM_OF_TYPES];
+	TextButton m_saveButton;
+	TextButton m_clearButton;
 };

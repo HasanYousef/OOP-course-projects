@@ -21,5 +21,5 @@ private:
 	size_t m_height = 0,
 		m_width = 0;
 	std::vector<std::vector<WorldObject>> m_worldObjects;
-	sf::Texture m_textures[];
+	sf::Texture m_textures[NUM_OF_TYPES];
 };

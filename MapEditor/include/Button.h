@@ -12,13 +12,11 @@ public:
 	//------------------------------------------------------
 	void draw(sf::RenderWindow&);
 	//------------------------------------------------------
-	bool isMouse(sf::RenderWindow& ,const sf::Event::MouseButtonEvent&);
+	bool handleClick(const sf::Vector2f);
 	//------------------------------------------------------
 	void setPosition(sf::Vector2f);
 	//------------------------------------------------------
 	sf::Vector2f getPosition() const;
-	//------------------------------------------------------
-	//void setPosition(sf::Vector2f);
 protected:
 	sf::RectangleShape m_button;
 };

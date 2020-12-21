@@ -20,9 +20,8 @@ void Button::draw(sf::RenderWindow& window) {
 //------------------------------------------------------
 //this bool funck check if the mouse is on the botton
 //or not if yes we return true if no we return false
-bool Button::isMouse(sf::RenderWindow& window ,const sf::Event::MouseButtonEvent& event) {
-	return (m_button.getGlobalBounds().
-		    contains(window.mapPixelToCoords({ event.x, event.y })));
+bool Button::handleClick(const sf::Vector2f location) {
+	return (m_button.getGlobalBounds().contains(location));
 }
 
 //------------------------------------------------------

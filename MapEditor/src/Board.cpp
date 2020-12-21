@@ -40,8 +40,8 @@ void Board::draw(sf::RenderWindow& window) const {
 }
 
 void Board::set_object(ObjectType type, const sf::Vector2f& location) {
-	int col = int(location.x - BOARD_UI_X) % TEXTURE_SIZE;
-	int row = int(location.y) % TEXTURE_SIZE;
+	int col = int(location.x - BOARD_UI_X) / TEXTURE_SIZE;
+	int row = int(location.y) / TEXTURE_SIZE;
 	m_worldObjects[row][col] = WorldObject(type, m_textures[int(type)], sf::Vector2f(col, row));
 }
 

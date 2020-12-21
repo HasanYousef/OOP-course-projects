@@ -32,13 +32,15 @@ void Editor::run() {
 }
 
 void Editor::handle_panel_click(const sf::Vector2f &location) {
-	if (m_saveButton.handle_click(location)) {
+	if (m_saveButton.handleClick(location)) {
 
 	}
-	else if (m_clearButton.handle_click(location)) {
+	else if (m_clearButton.handleClick(location)) {
 
 	}
 	for (int buttonIndex = 0; buttonIndex < NUM_OF_TYPES; buttonIndex++) {
-		if(m_)
+		if (true) {
+
+		}
 	}
 }
