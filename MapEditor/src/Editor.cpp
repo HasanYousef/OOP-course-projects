@@ -38,8 +38,6 @@ void Editor::handle_panel_click(const sf::Vector2f &location) {
 	else if (m_textButtons[CLEAR_BUTTON].handleClick(location)) {
 	}
 	for (int buttonIndex = 0; buttonIndex < NUM_OF_TYPES; buttonIndex++) {
-		if (true) {
-
-		}
+		
 	}
 }
