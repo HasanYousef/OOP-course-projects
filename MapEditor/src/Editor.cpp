@@ -6,6 +6,7 @@ Editor::Editor() :
 	m_window(sf::VideoMode(640, 500), "Map Editor") {}
 
 void Editor::run() {
+	initializeTextures();
 	m_panel.initPanel(m_textures);
 
 	/* try to open file to read */
@@ -64,6 +65,8 @@ void Editor::initBoard() {
 }
 
 void Editor::initializeTextures() {
+	for (int i = 0; i < NUM_OF_TYPES; i++)
+		m_textures[i] = new sf::Texture();
 	(*m_textures[ObjectType::Space]).loadFromFile("space.png");
 	(*m_textures[ObjectType::Wall]).loadFromFile("wall.png");
 	(*m_textures[ObjectType::Ladder]).loadFromFile("ladder.png");

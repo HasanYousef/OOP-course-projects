@@ -3,11 +3,13 @@
 #include "Panel.h"
 
 void Panel::initPanel(sf::Texture* textures[]) {
-	m_textButtons.push_back(TextButton("Save", { 30, 30 }, m_font));
-	m_textButtons.push_back(TextButton("Remove", { 30, 30 }, m_font));
+	m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+
+	m_textButtons.push_back(TextButton("Save", { 0, 0 }, m_font));
+	m_textButtons.push_back(TextButton("Remove", { 0, BUTTON_HEIGHT }, m_font));
 
 	for(int i = 0; i < NUM_OF_TYPES; i++)
-		m_textureButtons.push_back(TextureButton(textures[i], { 50, 50 }, ObjectType(i)));
+		m_textureButtons.push_back(TextureButton(textures[i], sf::Vector2f(0, (2 + i)*BUTTON_HEIGHT), ObjectType(i)));
 }
 
 ActionType Panel::handleClick(const sf::Vector2f& location) const {

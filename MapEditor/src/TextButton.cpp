@@ -16,7 +16,7 @@ void TextButton::draw(sf::RenderWindow& window) const {
 	auto text = sf::Text(m_text, m_font);
 	text.setPosition(m_position);
 	const auto rect = text.getLocalBounds();
-	text.setOrigin(rect.width / 2, rect.height / 2);
+	//text.setOrigin(rect.width / 2, rect.height / 2);
 	window.draw(text);
 }
 
