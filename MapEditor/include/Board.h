@@ -11,10 +11,11 @@ class Board {
 public:
 	Board();
 	Board(int, int);
-	Board(std::ifstream&, int, int);
+	void readFromStream(std::ifstream&);
 	void setNew(int, int);
 	void draw(sf::RenderWindow& window) const;
 	void set_object(ObjectType, const sf::Vector2f&);
+	ObjectType charToType(char ch);
 
 private:
 	void initializeTextures();
