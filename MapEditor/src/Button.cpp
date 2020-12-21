@@ -13,7 +13,7 @@ Button::Button(sf::Vector2f size) {
 //------------------------------------------------------
 //this void func take the window to let is draw the 
 //botton we have on the window
-void Button::draw(sf::RenderWindow& window) {
+void Button::draw(const sf::RenderWindow& window) const {
 	window.draw(m_button);
 }
 

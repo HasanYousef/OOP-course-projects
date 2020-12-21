@@ -3,7 +3,7 @@
 #include "WorldObject.h"
 
 WorldObject::WorldObject(ObjectType type,
-	sf::Texture &texture,
+	sf::Texture *texture,
 	const sf::Vector2f &position) :
 	m_objectType(type), m_texture(texture), m_position(position) {}
 
@@ -25,7 +25,7 @@ bool WorldObject::handleClick(const sf::Vector2f& location)
 }
 
 sf::Sprite WorldObject::create() const {
-	auto result = sf::Sprite(m_texture);
+	auto result = sf::Sprite(*m_texture);
 	result.setPosition(m_position);
 	return result;
 }

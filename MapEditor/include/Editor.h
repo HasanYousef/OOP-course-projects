@@ -18,9 +18,11 @@ private:
 	void handleClick(const sf::Vector2f&);
 	void initButtons();
 	void initBoard();
+	void initializeTextures();
 
 	sf::RenderWindow m_window;
 	Board m_board;
 	Panel m_panel;
 	ObjectType m_clickMode;
+	sf::Texture* m_textures[NUM_OF_TYPES];
 };

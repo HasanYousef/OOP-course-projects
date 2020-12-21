@@ -12,13 +12,13 @@ void Editor::run() {
 
 	// if file exists
 	if (ifile) {
-		m_board.readFromStream(ifile);
+		m_board.readFromStream(ifile, m_textures);
 	}
 	// if file doesn't exist
 	else {
 		int height, width;
 		std::cin >> height >> width;
-		m_board.setNew(height, width);
+		m_board.setNew(height, width, m_textures);
 	}
 	ifile.close();
 
@@ -27,7 +27,7 @@ void Editor::run() {
 	while (m_window.isOpen()) {
 		m_window.clear();
 		m_board.draw(m_window);
-
+		m_panel.draw(m_window);
 		m_window.display();
 
 		if (auto event = sf::Event{}; m_window.waitEvent(event))
@@ -43,7 +43,7 @@ void Editor::run() {
 				if (location.x < BOARD_UI_X)
 					handleClick(location);
 				else
-					m_board.set_object(m_clickMode, location);
+					m_board.set_object(m_clickMode, location, m_textures);
 			}
 			}
 		}
@@ -68,3 +68,12 @@ void Editor::initBoard() {
 
 }
 
+void Editor::initializeTextures() {
+	(*m_textures[ObjectType::Space]).loadFromFile("space.png");
+	(*m_textures[ObjectType::Wall]).loadFromFile("wall.png");
+	(*m_textures[ObjectType::Ladder]).loadFromFile("ladder.png");
+	(*m_textures[ObjectType::Rope]).loadFromFile("rope.png");
+	(*m_textures[ObjectType::Money]).loadFromFile("money.png");
+	(*m_textures[ObjectType::Player]).loadFromFile("player.png");
+	(*m_textures[ObjectType::Enemy]).loadFromFile("enemy.png");
+}

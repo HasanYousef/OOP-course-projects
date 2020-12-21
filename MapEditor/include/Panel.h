@@ -8,10 +8,12 @@
 
 class Panel {
 public:
-	Panel() {};
+	Panel();
 	ActionType handleClick(const sf::Vector2f&) const;
+	void draw(const sf::RenderWindow&) const;
 
 private:
 	std::vector<TextureButton> m_textureButtons;
 	std::vector<TextButton> m_textButtons;
+	sf::Font m_font;
 };
