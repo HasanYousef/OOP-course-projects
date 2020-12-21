@@ -41,7 +41,7 @@ void Editor::run() {
 				auto location = m_window.mapPixelToCoords(
 					{ event.mouseButton.x, event.mouseButton.y });
 				if (location.x < BOARD_UI_X)
-					m_clickMode = m_panel.handleClick(location);
+					handleClick(location);
 				else
 					m_board.set_object(m_clickMode, location);
 			}
@@ -50,15 +50,21 @@ void Editor::run() {
 	}
 }
 
-void Editor::handle_panel_click(const sf::Vector2f &location) {
-	
+void Editor::handleClick(const sf::Vector2f &location) {
+	ActionType act = m_panel.handleClick(location);
+	if (act == ActionType::SaveBoard)
+		m_board.save();
+	if (act == ActionType::ClearBoard)
+		initBoard();
+	if (!act == ActionType::Nothing)
+		m_clickMode = ObjectType(int(act));
 }
 
 void Editor::initButtons() {
 
 }
 
-void Editor::saveBoard() const {
+void Editor::initBoard() {
 
 }
 

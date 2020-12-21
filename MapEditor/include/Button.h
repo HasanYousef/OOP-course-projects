@@ -12,7 +12,7 @@ public:
 	//------------------------------------------------------
 	void draw(sf::RenderWindow&);
 	//------------------------------------------------------
-	bool handleClick(const sf::Vector2f);
+	bool handleClick(const sf::Vector2f) const;
 	//------------------------------------------------------
 	void setPosition(sf::Vector2f);
 	//------------------------------------------------------

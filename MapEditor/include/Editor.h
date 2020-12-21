@@ -17,7 +17,7 @@ public:
 private:
 	void handleClick(const sf::Vector2f&);
 	void initButtons();
-	void saveBoard() const;
+	void initBoard();
 
 	sf::RenderWindow m_window;
 	Board m_board;

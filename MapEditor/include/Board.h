@@ -16,6 +16,7 @@ public:
 	void draw(sf::RenderWindow& window) const;
 	void set_object(ObjectType, const sf::Vector2f&);
 	ObjectType charToType(char ch);
+	void save();
 
 private:
 	void initializeTextures();
