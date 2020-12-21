@@ -11,7 +11,7 @@ void WorldObject::draw(sf::RenderWindow& window) const {
 	window.draw(create());
 }
 
-WorldObject& WorldObject::operator=(const WorldObject& other) {
+ WorldObject& WorldObject::operator=(const WorldObject& other) {
 	m_objectType = other.m_objectType;
 	m_texture = other.m_texture;
 	m_position = other.m_position;
@@ -24,8 +24,14 @@ bool WorldObject::handleClick(const sf::Vector2f& location)
 	return create().getGlobalBounds().contains(location);
 }
 
+
+//===dont work=================================
 sf::Sprite WorldObject::create() const {
 	auto result = sf::Sprite(*m_texture);
 	result.setPosition(m_position);
 	return result;
+}
+
+ObjectType WorldObject::getType() const {
+	return m_objectType;
 }

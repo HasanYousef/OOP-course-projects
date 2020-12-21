@@ -10,6 +10,7 @@ public:
 	void draw(sf::RenderWindow&) const;
 	bool handleClick(const sf::Vector2f&);
 	WorldObject& operator=(const WorldObject&);
+	ObjectType getType() const;
 
 private:
 	sf::Sprite create() const;

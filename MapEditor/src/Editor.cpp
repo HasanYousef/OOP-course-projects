@@ -8,7 +8,6 @@ Editor::Editor() :
 void Editor::run() {
 	initializeTextures();
 	m_panel.initPanel(m_textures);
-
 	/* try to open file to read */
 	fs::path p = "C:board.txt";
 	std::ifstream ifile(fs::absolute(p));
@@ -53,8 +52,10 @@ void Editor::handleClick(const sf::Vector2f &location) {
 		m_board.save();
 	if (act == ActionType::ClearBoard)
 		initBoard();
-	if (!act == ActionType::Nothing)
+	//======condition===error=====================
+	if (act != ActionType::Nothing && act < 8) {
 		m_clickMode = ObjectType(int(act));
+	}
 }
 
 void Editor::initBoard() {

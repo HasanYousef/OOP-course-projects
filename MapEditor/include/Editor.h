@@ -22,6 +22,6 @@ private:
 	sf::RenderWindow m_window;
 	Board m_board;
 	Panel m_panel;
-	ObjectType m_clickMode;
+	ObjectType m_clickMode = ObjectType::Wall;
 	sf::Texture* m_textures[NUM_OF_TYPES];
 };

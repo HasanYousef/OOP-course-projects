@@ -3,6 +3,8 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "macros.h"
 #include "WorldObject.h"
@@ -16,7 +18,8 @@ public:
 	void draw(sf::RenderWindow&) const;
 	void set_object(ObjectType, const sf::Vector2f&, sf::Texture* []);
 	ObjectType charToType(char) const;
-	void save() const {}
+	void save() const;
+	char typeToChar(ObjectType) const;
 
 private:
 	size_t m_height = 0,

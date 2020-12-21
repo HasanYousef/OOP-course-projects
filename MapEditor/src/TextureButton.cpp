@@ -15,7 +15,7 @@ void TextureButton::draw(sf::RenderWindow& window) const {
 	window.draw(create());
 
 	auto result = sf::Sprite(*m_texture);
-	result.setPosition(m_position);
+	result.setPosition({ m_position.x + 40, m_position.y + 8 });
 	//result.setOrigin(sf::Vector2f(m_position.x - BUTTON_WIDTH / 2, m_position.y - BUTTON_HEIGHT / 2));
 	window.draw(result);
 }
