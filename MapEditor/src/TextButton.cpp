@@ -3,7 +3,7 @@
 #include "TextButton.h"
 
 //------------------------------------------------------
-TextButton::TextButton(std::string string, sf::Vector2f size, sf::Font& font) {
+TextButton::TextButton(const std::string& string, const sf::Vector2f& size, const sf::Font& font) {
 	m_text.setString(string);
 	m_text.setColor(sf::Color::Black);
 	m_text.setCharacterSize(TEXTSIZE);
@@ -16,4 +16,8 @@ TextButton::TextButton(std::string string, sf::Vector2f size, sf::Font& font) {
 void TextButton::setPosition(sf::Vector2f points) {
 	m_button.setPosition(points);
 	m_text.setPosition(sf::Vector2f(m_button.getOrigin()));
+}
+
+std::string TextButton::getType() const {
+	return m_text.getString();
 }

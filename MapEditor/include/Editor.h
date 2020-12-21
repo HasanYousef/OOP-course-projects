@@ -18,7 +18,6 @@ private:
 	sf::RenderWindow m_window;
 	Board m_board;
 	ObjectType m_clickMode;
-	TextureButton m_textureButtons[NUM_OF_TYPES];
-	TextButton m_saveButton;
-	TextButton m_clearButton;
+	std::vector<TextureButton> m_textureButtons;
+	std::vector<TextButton> m_textButtons;
 };
