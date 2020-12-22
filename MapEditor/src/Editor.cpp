@@ -20,10 +20,14 @@ void Editor::run() {
 		initBoard();
 	ifile.close();
 
+	sf::Sprite hover;
+	bool putHover = false;
 	while (m_window.isOpen()) {
 		m_window.clear();
 		m_board.draw(m_window);
 		m_panel.draw(m_window);
+		if (putHover)
+			m_window.draw(hover);
 		m_window.display();
 
 		if (auto event = sf::Event{}; m_window.waitEvent(event))
@@ -38,8 +42,24 @@ void Editor::run() {
 					{ event.mouseButton.x, event.mouseButton.y });
 				if (location.x < BOARD_UI_X)
 					handleClick(location);
-				else
-					m_board.set_object(m_clickMode, location, m_textures);
+				else if (m_clickMode < ActionType::SaveBoard)
+					m_board.set_object(ObjectType(m_clickMode), location, m_textures);
+				break;
+			}
+			case sf::Event::MouseMoved: {
+				auto location = sf::Mouse::getPosition(m_window);
+				int newCol = int(location.x - BOARD_UI_X) / TEXTURE_SIZE;
+				int newRow = int(location.y) / TEXTURE_SIZE;
+				if (m_clickMode < ActionType::SaveBoard && location.x > BOARD_UI_X && newRow < m_board.getHeight() && newCol < m_board.getWidth()) {
+					hover = sf::Sprite(*m_textures[m_clickMode]);
+					int xPos = ((int(location.x) - BOARD_UI_X) / TEXTURE_SIZE) * TEXTURE_SIZE + BOARD_UI_X;
+					int yPos = (int(location.y) / TEXTURE_SIZE) * TEXTURE_SIZE;
+					hover.setPosition(sf::Vector2f(xPos , yPos));
+					putHover = true;
+				}
+				else {
+					putHover = false;
+				}
 			}
 			}
 		}
@@ -54,7 +74,7 @@ void Editor::handleClick(const sf::Vector2f &location) {
 		initBoard();
 	//======condition===error=====================
 	if (act != ActionType::Nothing && act < 8) {
-		m_clickMode = ObjectType(int(act));
+		m_clickMode = ActionType(int(act));
 	}
 }
 

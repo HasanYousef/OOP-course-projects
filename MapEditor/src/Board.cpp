@@ -85,13 +85,27 @@ void Board::setNew(int height, int width, sf::Texture* textures[]) {
 //and the type that the user choose to add it and the textures
 //array to pute the texture that we want to print it
 void Board::set_object(ObjectType type, const sf::Vector2f& location, sf::Texture* textures[]) {
-	int col = int(location.x - BOARD_UI_X) / TEXTURE_SIZE;
-	int row = int(location.y) / TEXTURE_SIZE;
+	int newCol = int(location.x - BOARD_UI_X) / TEXTURE_SIZE;
+	int newRow = int(location.y) / TEXTURE_SIZE;
 	int xPos = ((int(location.x) - BOARD_UI_X) / TEXTURE_SIZE) * TEXTURE_SIZE + BOARD_UI_X;
 	int yPos = (int(location.y) / TEXTURE_SIZE) * TEXTURE_SIZE;
-	//check if there a object on the possision or no
-	if(row < m_height && col < m_width)
-		m_worldObjects[row][col] = WorldObject(type, textures[type], sf::Vector2f(xPos, yPos));
+
+	if (type == ObjectType::Player) {
+		//check if the player already exists in the map
+		for (int row = 0; row < m_height; row++) {
+			for (int col = 0; col < m_width; col++) {
+				if (m_worldObjects[row][col].getType() == ObjectType::Player) {
+					m_worldObjects[row][col] = WorldObject(ObjectType::Space, textures[ObjectType::Space],
+						sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE));
+					break;
+				}
+			}
+		}
+	}
+
+	//check if the position is inside the board range
+	if(newRow < m_height && newCol < m_width)
+		m_worldObjects[newRow][newCol] = WorldObject(type, textures[type], sf::Vector2f(xPos, yPos));
 }
 
 //-----------------------------------------------
@@ -149,4 +163,12 @@ char Board::typeToChar(ObjectType type) const {
 	case ObjectType::Enemy:
 		return ENEMY;
 	}
+}
+
+int Board::getHeight() const {
+	return m_height;
+}
+
+int Board::getWidth() const {
+	return m_width;
 }

@@ -20,6 +20,8 @@ public:
 	ObjectType charToType(char) const;
 	void save() const;
 	char typeToChar(ObjectType) const;
+	int getHeight() const;
+	int getWidth() const;
 
 private:
 	size_t m_height = 0,
