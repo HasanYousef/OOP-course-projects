@@ -9,6 +9,7 @@
 class Panel {
 public:
 	Panel() {};
+	//----------------------------------------------
 	void initPanel(sf::Texture* []);
 	ActionType handleClick(const sf::Vector2f&) const;
 	void draw(sf::RenderWindow&) const;

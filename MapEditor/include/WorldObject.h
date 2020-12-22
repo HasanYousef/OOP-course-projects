@@ -7,6 +7,7 @@
 class WorldObject {
 public:
 	WorldObject(ObjectType, sf::Texture*, const sf::Vector2f&);
+	//----------------------------------------------
 	void draw(sf::RenderWindow&) const;
 	bool handleClick(const sf::Vector2f&);
 	WorldObject& operator=(const WorldObject&);

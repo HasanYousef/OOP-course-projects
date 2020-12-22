@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "macros.h"
-
+//----------------------------------
 class Button {
 public:
 	Button() {}

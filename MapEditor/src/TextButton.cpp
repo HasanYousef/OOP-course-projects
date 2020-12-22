@@ -2,6 +2,10 @@
 
 #include "TextButton.h"
 
+//--------------------------------------------------------
+//this the constructor of the TextButton we take the Font
+//and what we want to write on the botton also the possistion
+//of the botton
 TextButton::TextButton(const std::string& text,
 	const sf::Vector2f& position,
 	const sf::Font& font) :
@@ -10,6 +14,8 @@ TextButton::TextButton(const std::string& text,
 	m_position = position;
 }
 
+//--------------------------------------------------------
+//here we draw the botton
 void TextButton::draw(sf::RenderWindow& window) const {
 	window.draw(create());
 

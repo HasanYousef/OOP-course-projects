@@ -2,6 +2,7 @@
 
 int main()
 {
+	//we run the editor
 	auto editor = Editor();
 	editor.run();
 

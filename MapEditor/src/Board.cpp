@@ -33,6 +33,7 @@ void Board::readFromStream(std::ifstream& stream, sf::Texture* textures[]) {
 		col = 0;
 		while (ch != '\n' && !stream.eof()) {
 			type = charToType(ch);
+			//adding the object according to the char in the file
 			tempRow.push_back(WorldObject(
 				type,
 				textures[type],
@@ -41,12 +42,14 @@ void Board::readFromStream(std::ifstream& stream, sf::Texture* textures[]) {
 			col++;
 			ch = stream.get();
 		}
+		// inserting the objects vector to the local member
 		newBoard.push_back(tempRow);
 		if (stream.eof())
 			break;
 		row++;
 		ch = stream.get();
 	}
+	//setting the board to the local member
 	m_worldObjects = newBoard;
 	m_height = m_worldObjects.size();
 	m_width = (m_height > 0 ? m_worldObjects[0].size() : 0);
@@ -71,6 +74,7 @@ void Board::setNew(int height, int width, sf::Texture* textures[]) {
 	std::vector<std::vector<WorldObject>> newBoard;
 	for (int row = 0; row <= m_height; row++) {
 		std::vector<WorldObject> tempRow;
+		//creating a line of objects
 		for (int col = 0; col <= m_width; col++) {
 			tempRow.push_back(WorldObject(ObjectType::Space, textures[ObjectType::Space], 
 				sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE)));
@@ -131,11 +135,13 @@ ObjectType Board::charToType(char ch) const {
 	}
 }
 
-//===need to include========
+//-----------------------------------------------
+//save the board (print the object on the board file)
 void Board::save() const {
-	
+	//opening the output file stream
 	fs::path p = "C:board.txt";
 	std::ofstream ofile(fs::absolute(p));
+	//writing the chars the represent each object 
 	for (int row = 0; row < m_height; row++) {
 		for (int col = 0; col < m_width; col++) {
 			ofile.put(typeToChar(m_worldObjects[row][col].getType()));
@@ -146,6 +152,8 @@ void Board::save() const {
 	ofile.close();
 }
 
+//-----------------------------------------------
+//take the type and return the char of type
 char Board::typeToChar(ObjectType type) const {
 	switch (type) {
 	case ObjectType::Space:
@@ -165,10 +173,12 @@ char Board::typeToChar(ObjectType type) const {
 	}
 }
 
+//-----------------------------------------------
 int Board::getHeight() const {
 	return m_height;
 }
 
+//-----------------------------------------------
 int Board::getWidth() const {
 	return m_width;
 }

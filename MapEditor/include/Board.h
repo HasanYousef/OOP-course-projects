@@ -5,14 +5,15 @@
 #include <iostream>
 #include <filesystem>
 namespace fs = std::filesystem;
-
+//----------------------------------
 #include "macros.h"
 #include "WorldObject.h"
-
+//----------------------------------
 class Board {
 public:
 	Board();
 	Board(int, int, sf::Texture* []);
+	//----------------------------------
 	void readFromStream(std::ifstream&, sf::Texture* []);
 	void setNew(int, int, sf::Texture* []);
 	void draw(sf::RenderWindow&) const;
