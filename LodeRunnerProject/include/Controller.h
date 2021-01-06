@@ -1,8 +1,11 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include <filesystem>
 #include <vector>
 
+#include "Game.h"
+#include "MainMenu.h"
 #include "Board.h"
 #include "Player.h"
 
@@ -10,17 +13,14 @@ class Controller {
 public:
 	Controller();
 	void run();
+	void start_game();
+	void 
 	void add_player();
 	void add_enemy();
 private:
-	void start_menu();
-	void start_game();
-	void run_level();
-	ifstream m_mapsStream;
 
-	int m_level,
-		m_numOfLevels;
-	World m_world;
-	Player m_player;
-	std::vector<Enemy> m_enemies;
+	Game m_game;
+	MainMenu m_menu;
+	sf::RenderWindow m_window;
+	ifstream m_mapsStream;
 };
