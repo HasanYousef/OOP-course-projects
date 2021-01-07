@@ -15,8 +15,8 @@ public:
 	void add_player();
 	void add_enemy();
 private:
-	void start_menu();
-	void start_game();
+	void pause_menu();
+	void start();
 	void run_level();
 
 	PauseMenu m_pauseMenu;

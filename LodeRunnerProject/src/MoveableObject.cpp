@@ -4,14 +4,6 @@
 #include <SFML/Graphics.hpp>
 
 //-------------------------------------------------
-//we creat the texture that we want to print it 
-sf::Sprite MoveableObject::create() const {
-	auto result = sf::Sprite(*m_texture);
-	result.setPosition(m_position);
-	return result;
-}
-
-//-------------------------------------------------
 sf::Vector2f MoveableObject::get_position() const {
 	return m_position;
 }
@@ -21,8 +13,13 @@ void MoveableObject::set_position(const sf::Vector2f& position) {
 	m_position = position;
 }
 
+//-------------------------------------------------
+//this func draw the object
+void MoveableObject::draw(sf::RenderWindow& window) const {
+	window.draw(m_body);
+}
 
-
-
-
-
+//-------------------------------------------------
+void MoveableObject::move(sf::Vector2f& movement) {
+	m_body.move(movement.x, movement.y);
+}

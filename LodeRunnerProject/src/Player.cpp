@@ -2,17 +2,10 @@
 
 #include "Player.h"
 #include <SFML/Graphics.hpp>
-//-------------------------------------------------
-//we creat the texture that we want to print it 
-sf::Sprite Player::create() const {
-	auto result = sf::Sprite(*m_texture);
-	result.setPosition(m_position);
-	return result;
-}
 
 //-------------------------------------------------
-sf::Vector2f Player::get_position() const {
-	return m_position;
+int Player::get_score() const {
+	return m_score;
 }
 
 //-------------------------------------------------
@@ -33,94 +26,64 @@ void Player::set_health(int currHealth) {
 	m_health = currHealth;
 }
 
-
-
-
-
-
-
-
-
-/*
-Coord Player::get_coord() {
-	return m_coord;
+//-------------------------------------------------
+void Player::add_health(int more_health) {
+	m_health += more_health;
 }
 
-//------------------------------------------------------------
-//here we do the Player Movement we take the board class,
-//we read from the user a input and we check if the input is
-//a arrows if no we do nothing if yes we check if the elment
-//that we have to move on it its valued or not if yes we reset
-//the coordinates of the player and return the new once
-//if its not valied we do nothing
-Coord Player::move(const Board& board)
-{
-	int row = m_coord.m_row,
-		col = m_coord.m_col;
-	int read_buff = _getch();
+//-------------------------------------------------
+void Player::add_score(int more_score) {
+	m_score += more_score;
+}
 
-	switch (_getch())
-	{
-	case KB_UP://if we want to move up (Ladder case)
-		if (board.get_char(Coord(col, row - 1)) == LADDER)
-		{
-			m_coord.m_row = m_coord.m_row - 1;//we reset the points
-			m_coord = board.get_ground(m_coord);//get into the ground if its needs
+//-------------------------------------------------
+void Player::Player_move(const Board& board) {
+	auto player = creat();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		if (!is_wall(board, get_position().x - speed, get_position().y)) {
+			sf::Vector2f move(-SPEED, 0);
+			move(move);
+			set_position(get_position().x - SPEED, get_position().y);
 		}
-		return m_coord;//return the new points of the player
-	case KB_DOWN://if we want to move down
-		if (!is_wall(m_coord.m_col, m_coord.m_row + 1, board))
-		{
-			m_coord.m_row = m_coord.m_row + 1;//we reset the points
-			m_coord = board.get_ground(m_coord);//get into the ground if its needs
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		if (!is_wall(board, get_position().x + speed, get_position().y)) {
+			sf::Vector2f move(SPEED, 0);
+			move(move);
+			set_position(get_position().x + SPEED, get_position().y);
 		}
-		return m_coord;//return the new points of the player
-	case KB_RIGHT://if we want to move right
-		if (!is_wall(m_coord.m_col + 1, m_coord.m_row, board))
-		{
-			if (fall_from_ladder(board, 1)) {//if we on ladder we cant fall
-				return m_coord;
-			}
-			m_coord.m_col = m_coord.m_col + 1;//we reset the points
-			m_coord = board.get_ground(m_coord);//get into the ground if its needs
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		if (is_ladder(board, get_position().x, get_position().y - speed)) {
+			sf::Vector2f move(0, -SPEED);
+			move(move);
+			set_position(get_position().x, get_position().y - SPEED);
 		}
-		return m_coord;//return the new points of the player
-	case KB_LEFT://if we want to move left
-		if (!is_wall(m_coord.m_col - 1, m_coord.m_row, board))
-		{
-			if (fall_from_ladder(board, -1)) {//if we on ladder we cant fall
-				return m_coord;
-			}
-			m_coord.m_col = m_coord.m_col - 1;//we reset the points
-			m_coord = board.get_ground(m_coord);//get into the ground if its needs
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		sf::Vector2f move(0, SPEED);
+		while (fall(Board & board), get_position()) {
+			move(move);
+			set_position(get_position().x, get_position().y + SPEED);
 		}
-		return m_coord;//return the new points of the player
-	default://if its a unvalued inpute
-		return m_coord;//we return the same points
 	}
 }
 
 //------------------------------------------------------------
 //here we check if the elment that we want to move on it its
 //valued or not (if its a WALL or not)
-bool Player::is_wall(int col, int row, const Board& board)
-{
-	return (board.get_char(Coord(col, row)) == WALL);
+bool Player::is_wall(const Board& board int col, int row) {
+	return (board.get_type(col, row) == WALL);
 }
 
 //------------------------------------------------------------
 //this func check if the player on the top of the ladder
-//returne false if not and true if its on last H
-bool Player::fall_from_ladder(const Board& board, int el) {
-	return board.get_char(m_coord) == PLAYER_ON_LADDER &&
-		board.get_char(Coord(m_coord.m_col + el, m_coord.m_row + 1)) != WALL
-		&& board.get_char(Coord(m_coord.m_col + el, m_coord.m_row)) != ROPE;
+//returne false if not and true if its on last H 
+bool Player::fall(const Board& board, const sf::Vector2f points) {
+	return board.get_type(point) != LADDER &&
+		board.get_type(sf::Vector2f(points.x, points.y + 1)) != WALL
+		&& board.get_type(Coord(m_coord.m_col + el, m_coord.m_row)) != ROPE;
 }
-
-*/
-
-
-
 
 
 

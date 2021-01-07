@@ -12,23 +12,14 @@ Controller::Controller() : m_level(0), m_numOfLevels(0),
 
 //-----------------run-----------------
 void Controller::run() {
-	m_mainMenu.run();
-}
-
-//-----------------start_game-----------------
-void Controller::start_game() {
-	m_level = 1;
-	while (m_level <= m_numOfLevels) {
-		m_map.readFromStream(m_mapsStream);
-		run_level();
-		m_level++;
-	}
-}
-
-//-----------------run_level-----------------
-void Controller::run_level() {
-	while () {
-
+	MainMenuOption userChoice = m_mainMenu.run();
+	switch (userChoice) {
+		case StartGame:
+			m_game.start();
+		case EditMaps:
+			17; //m_editor.start();
+		case Exit:
+			17; //end();
 	}
 }
 
