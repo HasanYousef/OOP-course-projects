@@ -7,7 +7,7 @@
 #include "macros.h"
 #include "Game.h"
 #include "MainMenu.h"
-#include "Board.h"
+#include "Map.h"
 #include "Player.h"
 
 class Controller {
@@ -19,5 +19,5 @@ private:
 	Game m_game;
 	MainMenu m_menu;
 	sf::RenderWindow m_window;
-	ifstream m_mapsStream;
+	std::ifstream m_mapsStream;
 };
