@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <filesystem>
 #include <vector>
+#include <iostream>
 
 #include "macros.h"
 #include "Game.h"
@@ -19,5 +20,5 @@ private:
 	Game m_game;
 	MainMenu m_menu;
 	sf::RenderWindow m_window;
-	std::ifstream m_mapsStream;
+	//std::ifstream m_mapsStream;
 };

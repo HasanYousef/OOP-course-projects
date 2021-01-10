@@ -1,23 +1,16 @@
 #pragma once
 
 #include <iostream>
-
+#include "macros.h"
+#include "SFML/Graphics.hpp"
 #include "WorldObject.h"
+#include "Map.h"
 
 class MoveableObject : public WorldObject {
 public:
 	//---Constructors---------------------------------------------------
-	MoveableObject() : m_position(), m_texture() {}
-	MoveableObject(const sf::Vector2f& position, sf::Texture* texture)
-	{
-		m_position = position;
-		m_texture = texture;
-		m_body = sf::Sprite(*texture);
-		m_body.setPosition(position);
-	}
+	MoveableObject();
+	MoveableObject(ObjectType, sf::Texture*, const sf::Vector2f&);
 	//---functions----------------------------
-	sf::Vector2f get_position() const;
-	void set_position(const sf::Vector2f&);
-	void draw(sf::RenderWindow&) const;
-	void move(sf::Vector2f&);
+	virtual void move(const Map&, char);
 };

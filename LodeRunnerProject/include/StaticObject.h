@@ -4,4 +4,5 @@
 
 class StaticObject : public WorldObject {
 
+
 };

@@ -2,8 +2,9 @@
 
 int main()
 {
-	Controller game();
-	game.run();
+	Controller control;
+	control.run();
+	//game.run();
 
 	return EXIT_SUCCESS;
 }

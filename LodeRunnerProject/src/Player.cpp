@@ -1,7 +1,14 @@
 #pragma once
 
 #include "Player.h"
-#include <SFML/Graphics.hpp>
+
+//-------------------------------------------------
+Player::Player() : m_health(INIT_HEALTH) {}
+
+//-------------------------------------------------
+Player::Player(ObjectType type, sf::Texture* t,
+	                      const sf::Vector2f& p)
+	              : MoveableObject(type, t, p) {}
 
 //-------------------------------------------------
 int Player::get_score() const {
@@ -10,7 +17,7 @@ int Player::get_score() const {
 
 //-------------------------------------------------
 //here we return the helth number of the Player
-int Player::get_health()const {
+int Player::get_health() const {
 	return m_health;
 }
 
@@ -18,7 +25,7 @@ int Player::get_health()const {
 //here we sub 1 from the helth of the player when 
 //the player get damged from a enemy
 void Player::die() {
-	m_health = m_health - 1;
+	m_health -= 1;
 }
 
 //-------------------------------------------------
@@ -37,53 +44,70 @@ void Player::add_score(int more_score) {
 }
 
 //-------------------------------------------------
-void Player::Player_move(const Board& board) {
-	auto player = creat();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		if (!is_wall(board, get_position().x - speed, get_position().y)) {
-			sf::Vector2f move(-SPEED, 0);
-			move(move);
-			set_position(get_position().x - SPEED, get_position().y);
+//this func move the player we get input from the 
+//user we check if the input is arrows and check if
+//we can go to the way that the user want if yes we 
+//move it and set the new points else still same points
+void Player::move(const Map& map) 
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		if (if_can_move(map, 'U')) {
+			create().move(0, -SPEED);
+			m_position.y -= SPEED;
 		}
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		if (!is_wall(board, get_position().x + speed, get_position().y)) {
-			sf::Vector2f move(SPEED, 0);
-			move(move);
-			set_position(get_position().x + SPEED, get_position().y);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		if (if_can_move(map, 'D')) {
+			create().move(0, SPEED);
+			m_position.y += SPEED;
 		}
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		if (is_ladder(board, get_position().x, get_position().y - speed)) {
-			sf::Vector2f move(0, -SPEED);
-			move(move);
-			set_position(get_position().x, get_position().y - SPEED);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		if (if_can_move(map, 'L')) {
+			create().move(-SPEED, 0);
+			m_position.x -= SPEED;
 		}
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		sf::Vector2f move(0, SPEED);
-		while (fall(Board & board), get_position()) {
-			move(move);
-			set_position(get_position().x, get_position().y + SPEED);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		if (if_can_move(map, 'R')) {
+			create().move(SPEED, 0);
+			m_position.x += SPEED;
 		}
 	}
 }
 
-//------------------------------------------------------------
-//here we check if the elment that we want to move on it its
-//valued or not (if its a WALL or not)
-bool Player::is_wall(const Board& board int col, int row) {
-	return (board.get_type(col, row) == WALL);
+//-------------------------------------------------
+//we use this bool func in move player func in this
+//func check if the player can go to the place that 
+//he want if yes we return true else we return false
+bool Player::if_can_move(const Map& map, char way) {
+	sf::Vector2f points(get_position());
+	//check if we can not go to the way we want
+	switch (way) {
+	case 'U': //UP
+		points.y -= SPEED;
+		if (map.get_type(points) != O_Ladder)
+		{ return false; }
+		break;
+	case 'D': //DOWN
+		points.y += SPEED;
+		if (map.get_type(points) == O_Wall)
+		{ return false; }
+		break;
+	case 'L': //LEFT
+		points.x -= SPEED;
+		if (map.get_type(points) == O_Wall)
+		{ return false; }
+		break;
+	case 'R': //RIGHT
+		points.x += SPEED;
+		if (map.get_type(points) == O_Wall)
+		{ return false; }
+		break;
+	}
+	return true; //true if we can go
 }
 
-//------------------------------------------------------------
-//this func check if the player on the top of the ladder
-//returne false if not and true if its on last H 
-bool Player::fall(const Board& board, const sf::Vector2f points) {
-	return board.get_type(point) != LADDER &&
-		board.get_type(sf::Vector2f(points.x, points.y + 1)) != WALL
-		&& board.get_type(Coord(m_coord.m_col + el, m_coord.m_row)) != ROPE;
-}
 
 
 

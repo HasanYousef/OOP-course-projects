@@ -2,4 +2,12 @@
 										  "Controller.cpp"
 										  "Game.cpp"
 										  "Map.cpp"
+										  "WorldObject.cpp"
+										  "TakeableObject.cpp"
+										  "StaticObject.cpp"
+										  "Player.cpp"
+										  "PauseMenu.cpp"
+										  "MoveableObject.cpp"
+										  "Map.cpp"
+										  "MainMenu.cpp"
 										  )
