@@ -1,8 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <MoveableObject.h>
 
-class Enemy {
+class Enemy : public MoveableObject {
 public:
 	Enemy();
 	Enemy(ObjectType, sf::Texture*,

@@ -109,3 +109,13 @@ bool Player::if_can_move(const Map& map, char way) {
 	}
 	return true; //true if we can go
 }
+
+//-------------------------------------------------
+bool Player::getCoin(const Map& map) {
+	return (map.get_type(m_position) == O_Coin);
+}
+
+//-------------------------------------------------
+bool Player::getGift(const Map& map) {
+	return (map.get_type(m_position) == O_Gift);
+}

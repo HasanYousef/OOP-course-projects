@@ -16,6 +16,8 @@ public:
 	void move(const Map&);
 	void die();
 	void set_health(int);
+	bool getCoin(const Map&);
+	bool getGift(const Map&);
 	//---get-functions----------
 	int get_health() const;
 	int get_score() const;

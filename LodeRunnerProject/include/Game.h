@@ -4,8 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <fstream>
-using namespace std;
-#include "PauseMenu.h"
+
+#include "Menu.h"
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -13,20 +13,23 @@ using namespace std;
 class Game {
 public:
 	Game();
-	void start(sf::RenderWindow&);
+	void run(sf::RenderWindow&);
 	void run_level(sf::RenderWindow& window);
 	void add_player();
 	void add_enemy();
 	void open_maps_stream();
 private:
 	void initializeTextures();
+	void move_enemies();
+	bool player_get_hit();
 	//void pause_menu();
-	ifstream m_mapsStream;
+	std::ifstream m_mapsStream;
 	//PauseMenu m_pauseMenu;
 	int m_level,
 		m_numOfLevels;
 	Map m_map;
 	Player m_player;
+	std::vector <Enemy> m_enemies;
 	//std::vector<Enemy> m_enemies;
 	sf::Texture* m_textures[NUM_OF_TYPES];
 };

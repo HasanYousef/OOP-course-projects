@@ -31,7 +31,9 @@ enum ObjectType
 	O_Rope,
 	O_Money,
 	O_Player,
-	O_Enemy
+	O_Enemy,
+	O_Coin,
+	O_Gift
 };
 
 //---------------------

@@ -18,9 +18,9 @@ void Controller::run() {
 		case UserOption::ShowMainMenu:
 			userChoice = m_menu.run(m_window);
 		case UserOption::StartGame:
-			userChoice = m_game.run(m_window);
+			m_game.run(m_window);
 		case UserOption::EditMaps:
-			userChoice = m_editor.run(m_window);
+			m_editor.run(m_window);
 	}
 }
 
