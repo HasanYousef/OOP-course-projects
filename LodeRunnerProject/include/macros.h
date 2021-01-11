@@ -11,7 +11,9 @@ TEXTURE_SIZE = 32,
 NUM_OF_TYPES = 7,
 INIT_HEALTH = 3,
 BOARD_UI_X = 32,
-SPEED = 0.1;
+SPEED = 0.1,
+BUTTON_WIDTH = 120,
+BUTTON_HEIGHT = 50;
 
 //---------------------
 enum UserOption
@@ -19,7 +21,17 @@ enum UserOption
 	MainMenu,
 	StartGame,
 	EditMaps,
-	Exit
+	Exit,
+	AddSpace,
+	AddWall,
+	AddLadder,
+	AddRope,
+	AddMoney,
+	AddPlayer,
+	AddEnemy,
+	SaveBoard,
+	ClearBoard,
+	Nothing
 };
 
 //---------------------

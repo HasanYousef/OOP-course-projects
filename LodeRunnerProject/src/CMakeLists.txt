@@ -4,10 +4,11 @@
 										  "Editor.cpp"
 										  "Map.cpp"
 										  "WorldObject.cpp"
-										  "TakeableObject.cpp"
 										  "StaticObject.cpp"
+										  "MoveableObject.cpp"
+										  "TakeableObject.cpp"
 										  "Player.cpp"
 										  "Enemy.cpp"
 										  "Menu.cpp"
-										  "MoveableObject.cpp"
-										  )
+										  "Panel.cpp"
+										  "Button.cpp")
