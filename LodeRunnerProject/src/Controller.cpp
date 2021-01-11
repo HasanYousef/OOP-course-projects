@@ -5,14 +5,19 @@
 //-----------------structor-----------------
 //in the Controller structor, the maps file will be open
 //and it's stream will be stored in the map stream variable
-Controller::Controller() :
-	m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Lode Runner") {
+Controller::Controller() {
+	m_window.setSize({ WINDOW_WIDTH,WINDOW_HEIGHT });
 	//open_maps_stream();
 }
 
 //-----------------run-----------------
 void Controller::run() {
-	m_game.start(m_window);
+	while (m_window.isOpen())
+	{
+		m_window.display();
+	}
+	
+	//m_game.start(m_window);
 	/*
 	MainMenuOption userChoice = m_menu.run();
 	switch (userChoice) { // we make it to start the game 

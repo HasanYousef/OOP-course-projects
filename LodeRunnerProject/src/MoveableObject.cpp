@@ -14,5 +14,3 @@ MoveableObject::MoveableObject(ObjectType type,
 
 //-------------------------------------------------
 void MoveableObject::move(const Map& map, char way) {}
-
-

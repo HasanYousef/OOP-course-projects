@@ -2,12 +2,15 @@
 
 #include "WorldObject.h"
 #include <SFML/Graphics.hpp>
+
+//-------------------------------------------------
 WorldObject::WorldObject()
 {
 	m_position = sf::Vector2f({ 0,0 });
 	m_texture = NULL;
 	m_objectType = O_Space;
 }
+
 //-------------------------------------------------
 WorldObject::WorldObject(ObjectType type,
 	sf::Texture* texture,

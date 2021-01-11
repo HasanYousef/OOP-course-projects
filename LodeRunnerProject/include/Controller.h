@@ -16,7 +16,6 @@ public:
 	Controller();
 	void run();
 private:
-
 	Game m_game;
 	MainMenu m_menu;
 	sf::RenderWindow m_window;

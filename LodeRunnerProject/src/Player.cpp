@@ -34,11 +34,13 @@ void Player::set_health(int currHealth) {
 }
 
 //-------------------------------------------------
+//give the player more health when get a gift
 void Player::add_health(int more_health) {
 	m_health += more_health;
 }
 
 //-------------------------------------------------
+//add the score when the player get a coin
 void Player::add_score(int more_score) {
 	m_score += more_score;
 }
@@ -107,12 +109,3 @@ bool Player::if_can_move(const Map& map, char way) {
 	}
 	return true; //true if we can go
 }
-
-
-
-
-
-
-
-
-

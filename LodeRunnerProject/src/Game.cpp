@@ -5,6 +5,7 @@
 //---------------------------------------------
 Game::Game() { 
 	initializeTextures();
+	m_numOfLevels = 10;
 };
 
 //-----------------start_game-----------------
@@ -25,7 +26,7 @@ void Game::start(sf::RenderWindow& window) {
 //-----------------run_level-----------------
 void Game::run_level(sf::RenderWindow& window) {
 	sf::Event event;
-
+	window.display();
 	while (window.isOpen())
 	{
 		window.clear();
@@ -35,7 +36,7 @@ void Game::run_level(sf::RenderWindow& window) {
 		if (event.type == sf::Event::Closed) {
 			window.close();
 		}
-		m_player.Player_move(m_map);
+		m_player.move(m_map);
 	}
 	
 }
