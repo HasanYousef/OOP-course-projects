@@ -17,3 +17,7 @@ sf::RectangleShape Button::create() const {
 bool Button::handleClick(const sf::Vector2f location) const {
 	return (create().getGlobalBounds().contains(location));
 }
+
+UserOption Button::what_action() const {
+	return m_action;
+}
