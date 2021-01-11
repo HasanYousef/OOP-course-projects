@@ -14,8 +14,9 @@ BOARD_UI_X = 32,
 SPEED = 0.1;
 
 //---------------------
-enum MainMenuOption
+enum UserOption
 {
+	MainMenu,
 	StartGame,
 	EditMaps,
 	Exit

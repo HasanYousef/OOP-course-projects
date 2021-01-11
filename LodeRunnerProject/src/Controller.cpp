@@ -12,23 +12,16 @@ Controller::Controller() {
 
 //-----------------run-----------------
 void Controller::run() {
-	while (m_window.isOpen())
-	{
-		m_window.display();
-	}
-	
-	//m_game.start(m_window);
-	/*
-	MainMenuOption userChoice = m_menu.run();
+	UserOption userChoice = m_menu.run(m_window);
+	while(userChoice != UserOption::Exit)
 	switch (userChoice) { // we make it to start the game 
-		case StartGame:
-			m_game.start(m_window);
-		case EditMaps:
-			17; //m_editor.start();
-		case Exit:
-			17; //end();
+		case UserOption::ShowMainMenu:
+			userChoice = m_menu.run(m_window);
+		case UserOption::StartGame:
+			userChoice = m_game.run(m_window);
+		case UserOption::EditMaps:
+			userChoice = m_editor.run(m_window);
 	}
-	*/
 }
 
 //---------------------------------------------
