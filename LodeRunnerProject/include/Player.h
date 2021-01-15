@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include "macros.h"
 #include "Map.h"
 #include "SFML/Graphics.hpp"
@@ -10,8 +9,7 @@ class Player : public MoveableObject {
 public:
 	//---Constructors---------------------
 	Player();
-	Player(ObjectType , sf::Texture*,
-		          const sf::Vector2f&);
+	Player(ObjectType, const sf::Vector2f&);
 	//---functions--------------
 	void move(const Map&);
 	void die();

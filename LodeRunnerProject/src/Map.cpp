@@ -8,7 +8,7 @@ Map::Map() :m_height(0), m_width(0) {}
 //we use this func when the user press the clear
 //botton and we read from it a height and width to
 //creat new window and the window will be empty
-Map::Map(int height, int width, sf::Texture* textures[]) {
+Map::Map(int height, int width) {
 	m_height = height;
 	m_width = width;
 	std::vector<std::vector<WorldObject>> newBoard;
@@ -16,7 +16,7 @@ Map::Map(int height, int width, sf::Texture* textures[]) {
 		std::vector<WorldObject> tempRow;
 		//creating a line of objects
 		for (int col = 0; col <= m_width; col++) {
-			tempRow.push_back(WorldObject(ObjectType::O_Space, textures[ObjectType::O_Space],
+			tempRow.push_back(WorldObject(ObjectType::O_Space,
 				sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE)));
 		}
 		newBoard.push_back(tempRow);
@@ -29,7 +29,7 @@ Map::Map(int height, int width, sf::Texture* textures[]) {
 //a board file we open the file and do stream 
 //and we read tha map from the file and print 
 //on the window the map to
-void Map::readFromStream(std::ifstream& stream, sf::Texture* textures[]) {
+void Map::readFromStream(std::ifstream& stream) {
 	int row = 0,
 		col = 0;
 	std::vector<std::vector<WorldObject>> newBoard;
@@ -46,7 +46,6 @@ void Map::readFromStream(std::ifstream& stream, sf::Texture* textures[]) {
 			if (type != O_Player && type != O_Enemy) {
 				tempRow.push_back(WorldObject(
 					type,
-					textures[type],
 					sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE)
 				));
 			}
@@ -156,7 +155,7 @@ void Map::set_object(ObjectType type, const sf::Vector2f& location, sf::Texture*
 		for (int row = 0; row < m_height; row++) {
 			for (int col = 0; col < m_width; col++) {
 				if (m_map[row][col].getType() == ObjectType::O_Player) {
-					m_map[row][col] = WorldObject(ObjectType::O_Space, textures[ObjectType::O_Space],
+					m_map[row][col] = WorldObject(ObjectType::O_Space,
 						sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE));
 					break;
 				}
@@ -165,6 +164,6 @@ void Map::set_object(ObjectType type, const sf::Vector2f& location, sf::Texture*
 	}
 	//check if the position is inside the board range
 	if (newRow < m_height && newCol < m_width)
-		m_map[newRow][newCol] = WorldObject(type, textures[type], sf::Vector2f(xPos, yPos));
+		m_map[newRow][newCol] = WorldObject(type, sf::Vector2f(xPos, yPos));
 }
 

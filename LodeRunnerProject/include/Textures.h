@@ -12,8 +12,6 @@ public:
 
 private:
 	Textures();
-	Textures(const Textures&) = default;
-	Textures& operator=(const Textures&) = default;
 
 	std::vector<sf::Texture*> m_textures;
 };

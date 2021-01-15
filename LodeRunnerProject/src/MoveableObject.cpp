@@ -8,9 +8,9 @@
 MoveableObject::MoveableObject() {}
 
 //-------------------------------------------------
-MoveableObject::MoveableObject(ObjectType type, 
-	        sf::Texture* t, const sf::Vector2f& p)
-	                  : WorldObject(type, t, p) {}
+MoveableObject::MoveableObject(ObjectType type,
+	                        const sf::Vector2f& p)
+	                  : WorldObject(type, p) {}
 
 //-------------------------------------------------
-void MoveableObject::move(const Map& map, char way) {}
+void MoveableObject::move(const Map& map) {}

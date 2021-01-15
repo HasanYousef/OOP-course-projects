@@ -20,8 +20,8 @@ void Animation::update(float deltaTime) {
 
 sf::IntRect Animation::get_rect(ObjectType object) const {
 	sf::IntRect rec;
-	rec.width = Textures::get_texture[object]->getSize().x / ANIMATION_IMAGE_COUNT;
-	rec.height = Textures::get_texture[object]->getSize().y;
+	rec.width = Textures::instance().get_texture(object)->getSize().x / ANIMATION_IMAGE_COUNT;
+	rec.height = Textures::instance().get_texture(object)->getSize().y;;
 	rec.left = m_currentImage * rec.width;
 	return rec;
 }

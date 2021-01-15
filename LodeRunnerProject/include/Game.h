@@ -1,11 +1,11 @@
 #pragma once
 
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include <fstream>
+#include <filesystem>
+namespace fs = std::filesystem;
 
-#include "Menu.h"
+//#include "Menu.h"
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -16,21 +16,21 @@ public:
 	Game();
 	void run(sf::RenderWindow&);
 	void run_level(sf::RenderWindow& window);
-	void open_maps_stream();
 	void locate_objects();
 private:
-	void initializeTextures();
+	//---Functions----------
 	void move_enemies();
 	bool player_get_hit();
 	//void pause_menu();
-	std::ifstream m_mapsStream;
 	//PauseMenu m_pauseMenu;
+	//---Members------------
 	int m_level,
 		m_numOfLevels,
-		m_remainingMoney;
+		m_remainingMoney,
+		m_time;
 	Map m_map;
 	Player m_player;
+	//---Arrays_for_members-
 	std::vector <Enemy> m_enemies;
-	std::vector <Money> m_money_packs;
-	sf::Texture* m_textures[NUM_OF_TYPES];
+	std::vector <Money> m_moneyPacks;
 };

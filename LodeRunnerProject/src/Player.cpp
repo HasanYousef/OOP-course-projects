@@ -6,9 +6,8 @@
 Player::Player() : m_health(INIT_HEALTH) {}
 
 //-------------------------------------------------
-Player::Player(ObjectType type, sf::Texture* t,
-	                      const sf::Vector2f& p)
-	              : MoveableObject(type, t, p) {}
+Player::Player(ObjectType type, const sf::Vector2f& p)
+	              : MoveableObject(type, p) {}
 
 //-------------------------------------------------
 int Player::get_score() const {
@@ -55,25 +54,25 @@ void Player::move(const Map& map)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		if (if_can_move(map, 'U')) {
 			create().move(0, -SPEED);
-			m_position.y -= SPEED;
+			m_position = create().getPosition();
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		if (if_can_move(map, 'D')) {
 			create().move(0, SPEED);
-			m_position.y += SPEED;
+			m_position = create().getPosition();
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		if (if_can_move(map, 'L')) {
 			create().move(-SPEED, 0);
-			m_position.x -= SPEED;
+			m_position = create().getPosition();
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		if (if_can_move(map, 'R')) {
 			create().move(SPEED, 0);
-			m_position.x += SPEED;
+			m_position = create().getPosition();
 		}
 	}
 }

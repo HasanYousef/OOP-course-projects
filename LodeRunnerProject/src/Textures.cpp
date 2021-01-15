@@ -13,7 +13,7 @@ sf::Texture* Textures::get_texture(int textureIndex) const {
 
 Textures::Textures() { 
 	//initing the textures object in the array member
-	for (int i = 0; i < m_textures.size; i++)
+	for (int i = 0; i < m_textures.size(); i++)
 		m_textures[i] = new sf::Texture();
 
 	(*m_textures[ObjectType::O_Space]).loadFromFile("space.png");

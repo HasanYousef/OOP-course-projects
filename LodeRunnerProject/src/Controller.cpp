@@ -12,6 +12,8 @@ Controller::Controller() {
 
 //-----------------run-----------------
 void Controller::run() {
+	m_game.run(m_window);
+	/*
 	UserOption userChoice = m_menu.run(m_window);
 	while(userChoice != UserOption::Exit)
 	switch (userChoice) { // we make it to start the game 
@@ -22,6 +24,7 @@ void Controller::run() {
 		case UserOption::EditMaps:
 			m_editor.run(m_window);
 	}
+	*/
 }
 
 //---------------------------------------------

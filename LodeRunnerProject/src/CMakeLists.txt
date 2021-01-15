@@ -1,16 +1,12 @@
 ﻿target_sources (LodeRunnerProject PRIVATE "main.cpp"
 										  "Controller.cpp"
 										  "Game.cpp"
-										  "Editor.cpp"
 										  "Map.cpp"
-										  "Textures.cpp"
-										  "Animation.cpp"
 										  "WorldObject.cpp"
 										  "StaticObject.cpp"
 										  "MoveableObject.cpp"
 										  "TakeableObject.cpp"
 										  "Player.cpp"
 										  "Enemy.cpp"
-										  "Menu.cpp"
-										  "Panel.cpp"
-										  "Button.cpp")
+										  "Textures.cpp"
+										  "Animation.cpp")

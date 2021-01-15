@@ -3,16 +3,17 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <fstream>
+
 #include "macros.h"
 #include "StaticObject.h"
 
 class Map {
 public:
 	Map();
-	Map(int, int, sf::Texture* textures[]);
+	Map(int, int);
 	//----------------------------------
 	ObjectType get_type(const sf::Vector2f&) const;
-	void readFromStream(std::ifstream&, sf::Texture* []);
+	void readFromStream(std::ifstream&);
 	void draw(sf::RenderWindow&) const;
 	void set_object(ObjectType, const sf::Vector2f&, sf::Texture* textures[]);
 	//ObjectType get_object_type(const sf::Vector2f& location) const;

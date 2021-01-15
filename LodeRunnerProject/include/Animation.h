@@ -13,8 +13,6 @@ public:
 
 private:
 	Animation();
-	Animation(const Animation&) = default;
-	Animation& operator=(const Animation&) = default;
 
 	int m_totalTime,
 		m_currentImage;

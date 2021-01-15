@@ -2,21 +2,18 @@
 
 #include "WorldObject.h"
 #include <SFML/Graphics.hpp>
+#include "Textures.h"
 
 //-------------------------------------------------
-WorldObject::WorldObject()
-{
+WorldObject::WorldObject() {
 	m_position = sf::Vector2f({ 0,0 });
-	m_texture = NULL;
 	m_objectType = O_Space;
 }
 
 //-------------------------------------------------
-WorldObject::WorldObject(ObjectType type,
-	sf::Texture* texture,
-	const sf::Vector2f& position) :
-	m_objectType(type), m_texture(texture),
-	m_position(position) {}
+WorldObject::WorldObject(ObjectType type, 
+	              const sf::Vector2f& position) :
+	m_objectType(type), m_position(position) {}
 
 //-------------------------------------------------
 sf::Vector2f WorldObject::get_position() const {
@@ -44,7 +41,6 @@ ObjectType WorldObject::getType() const {
 //this operator = that let us copy another object
 WorldObject& WorldObject::operator=(const WorldObject& other) {
 	m_objectType = other.m_objectType;
-	m_texture = other.m_texture;
 	m_position = other.m_position;
 	return *this;
 }
@@ -52,7 +48,8 @@ WorldObject& WorldObject::operator=(const WorldObject& other) {
 //-------------------------------------------------
 //we creat the texture that we want to print it 
 sf::Sprite WorldObject::create() const {
-	auto result = sf::Sprite(*m_texture);
+	auto result = sf::Sprite(*Textures::instance().
+		                 get_texture(m_objectType));
 	result.setPosition(m_position);
 	return result;
 }
