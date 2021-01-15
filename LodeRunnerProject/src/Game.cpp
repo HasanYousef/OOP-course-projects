@@ -9,7 +9,7 @@ Game::Game() {
 	//m_numOfLevels = 5;
 };
 
-//-----------------start_game-----------------
+//-----------------start_game------------------
 void Game::run(sf::RenderWindow& window) {
 	m_level = 1;
 	while (m_level <= m_numOfLevels) {
@@ -24,7 +24,7 @@ void Game::run(sf::RenderWindow& window) {
 	}
 }
 
-//-----------------run_level-----------------
+//-----------------run_level-------------------
 void Game::run_level(sf::RenderWindow& window) {
 	sf::Event event;
 	//add panel (bottons)
@@ -51,8 +51,10 @@ void Game::run_level(sf::RenderWindow& window) {
 		}
 		m_player.move(m_map);
 		move_enemies();
+		//have to add to be able remove block
 		if (m_player.getCoin(m_map)) {
 			m_player.add_score(10); //need to add a const for coin value
+			m_remainingMoney--;
 		}
 		if (m_player.getGift(m_map)) {
 			//give him a gift
@@ -61,10 +63,12 @@ void Game::run_level(sf::RenderWindow& window) {
 			m_player.die();
 			//replay the level ***
 		}
+		if (m_remainingMoney == 0) {
+			return;
+		}
 	}
 	
 }
-
 
 //---------------------------------------------
 void Game::open_maps_stream() {
@@ -77,7 +81,7 @@ void Game::open_maps_stream() {
 	}
 }
 
-//--------------------------------------------
+//---------------------------------------------
 //here we load the textures
 void Game::initializeTextures() {
 	//initing the textures object in the array member
@@ -108,4 +112,32 @@ bool Game::player_get_hit() {
 		}
 	}
 	return false;
+}
+
+//-----------------locate_objects--------------
+//this func move on the board (array) and locate
+//the object we have for example if the elment x.y
+//have a enemy we add to the vector of enemy a enemy
+//if we find a coin we add to the integer of 
+//m_remainingMoney 1 this is how its work
+void Game::locate_objects() {
+	m_remainingMoney = 0;
+	for (int row = 0; row < m_map.getHeight(); row++) {
+		for (int col = 0; col < m_map.getWidth(); col++) {
+			switch (m_map.get_type({ row,col })) {
+			case O_Player: //we add the player
+				m_player.set_position({ row,col });
+				break;
+			case O_Enemy: //we add the enemy
+				m_enemies.push_back(Enemy());
+				break;
+			case O_Money: //we add money
+				m_money_packs.push_back(Money(O_Money,
+					m_textures[O_Money],
+					{ row,col }));
+				m_remainingMoney++;
+				break;
+			}
+		}
+	}
 }

@@ -3,6 +3,8 @@
 										  "Game.cpp"
 										  "Editor.cpp"
 										  "Map.cpp"
+										  "Textures.cpp"
+										  "Animation.cpp"
 										  "WorldObject.cpp"
 										  "StaticObject.cpp"
 										  "MoveableObject.cpp"

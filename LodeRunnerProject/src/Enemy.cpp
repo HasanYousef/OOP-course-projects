@@ -11,6 +11,11 @@ Enemy::Enemy(ObjectType type, sf::Texture* t,
 	: MoveableObject(type, t, p), m_iq(iq) {}
 
 //-------------------------------------------------
+Enemy::Enemy(ObjectType type, sf::Texture* t,
+	const sf::Vector2f& p, int iq)
+	: MoveableObject(type, t, p) {}
+
+//-------------------------------------------------
 int Enemy::setIq(int iq) {
 	m_iq = iq;
 }
