@@ -3,7 +3,6 @@
 										  "Game.cpp"
 										  "Map.cpp"
 										  "WorldObject.cpp"
-										  "StaticObject.cpp"
 										  "MoveableObject.cpp"
 										  "TakeableObject.cpp"
 										  "Player.cpp"

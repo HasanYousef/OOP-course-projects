@@ -87,22 +87,22 @@ bool Player::if_can_move(const Map& map, char way) {
 	switch (way) {
 	case 'U': //UP
 		points.y -= SPEED;
-		if (map.get_type(points) != O_Ladder)
+		if (map.get_type(points.x,points.y) != O_Ladder)
 		{ return false; }
 		break;
 	case 'D': //DOWN
 		points.y += SPEED;
-		if (map.get_type(points) == O_Wall)
+		if (map.get_type(points.x, points.y) == O_Wall)
 		{ return false; }
 		break;
 	case 'L': //LEFT
 		points.x -= SPEED;
-		if (map.get_type(points) == O_Wall)
+		if (map.get_type(points.x, points.y) == O_Wall)
 		{ return false; }
 		break;
 	case 'R': //RIGHT
 		points.x += SPEED;
-		if (map.get_type(points) == O_Wall)
+		if (map.get_type(points.x, points.y) == O_Wall)
 		{ return false; }
 		break;
 	}
@@ -111,10 +111,10 @@ bool Player::if_can_move(const Map& map, char way) {
 
 //-------------------------------------------------
 bool Player::getCoin(const Map& map) {
-	return (map.get_type(m_position) == O_Coin);
+	return (map.get_type(m_position.x,m_position.y) == O_Coin);
 }
 
 //-------------------------------------------------
 bool Player::getGift(const Map& map) {
-	return (map.get_type(m_position) == O_Gift);
+	return (map.get_type(m_position.x, m_position.y) == O_Gift);
 }

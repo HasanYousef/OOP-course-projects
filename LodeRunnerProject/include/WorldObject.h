@@ -11,7 +11,7 @@ public:
 	void draw(sf::RenderWindow&) const;
 	sf::Vector2f get_position() const;
 	void set_position(const sf::Vector2f&);
-	ObjectType getType() const;
+	ObjectType get_type() const;
 	WorldObject& operator=(const WorldObject&);
 	//---build-body-----------
 	sf::Sprite create() const;

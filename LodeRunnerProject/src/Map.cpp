@@ -29,40 +29,23 @@ Map::Map(int height, int width) {
 //a board file we open the file and do stream 
 //and we read tha map from the file and print 
 //on the window the map to
-void Map::readFromStream(std::ifstream& stream) {
-	int row = 0,
-		col = 0;
-	std::vector<std::vector<WorldObject>> newBoard;
-	ObjectType type;
+int Map::read_from_stream(std::ifstream& stream) {
+	int time;
+	stream >> m_height;
+	stream >> m_width;
+	stream >> time;
 	char ch;
+	//jumping over the new line char
+	stream.get();
 	//reading the map's chars line by line
-	ch = stream.get();
-	while (true) {
+	for (int row = 0; row < m_height; row++) {
 		std::vector<WorldObject> tempRow;
-		col = 0;
-		while (ch != '\n' && !stream.eof()) {
-			type = charToType(ch);
-			//adding the object according to the char in the file
-			if (type != O_Player && type != O_Enemy) {
-				tempRow.push_back(WorldObject(
-					type,
-					sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE)
-				));
-			}
-			col++;
-			ch = stream.get();
+		for (int col = 0; col < m_width; col++) {
+			tempRow.push_back(WorldObject(char_to_type(stream.get()), sf::Vector2f(col, row)));
 		}
-		// inserting the objects vector to the local member
-		newBoard.push_back(tempRow);
-		if (stream.eof())
-			break;
-		row++;
-		ch = stream.get();
+		m_map.push_back(tempRow);
 	}
-	//setting the board to the local member
-	m_map = newBoard;
-	m_height = m_map.size();
-	m_width = (m_height > 0 ? m_map[0].size() : 0);
+	return time;
 }
 
 //-----------------------------------------------
@@ -70,15 +53,18 @@ void Map::readFromStream(std::ifstream& stream) {
 //print the elment to present it on the window 
 void Map::draw(sf::RenderWindow& window) const {
 	for (int row = 0; row < m_height; row++)
-		for (int col = 0; col < m_width; col++)
-			m_map[row][col].draw(window);
+		for (int col = 0; col < m_width; col++) {
+			ObjectType type = m_map[row][col].get_type();
+			if (type != ObjectType::O_Player && type != ObjectType::O_Player)
+				m_map[row][col].draw(window);
+		}
 }
 
 //-----------------------------------------------
 //we use this when we want to print the array
 //we chech the char in the array and return the 
 //type on ObjectType
-ObjectType Map::charToType(char ch) const {
+ObjectType Map::char_to_type(char ch) const {
 	switch (ch) {
 	case SPACE:
 		return ObjectType::O_Space;
@@ -88,8 +74,8 @@ ObjectType Map::charToType(char ch) const {
 		return ObjectType::O_Ladder;
 	case ROPE:
 		return ObjectType::O_Rope;
-	case MONEY:
-		return ObjectType::O_Money;
+	case COIN:
+		return ObjectType::O_Coin;
 	case PLAYER:
 		return ObjectType::O_Player;
 	case ENEMY:
@@ -99,37 +85,37 @@ ObjectType Map::charToType(char ch) const {
 
 //-----------------------------------------------
 //take the type and return the char of type
-char Map::typeToChar(ObjectType type) const {
+char Map::type_to_char(ObjectType type) const {
 	switch (type) {
-	case ObjectType::O_Space:
-		return SPACE;
 	case ObjectType::O_Wall:
 		return WALL;
 	case ObjectType::O_Ladder:
 		return LADDER;
 	case ObjectType::O_Rope:
 		return ROPE;
-	case ObjectType::O_Money:
-		return MONEY;
+	case ObjectType::O_Coin:
+		return COIN;
 	case ObjectType::O_Player:
 		return PLAYER;
 	case ObjectType::O_Enemy:
 		return ENEMY;
 	}
+	return O_Space;
 }
 
 //-----------------------------------------------
-ObjectType Map::get_type(const sf::Vector2f& points) const {
-	return m_map[points.y/TEXTURE_SIZE][points.x/ TEXTURE_SIZE].getType();
+ObjectType Map::get_type(int row,int col) const {
+	ObjectType t = m_map[row][col].get_type();
+	return t;
 }
 
 //-----------------------------------------------
-int Map::getHeight() const {
+int Map::get_height() const {
 	return m_height;
 }
 
 //-----------------------------------------------
-int Map::getWidth() const {
+int Map::get_width() const {
 	return m_width;
 }
 
@@ -147,7 +133,7 @@ void Map::set_object(ObjectType type, const sf::Vector2f& location, sf::Texture*
 		//check if the player already exists in the map
 		for (int row = 0; row < m_height; row++) {
 			for (int col = 0; col < m_width; col++) {
-				if (m_map[row][col].getType() == ObjectType::O_Player) {
+				if (m_map[row][col].get_type() == ObjectType::O_Player) {
 					m_map[row][col] = WorldObject(ObjectType::O_Space,
 						sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE));
 					break;

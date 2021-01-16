@@ -7,7 +7,7 @@ Textures& Textures::instance() {
 	return inst;
 }
 
-sf::Texture* Textures::get_texture(int textureIndex) const {
+sf::Texture* Textures::get_texture(ObjectType textureIndex) const {
 	return m_textures[textureIndex];
 }
 

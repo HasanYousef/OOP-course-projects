@@ -5,22 +5,22 @@
 #include <fstream>
 
 #include "macros.h"
-#include "StaticObject.h"
+#include "WorldObject.h"
 
 class Map {
 public:
 	Map();
 	Map(int, int);
 	//----------------------------------
-	ObjectType get_type(const sf::Vector2f&) const;
-	void readFromStream(std::ifstream&);
+	ObjectType get_type(int, int) const;
+	int read_from_stream(std::ifstream&);
 	void draw(sf::RenderWindow&) const;
 	void set_object(ObjectType, const sf::Vector2f&, sf::Texture* textures[]);
 	//ObjectType get_object_type(const sf::Vector2f& location) const;
-	ObjectType charToType(char) const;
-	int getWidth() const;
-	int getHeight() const;
-	char typeToChar(ObjectType) const;
+	ObjectType char_to_type(char) const;
+	int get_width() const;
+	int get_height() const;
+	char type_to_char(ObjectType) const;
 
 private:
 	size_t m_height,

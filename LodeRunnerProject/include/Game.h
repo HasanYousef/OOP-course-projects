@@ -9,7 +9,6 @@ namespace fs = std::filesystem;
 #include "Map.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "Money.h"
 
 class Game {
 public:

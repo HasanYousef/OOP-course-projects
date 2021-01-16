@@ -8,7 +8,7 @@
 class Textures {
 public:
 	static Textures& instance();
-	sf::Texture* get_texture(int) const;
+	sf::Texture* get_texture(ObjectType) const;
 
 private:
 	Textures();

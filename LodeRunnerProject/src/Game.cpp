@@ -4,7 +4,7 @@
 
 //---------------------------------------------
 Game::Game() :
-	m_level(1), m_numOfLevels(0), m_remainingMoney(0), m_time(-1) {}
+	m_level(1), m_numOfLevels(5), m_remainingMoney(0), m_time(-1) {}
 
 //-----------------start_game------------------
 void Game::run(sf::RenderWindow& window) {
@@ -14,14 +14,21 @@ void Game::run(sf::RenderWindow& window) {
 			exit(EXIT_SUCCESS);
 		}
 		m_player.add_score(50);
+		//m_level++;         //added
 	}
 }
 
 void Game::load_map() {
 	//we open the level we in
-	fs::path p = "C:board.txt";
+	/*    The infinty levels reader
+	char file[] = "D:board1.txt";
+	file[7] = char(m_level + '0');
+	fs::path p = file;
+	*/
+
+	fs::path p = "C:board1.txt";
 	std::ifstream ifile(fs::absolute(p));
-	m_map.readFromStream(ifile);
+	m_time = m_map.read_from_stream(ifile);
 	ifile.close();
 }
 
@@ -32,7 +39,7 @@ void Game::run_level(sf::RenderWindow& window) {
 	int remaining_coins = 0;
 	//add panel (bottons)
 	load_map();
-	locate_objects();
+	//locate_objects();
 	while (window.isOpen()) {
 		window.clear();
 		sf::Time time = clock.getElapsedTime();
@@ -63,7 +70,7 @@ void Game::run_level(sf::RenderWindow& window) {
 		if (m_player.getGift(m_map)) {
 			//give him a gift
 		}
-		if (time.asSeconds() >= m_time || player_get_hit()) {
+		if (time.asSeconds() >= m_time && m_time != -1 || player_get_hit()) {
 			m_player.die();
 			//we reset the map
 			load_map();
@@ -101,16 +108,16 @@ bool Game::player_get_hit() {
 //m_remainingMoney 1 this is how its work
 void Game::locate_objects() {
 	m_remainingMoney = 0;
-	for (int row = 0; row < m_map.getHeight(); row++) {
-		for (int col = 0; col < m_map.getWidth(); col++) {
-			switch (m_map.get_type(sf::Vector2f(row, col))) {
+	for (int row = 0; row < m_map.get_height(); row++) {
+		for (int col = 0; col < m_map.get_width(); col++) {
+			switch (m_map.get_type(row,col)) {
 			case O_Player: //we add the player
 				m_player.set_position(sf::Vector2f(row, col));
 				break;
 			case O_Enemy: //we add the enemy
-				m_enemies.push_back(Enemy());
+				//m_enemies.push_back(Enemy());
 				break;
-			case O_Money: //we add money
+			case O_Coin: //we add money
 				m_remainingMoney++;
 				break;
 			}

@@ -33,7 +33,7 @@ void WorldObject::draw(sf::RenderWindow& window) const {
 
 //-------------------------------------------------
 //we get the type of the object(player,enemy....)
-ObjectType WorldObject::getType() const {
+ObjectType WorldObject::get_type() const {
 	return m_objectType;
 }
 

@@ -11,13 +11,14 @@ TEXTURE_SIZE = 32,
 NUM_OF_TYPES = 7,
 INIT_HEALTH = 3,
 BOARD_UI_X = 32,
-SPEED = 0.1,
 BUTTON_WIDTH = 120,
 BUTTON_HEIGHT = 50,
 ANIMATION_SIZE = 5,
 ANIMATION_IMAGE_COUNT = 5;
 
-const float ANIMATION_SWITCH_TIME = 0.2;
+const float ANIMATION_SWITCH_TIME = 0.2,
+            SPEED = 0.1f;
+
 
 //---------------------
 enum UserOption
@@ -45,11 +46,10 @@ enum ObjectType
 	O_Wall,
 	O_Ladder,
 	O_Rope,
-	O_Money,
-	O_Player,
-	O_Enemy,
 	O_Coin,
-	O_Gift
+	O_Gift,
+	O_Player,
+	O_Enemy
 };
 
 //---------------------
@@ -59,6 +59,6 @@ SPACE = ' ',
 WALL = '#',
 LADDER = 'H',
 ROPE = '-',
-MONEY = '*',
+COIN = '*',
 PLAYER = '@',
 ENEMY = '%';

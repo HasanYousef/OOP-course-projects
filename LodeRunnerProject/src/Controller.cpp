@@ -6,7 +6,7 @@
 //in the Controller structor, the maps file will be open
 //and it's stream will be stored in the map stream variable
 Controller::Controller() {
-	m_window.setSize({ WINDOW_WIDTH,WINDOW_HEIGHT });
+	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_WIDTH), "LodeRunner");
 	//open_maps_stream();
 }
 
