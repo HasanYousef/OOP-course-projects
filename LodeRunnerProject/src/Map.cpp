@@ -75,13 +75,6 @@ void Map::draw(sf::RenderWindow& window) const {
 }
 
 //-----------------------------------------------
-/*
-ObjectType Map::get_object_type(const sf::Vector2f& location) const {
-	
-}
-*/
-
-//-----------------------------------------------
 //we use this when we want to print the array
 //we chech the char in the array and return the 
 //type on ObjectType

@@ -4,35 +4,35 @@
 
 //---------------------------------------------
 Game::Game() :
-	m_level(0), m_numOfLevels(0), m_remainingMoney(0), m_time(-1) {}
+	m_level(1), m_numOfLevels(0), m_remainingMoney(0), m_time(-1) {}
 
 //-----------------start_game------------------
 void Game::run(sf::RenderWindow& window) {
-	m_level = 1;
 	while (m_level <= m_numOfLevels) {
-		//we open the level we in
-		fs::path p = "C:board.txt";
-		std::ifstream ifile(fs::absolute(p));
-		m_map.readFromStream(ifile);
-		ifile.close();
-
-		locate_objects();
 		run_level(window);
-		m_level++;
 		if (m_player.get_health() == 0) {
 			exit(EXIT_SUCCESS);
 		}
 		m_player.add_score(50);
-		m_level++;
 	}
+}
+
+void Game::load_map() {
+	//we open the level we in
+	fs::path p = "C:board.txt";
+	std::ifstream ifile(fs::absolute(p));
+	m_map.readFromStream(ifile);
+	ifile.close();
 }
 
 //-----------------run_level-------------------
 void Game::run_level(sf::RenderWindow& window) {
 	sf::Event event;
 	sf::Clock clock;
-	int coins_remaned = 0;
+	int remaining_coins = 0;
 	//add panel (bottons)
+	load_map();
+	locate_objects();
 	while (window.isOpen()) {
 		window.clear();
 		sf::Time time = clock.getElapsedTime();
@@ -41,19 +41,13 @@ void Game::run_level(sf::RenderWindow& window) {
 		window.pollEvent(event);
 		//draw panel
 		window.display();
-		if (time.asSeconds() >= m_time) {
-			m_player.die();
-			//we reset the map
-			open_maps_stream();
-			locate_objects();
-		}
 		switch (event.type) {
 		case sf::Event::Closed:
 			window.close();
 			break;
 		case sf::Event::MouseButtonReleased:
 			/*
-			* check if panel bottons presser
+			* check if panel bottons pressed
 			*/
 			break;
 		//case:
@@ -69,10 +63,10 @@ void Game::run_level(sf::RenderWindow& window) {
 		if (m_player.getGift(m_map)) {
 			//give him a gift
 		}
-		if (player_get_hit()) {
+		if (time.asSeconds() >= m_time || player_get_hit()) {
 			m_player.die();
 			//we reset the map
-			open_maps_stream();
+			load_map();
 			locate_objects();
 		}
 		if (m_remainingMoney == 0) {
@@ -109,15 +103,14 @@ void Game::locate_objects() {
 	m_remainingMoney = 0;
 	for (int row = 0; row < m_map.getHeight(); row++) {
 		for (int col = 0; col < m_map.getWidth(); col++) {
-			switch (m_map.get_type({ row,col })) {
+			switch (m_map.get_type(sf::Vector2f(row, col))) {
 			case O_Player: //we add the player
-				m_player.set_position({ row,col });
+				m_player.set_position(sf::Vector2f(row, col));
 				break;
 			case O_Enemy: //we add the enemy
 				m_enemies.push_back(Enemy());
 				break;
 			case O_Money: //we add money
-				m_moneyPacks.push_back(Money(O_Money, { row,col }));
 				m_remainingMoney++;
 				break;
 			}

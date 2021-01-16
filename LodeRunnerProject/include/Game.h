@@ -15,6 +15,7 @@ class Game {
 public:
 	Game();
 	void run(sf::RenderWindow&);
+	void load_map();
 	void run_level(sf::RenderWindow& window);
 	void locate_objects();
 private:
@@ -32,5 +33,4 @@ private:
 	Player m_player;
 	//---Arrays_for_members-
 	std::vector <Enemy> m_enemies;
-	std::vector <Money> m_moneyPacks;
 };

@@ -2,6 +2,8 @@
 
 #include "Animation.h"
 
+Animation::Animation() : m_totalTime(0), m_currentImage(0) {}
+
 Animation& Animation::instance() {
 	static Animation inst;
 	return inst;
