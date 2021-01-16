@@ -35,13 +35,13 @@ int Map::read_from_stream(std::ifstream& stream) {
 	stream >> m_width;
 	stream >> time;
 	char ch;
-	//jumping over the new line char
-	stream.get();
 	//reading the map's chars line by line
 	for (int row = 0; row < m_height; row++) {
+		//jumping over the new line char
+		stream.get();
 		std::vector<WorldObject> tempRow;
 		for (int col = 0; col < m_width; col++) {
-			tempRow.push_back(WorldObject(char_to_type(stream.get()), sf::Vector2f(col, row)));
+			tempRow.push_back(WorldObject(char_to_type(stream.get()), sf::Vector2f(col * 32, row * 32)));
 		}
 		m_map.push_back(tempRow);
 	}
@@ -55,7 +55,7 @@ void Map::draw(sf::RenderWindow& window) const {
 	for (int row = 0; row < m_height; row++)
 		for (int col = 0; col < m_width; col++) {
 			ObjectType type = m_map[row][col].get_type();
-			if (type != ObjectType::O_Player && type != ObjectType::O_Player)
+			if (type != ObjectType::O_Player && type != ObjectType::O_Enemy)
 				m_map[row][col].draw(window);
 		}
 }

@@ -19,13 +19,6 @@ void Game::run(sf::RenderWindow& window) {
 }
 
 void Game::load_map() {
-	//we open the level we in
-	/*    The infinty levels reader
-	char file[] = "D:board1.txt";
-	file[7] = char(m_level + '0');
-	fs::path p = file;
-	*/
-
 	fs::path p = "C:board1.txt";
 	std::ifstream ifile(fs::absolute(p));
 	m_time = m_map.read_from_stream(ifile);

@@ -13,5 +13,5 @@ public:
 private:
 	Textures();
 
-	std::vector<sf::Texture*> m_textures;
+	sf::Texture* m_textures[NUM_OF_TYPES];
 };
