@@ -11,11 +11,15 @@ sf::Texture* Textures::get_texture(ObjectType textureIndex) const {
 	return m_textures[textureIndex];
 }
 
+sf::Font* Textures::get_font() const {
+	return m_font;
+}
+
 Textures::Textures() { 
-	//initing the textures object in the array member
+	// initing the textures object in the array member
 	for (int i = 0; i < NUM_OF_TYPES; i++)
 		m_textures[i] = new sf::Texture();
-
+	// load the textures from the files
 	(*m_textures[ObjectType::O_Space]).loadFromFile("space.png");
 	(*m_textures[ObjectType::O_Wall]).loadFromFile("wall.png");
 	(*m_textures[ObjectType::O_Ladder]).loadFromFile("ladder.png");
@@ -24,4 +28,6 @@ Textures::Textures() {
 	(*m_textures[ObjectType::O_Gift]).loadFromFile("gift.png");
 	(*m_textures[ObjectType::O_Player]).loadFromFile("player.png");
 	(*m_textures[ObjectType::O_Enemy]).loadFromFile("enemy.png");
+	// load the font
+	(*m_font).loadFromFile(FONT_PATH);
 }

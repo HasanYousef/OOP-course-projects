@@ -6,7 +6,7 @@
 #include "macros.h"
 #include "Game.h"
 //#include "Menu.h"
-//#include "Editor.h"
+#include "Editor.h"
 
 class Controller {
 public:
@@ -15,6 +15,7 @@ public:
 private:
 	//Menu m_menu;
 	Game m_game;
+	Editor m_editor;
 	//Editor m_editor;
 	sf::RenderWindow m_window;
 };

@@ -22,7 +22,7 @@ void Game::load_map() {
 	//we open the level we in
 	//The infinty levels reader
 	char file[] = "C:board1.txt";
-	file[7] = char(m_level + '0');
+	//file[7] = char(m_level + '0');
 	fs::path p = file;
 	std::ifstream ifile(fs::absolute(p));
 	m_time = m_map.read_from_stream(ifile);
@@ -36,13 +36,15 @@ void Game::run_level(sf::RenderWindow& window) {
 	int remaining_coins = 0;
 	//add panel (bottons)
 	load_map();
-	//locate_objects();
+	locate_objects();
 	while (window.isOpen()) {
 		window.clear();
 		sf::Time time = clock.getElapsedTime();
 		/*--- WE PRINT THE TIME ---*/
 		m_map.draw(window);
 		window.pollEvent(event);
+		m_player.draw(window);
+		draw_enemies(window);
 		//draw panel
 		window.display();
 		switch (event.type) {
@@ -60,7 +62,7 @@ void Game::run_level(sf::RenderWindow& window) {
 		m_player.move(m_map);
 		move_enemies();
 		//have to add to be able remove block
-		if (m_player.getCoin(m_map)) {
+  		if (m_player.getCoin(m_map)) {
 			m_player.add_score(2*m_level); //need to add a const for coin value
 			m_remainingMoney--;
 		}
@@ -78,6 +80,13 @@ void Game::run_level(sf::RenderWindow& window) {
 		}
 	}
 	
+}
+
+//---------------------------------------------
+void Game::draw_enemies(sf::RenderWindow& window) {
+	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
+		m_enemies[enemy].draw(window);
+	}
 }
 
 //---------------------------------------------
@@ -107,12 +116,15 @@ void Game::locate_objects() {
 	m_remainingMoney = 0;
 	for (int row = 0; row < m_map.get_height(); row++) {
 		for (int col = 0; col < m_map.get_width(); col++) {
+			sf::Vector2f points(col * TEXTURE_SIZE, row * TEXTURE_SIZE);
 			switch (m_map.get_type(row,col)) {
 			case O_Player: //we add the player
-				m_player.set_position(sf::Vector2f(row, col));
+				m_player = Player(O_Player, points);
+				m_map.set_object(O_Space, points);
 				break;
 			case O_Enemy: //we add the enemy
-				//m_enemies.push_back(Enemy());
+				m_enemies.push_back(Enemy(O_Enemy, points));
+				m_map.set_object(O_Space, points);
 				break;
 			case O_Coin: //we add money
 				m_remainingMoney++;

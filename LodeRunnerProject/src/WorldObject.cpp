@@ -48,8 +48,9 @@ WorldObject& WorldObject::operator=(const WorldObject& other) {
 //-------------------------------------------------
 //we creat the texture that we want to print it 
 sf::Sprite WorldObject::create() const {
-	auto result = sf::Sprite(*Textures::instance().
+	sf::Sprite result = sf::Sprite(*Textures::instance().
 		                 get_texture(m_objectType));
 	result.setPosition(m_position);
+	result.getPosition();
 	return result;
 }

@@ -19,6 +19,7 @@ public:
 	void locate_objects();
 private:
 	//---Functions----------
+	void draw_enemies(sf::RenderWindow&);
 	void move_enemies();
 	bool player_get_hit();
 	//void pause_menu();

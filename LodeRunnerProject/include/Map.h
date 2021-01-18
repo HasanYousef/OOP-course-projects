@@ -13,9 +13,11 @@ public:
 	Map(int, int);
 	//----------------------------------
 	ObjectType get_type(int, int) const;
+	WorldObject get_object(const sf::Vector2f&);
 	int read_from_stream(std::ifstream&);
 	void draw(sf::RenderWindow&) const;
-	void set_object(ObjectType, const sf::Vector2f&, sf::Texture* textures[]);
+	void set_object(ObjectType, const sf::Vector2f&);
+	//void set_object(ObjectType, const sf::Vector2f&, sf::Texture* textures[]);
 	//ObjectType get_object_type(const sf::Vector2f& location) const;
 	ObjectType char_to_type(char) const;
 	int get_width() const;

@@ -12,7 +12,8 @@ Controller::Controller() {
 
 //-----------------run-----------------
 void Controller::run() {
-	m_game.run(m_window);
+	m_editor.run(m_window);
+	//m_game.run(m_window);
 	/*
 	UserOption userChoice = m_menu.run(m_window);
 	while(userChoice != UserOption::Exit)

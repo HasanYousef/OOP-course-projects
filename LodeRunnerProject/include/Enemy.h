@@ -6,5 +6,5 @@
 class Enemy : public MoveableObject {
 public:
 	Enemy() {};
-	Enemy(ObjectType, const sf::Vector2f&, int);
+	Enemy(ObjectType, const sf::Vector2f&);
 };

@@ -41,7 +41,8 @@ int Map::read_from_stream(std::ifstream& stream) {
 		stream.get();
 		std::vector<WorldObject> tempRow;
 		for (int col = 0; col < m_width; col++) {
-			tempRow.push_back(WorldObject(char_to_type(stream.get()), sf::Vector2f(col * 32, row * 32)));
+			tempRow.push_back(WorldObject(char_to_type(stream.get()), 
+				sf::Vector2f(col * TEXTURE_SIZE, row * TEXTURE_SIZE)));
 		}
 		m_map.push_back(tempRow);
 	}
@@ -105,8 +106,7 @@ char Map::type_to_char(ObjectType type) const {
 
 //-----------------------------------------------
 ObjectType Map::get_type(int row,int col) const {
-	ObjectType t = m_map[row][col].get_type();
-	return t;
+	return m_map[row][col].get_type();
 }
 
 //-----------------------------------------------
@@ -119,6 +119,7 @@ int Map::get_width() const {
 	return m_width;
 }
 
+/*
 //----------------------------------------------------------------------------------------------
 //this func take from the editor the possistion of the mouse 
 //and the type that the user choose to add it and the textures
@@ -144,5 +145,15 @@ void Map::set_object(ObjectType type, const sf::Vector2f& location, sf::Texture*
 	//check if the position is inside the board range
 	if (newRow < m_height && newCol < m_width)
 		m_map[newRow][newCol] = WorldObject(type, sf::Vector2f(xPos, yPos));
+}*/
+
+//-----------------------------------------------
+void Map::set_object(ObjectType type, const sf::Vector2f& location) {
+	m_map[location.y / TEXTURE_SIZE][location.x / TEXTURE_SIZE] =
+		WorldObject(type, location);
 }
 
+//-----------------------------------------------
+WorldObject Map::get_object(const sf::Vector2f& points) {
+	return m_map[points.y / TEXTURE_SIZE][points.x / TEXTURE_SIZE];
+}
