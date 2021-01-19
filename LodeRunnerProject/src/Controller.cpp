@@ -12,30 +12,43 @@ Controller::Controller() {
 
 //-----------------run-----------------
 void Controller::run() {
-	m_editor.run(m_window, 1);
-	//m_game.run(m_window);
-	/*
-	UserOption userChoice = m_menu.run(m_window);
+	UserOption userChoice = runMenu();
 	while(userChoice != UserOption::Exit)
 	switch (userChoice) { // we make it to start the game 
-		case UserOption::ShowMainMenu:
-			userChoice = m_menu.run(m_window);
 		case UserOption::StartGame:
 			m_game.run(m_window);
 		case UserOption::EditMaps:
-			m_editor.run(m_window);
+			m_editor.run(m_window, 1);
 	}
-	*/
 }
 
-//---------------------------------------------
-/*
-void Controller::open_maps_stream() {
-	// try to open file to read
-	fs::path p = MAP_PATH;
-	m_mapsStream(fs::absolute(p));
-	// if file doesn't exist open the editor
-	if (!m_mapsStream)
-		initNewMap();
+UserOption Controller::runMenu() {
+	Panel panel;
+	panel.setPosition({ 10, 10 });
+	panel.addTextButton(UserOption::StartGame, "Start game");
+	panel.addTextButton(UserOption::EditMaps, "Edit levels");
+	panel.addTextButton(UserOption::AddNewMap, "Add a new level");
+	panel.addTextButton(UserOption::Exit, "Exit game");
+
+	while (m_window.isOpen()) {
+		m_window.clear();
+		panel.draw(m_window);
+		m_window.display();
+		// if an event happened
+		if (auto event = sf::Event{}; m_window.waitEvent(event))
+		{
+			//close window
+			switch (event.type) {
+			case sf::Event::Closed:
+				return UserOption::Exit;
+
+			case sf::Event::MouseButtonReleased:
+				auto location = m_window.mapPixelToCoords(
+					{ event.mouseButton.x, event.mouseButton.y });
+				return panel.handle_click(location);
+			}
+		}
+	}
+
+	return UserOption::Nothing;
 }
-*/

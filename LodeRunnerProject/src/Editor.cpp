@@ -10,17 +10,8 @@ Editor::Editor() :
 void Editor::run(sf::RenderWindow& window, int level) {
 	// set the panel's buttons
 	initPanel();
-	// try to open file to read
-	fs::path p = "C:board.txt";
-	std::ifstream ifile(fs::absolute(p));
-
-	// if file exists
-	if (ifile)
-		m_map.read_from_stream(ifile);
-	// if file doesn't exist
-	else
-		initMap();
-	ifile.close();
+	
+	m_map.load_map(level);
 
 	// mouse world object hover
 	sf::Sprite hover;

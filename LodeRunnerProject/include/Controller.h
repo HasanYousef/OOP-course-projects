@@ -6,15 +6,15 @@
 #include "macros.h"
 #include "Game.h"
 #include "Editor.h"
+#include "Panel.h"
 
 class Controller {
 public:
 	Controller();
 	void run();
+	UserOption runMenu();
 private:
-	//Menu m_menu;
 	Game m_game;
 	Editor m_editor;
-	//Editor m_editor;
 	sf::RenderWindow m_window;
 };

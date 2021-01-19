@@ -26,7 +26,7 @@ Map::Map(int height, int width) {
 
 int Map::load_map(int level) {
 	std::string str = "C:board";
-	str += level;
+	str += std::to_string(level);
 	str += ".txt";
 	fs::path p = str;
 	std::ifstream ifile(fs::absolute(p));
