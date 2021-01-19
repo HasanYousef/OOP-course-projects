@@ -4,9 +4,9 @@
 
 //-------------------------------------------------------
 //
-void Panel::add_button(ObjectType type) {
+void Panel::addTextureButton(UserOption option) {
 	TextureButton* button = new TextureButton;
-	button->set_type(type);
+	button->setOption(option);
 
 	sf::Vector2f position(m_position.x,
 		m_buttons.back()->get_position().y + BUTTON_HEIGHT + BUTTON_MARGIN);
@@ -17,8 +17,9 @@ void Panel::add_button(ObjectType type) {
 
 //-------------------------------------------------------
 //
-void Panel::add_button(std::string string) {
+void Panel::addTextButton(UserOption option, std::string string) {
 	TextButton* button = new TextButton;
+	button->setOption(option);
 	button->set_string(string);
 
 	sf::Vector2f position(m_position.x,
@@ -42,8 +43,6 @@ UserOption Panel::handle_click(const sf::Vector2f& location) const {
 //-------------------------------------------------------
 //here we draw the panel (menu) we print every button 
 void Panel::draw(sf::RenderWindow& window) const {
-	m_textButtons[SAVE_BUTTON].draw(window);
-	m_textButtons[CLEAR_BUTTON].draw(window);
-	for (int buttonIndex = 0; buttonIndex < NUM_OF_TYPES; buttonIndex++)
-		m_textureButtons[buttonIndex].draw(window);
+	for (int i = 0; i < m_buttons.size(); i++)
+		m_buttons[i]->draw(window);
 }

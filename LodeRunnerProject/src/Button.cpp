@@ -30,3 +30,7 @@ sf::Vector2f Button::get_position() const {
 void Button::set_position(sf::Vector2f position) {
 	m_position = position;
 }
+
+void Button::setOption(UserOption option) {
+	m_option = option;
+}

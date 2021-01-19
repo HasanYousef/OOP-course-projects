@@ -54,69 +54,32 @@ void Player::move(const Map& map)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		if (if_can_move(map, 'U')) {
 			m_position.y -= SPEED;
+			get_on_floor(map);
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		if (if_can_move(map, 'D')) {
 			m_position.y += SPEED;
+			get_on_floor(map);
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		if (if_can_move(map, 'L')) {
 			m_position.x -= SPEED;
+			get_on_floor(map);
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		if (if_can_move(map, 'R')) {
 			m_position.x += SPEED;
+			get_on_floor(map);
 		}
 	}
 }
 
 //-------------------------------------------------
-//we use this bool func in move player func in this
-//func check if the player can go to the place that 
-//he want if yes we return true else we return false
-bool Player::if_can_move(const Map& map, char way) {
-	sf::Vector2f points(m_position);
-	//check if we can not go to the way we want
-	switch (way) {
-	case 'U': //UP
-		points.y -= SPEED;
-		points.y = points.y / TEXTURE_SIZE;
-		points.x = points.x / TEXTURE_SIZE;
-		if (map.get_type(points.y, points.x) == O_Ladder &&
-			map.get_object(points).create().getOrigin() == points)
-		{ return true; }
-		break;
-	case 'D': //DOWN
-		points.y += SPEED;
-		points.y = points.y / TEXTURE_SIZE;
-		points.x = points.x / TEXTURE_SIZE;
-		if (map.get_type(points.y, points.x) != O_Wall)
-		{ return true; }
-		break;
-	case 'L': //LEFT
-		points.x -= SPEED;
-		points.y = points.y / TEXTURE_SIZE;
-		points.x = points.x / TEXTURE_SIZE;
-		if (map.get_type(points.y, points.x) != O_Wall)
-		{ return true; }
-		break;
-	case 'R': //RIGHT
-		points.x += SPEED;
-		points.y = points.y / TEXTURE_SIZE;
-		points.x = points.x / TEXTURE_SIZE;
-		if (map.get_type(points.y, points.x) != O_Wall)
-		{ return true; }
-		break;
-	}
-	return false; //true if we can go
-}
-
-//-------------------------------------------------
 bool Player::getCoin(const Map& map) {
-	return (map.get_type(m_position.x/TEXTURE_SIZE,m_position.y / TEXTURE_SIZE) == O_Coin);
+	return (map.get_type(m_position) == O_Coin);
 }
 
 //-------------------------------------------------
@@ -124,11 +87,3 @@ bool Player::getGift(const Map& map) {
 	return (map.get_type(m_position.x / TEXTURE_SIZE, m_position.y / TEXTURE_SIZE) == O_Gift);
 }
 
-/*
-while (map.get_type((m_position.y + TEXTURE_SIZE) / TEXTURE_SIZE, m_position.x / TEXTURE_SIZE) != O_Wall
-				&& map.get_type((m_position.y + TEXTURE_SIZE) / TEXTURE_SIZE, m_position.x / TEXTURE_SIZE) != O_Ladder
-				&& map.get_type((m_position.y + TEXTURE_SIZE) / TEXTURE_SIZE, m_position.x / TEXTURE_SIZE) != O_Rope)
-			{
-				m_position.y += 0.000007f;
-			}
-*/

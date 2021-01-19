@@ -21,7 +21,7 @@ void Game::run(sf::RenderWindow& window) {
 void Game::load_map() {
 	//we open the level we in
 	//The infinty levels reader
-	char file[] = "C:board1.txt";
+	char file[] = "D:board2.txt";
 	//file[7] = char(m_level + '0');
 	fs::path p = file;
 	std::ifstream ifile(fs::absolute(p));
@@ -43,8 +43,8 @@ void Game::run_level(sf::RenderWindow& window) {
 		/*--- WE PRINT THE TIME ---*/
 		m_map.draw(window);
 		window.pollEvent(event);
-		m_player.draw(window);
 		draw_enemies(window);
+		m_player.draw(window);
 		//draw panel
 		window.display();
 		switch (event.type) {
@@ -56,8 +56,6 @@ void Game::run_level(sf::RenderWindow& window) {
 			* check if panel bottons pressed
 			*/
 			break;
-		//case:
-			//break;
 		}
 		m_player.move(m_map);
 		move_enemies();
@@ -65,21 +63,24 @@ void Game::run_level(sf::RenderWindow& window) {
   		if (m_player.getCoin(m_map)) {
 			m_player.add_score(2*m_level); //need to add a const for coin value
 			m_remainingMoney--;
+			m_map.set_object(O_Space, m_player.get_position());
 		}
 		if (m_player.getGift(m_map)) {
 			//give him a gift
 		}
 		if (time.asSeconds() >= m_time && m_time != -1 || player_get_hit()) {
 			m_player.die();
-			//we reset the map
-			load_map();
-			locate_objects();
+			if (m_player.get_health() == 0) {
+				return;
+			}
+			//we set the origin points to enemy and player
+			//m_player.set_position();
+			//enemies_origin_position();
 		}
 		if (m_remainingMoney == 0) {
 			return;
 		}
 	}
-	
 }
 
 //---------------------------------------------
@@ -99,7 +100,8 @@ void Game::move_enemies() {
 //---------------------------------------------
 bool Game::player_get_hit() {
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
-		if (m_enemies[enemy].get_position() == m_player.get_position()) {
+		if (m_enemies[enemy].create().getGlobalBounds()
+			.intersects(m_player.create().getGlobalBounds()) ) {
 			return true;
 		}
 	}

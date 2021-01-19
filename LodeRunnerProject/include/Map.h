@@ -2,10 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include <string>
 #include <fstream>
-#include <filesystem>
-namespace fs = std::filesystem;
 
 #include "macros.h"
 #include "WorldObject.h"
@@ -16,6 +13,7 @@ public:
 	Map(int, int);
 	//----------------------------------
 	ObjectType get_type(int, int) const;
+	ObjectType get_type(const sf::Vector2f& ) const;
 	WorldObject get_object(const sf::Vector2f&);
 	int read_from_stream(std::ifstream&);
 	void draw(sf::RenderWindow&) const;
@@ -26,7 +24,6 @@ public:
 	int get_width() const;
 	int get_height() const;
 	char type_to_char(ObjectType) const;
-	void save(int) const;
 
 private:
 	size_t m_height,

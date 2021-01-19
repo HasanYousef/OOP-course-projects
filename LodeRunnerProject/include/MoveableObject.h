@@ -10,6 +10,11 @@ public:
 	//---Constructors---------------------------------------------------
 	MoveableObject();
 	MoveableObject(ObjectType, const sf::Vector2f&);
+	void get_on_floor(const Map&);
+	bool on_ladder(const Map&, char);
+	bool if_can_move(const Map&, char);
 	//---functions----------------------------
 	virtual void move(const Map&);
+private:
+	sf::Vector2f m_originPosition;
 };

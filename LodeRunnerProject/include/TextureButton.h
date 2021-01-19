@@ -5,12 +5,7 @@
 
 class TextureButton : public Button {
 public:
-	TextureButton();
-	TextureButton(const sf::Vector2f&, ObjectType);
+	ObjectType optionToObjectType() const;
 	//----------------------------------------------
-	void draw(sf::RenderWindow& window) const;
-	ObjectType getType() const;
-	void set_type(ObjectType type);
-private:
-	ObjectType m_type;
+	virtual void draw(sf::RenderWindow& window) const;
 };

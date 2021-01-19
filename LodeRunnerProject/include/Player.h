@@ -25,6 +25,4 @@ public:
 private:
 	int m_health = INIT_HEALTH;
 	int m_score = 0;
-	//---help-functions-------------------
-	bool if_can_move(const Map&, char);
 };

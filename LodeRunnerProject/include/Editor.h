@@ -12,11 +12,12 @@ namespace fs = std::filesystem;
 class Editor {
 public:
 	Editor();
-	void run();
+	void run(sf::RenderWindow&);
 
 private:
 	void handle_click(const sf::Vector2f&);
-	void init_map();
+	void initMap();
+	void initPanel();
 	//----------------------------------
 	sf::RenderWindow m_window;
 	Map m_map;

@@ -13,8 +13,8 @@ class Panel {
 public:
 	Panel() {};
 	//----------------------------------------------
-	void add_button(ObjectType);
-	void add_button(std::string string);
+	void addTextureButton(UserOption);
+	void addTextButton(UserOption, std::string string);
 	UserOption handle_click(const sf::Vector2f&) const;
 	void draw(sf::RenderWindow&) const;
 

@@ -24,17 +24,18 @@ const float ANIMATION_SWITCH_TIME = 0.2,
 //---------------------
 enum UserOption
 {
-	MainMenu,
-	StartGame,
-	EditMaps,
-	Exit,
 	AddSpace,
 	AddWall,
 	AddLadder,
 	AddRope,
-	AddMoney,
+	AddCoin,
+	AddGift,
 	AddPlayer,
 	AddEnemy,
+	MainMenu,
+	StartGame,
+	EditMaps,
+	Exit,
 	SaveBoard,
 	ClearBoard,
 	Nothing

@@ -2,34 +2,37 @@
 
 #include "TextureButton.h"
 
-TextureButton::TextureButton() :
-	m_type(ObjectType::O_Space)
-{}
-
-//------------------------------------------------------
-//constructor that take a texture to put a texture on the botton
-TextureButton::TextureButton(const sf::Vector2f& position,
-	ObjectType type) :
-	m_type(type) {
-	m_position = position;
-}
-
 //------------------------------------------------------
 //this a copy constructor
 void TextureButton::draw(sf::RenderWindow& window) const {
 	window.draw(create());
-
-	auto result = sf::Sprite(*(Textures::instance().get_texture(m_type)));
+	
+	ObjectType type = optionToObjectType();
+	auto result = sf::Sprite(*(Textures::instance().get_texture(type)));
 	result.setPosition({ m_position.x + 40, m_position.y + 8 });
 	window.draw(result);
 }
 
-//------------------------------------------------------
-//this func return the type of the botton(player,coin..)
-ObjectType TextureButton::getType() const {
-	return m_type;
-}
-
-void TextureButton::set_type(ObjectType type) {
-	m_type = type;
+ObjectType TextureButton::optionToObjectType() const {
+	switch (m_option)
+	{
+	case UserOption::AddSpace:
+		return ObjectType::O_Space;
+	case UserOption::AddWall:
+		return ObjectType::O_Wall;
+	case UserOption::AddLadder:
+		return ObjectType::O_Ladder;
+	case UserOption::AddRope:
+		return ObjectType::O_Rope;
+	case UserOption::AddCoin:
+		return ObjectType::O_Coin;
+	case UserOption::AddGift:
+		return ObjectType::O_Gift;
+	case UserOption::AddPlayer:
+		return ObjectType::O_Player;
+	case UserOption::AddEnemy:
+		return ObjectType::O_Enemy;
+	default:
+		return ObjectType::O_Space;
+	}
 }
