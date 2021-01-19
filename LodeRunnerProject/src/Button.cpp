@@ -12,7 +12,7 @@ Button::Button() :
 sf::RectangleShape Button::create() const {
 	auto result = sf::RectangleShape({ BUTTON_WIDTH, BUTTON_HEIGHT });
 	result.setPosition(m_position);
-	result.setFillColor(sf::Color::White);
+	result.setFillColor(sf::Color::Blue);
 	return result;
 }
 

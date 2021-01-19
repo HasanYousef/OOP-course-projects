@@ -5,7 +5,6 @@
 
 #include "macros.h"
 #include "Game.h"
-//#include "Menu.h"
 #include "Editor.h"
 
 class Controller {

@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <fstream>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "macros.h"
 #include "WorldObject.h"
@@ -14,7 +16,7 @@ public:
 	//----------------------------------
 	ObjectType get_type(int, int) const;
 	ObjectType get_type(const sf::Vector2f& ) const;
-	WorldObject get_object(const sf::Vector2f&);
+	int load_map(int);
 	int read_from_stream(std::ifstream&);
 	void draw(sf::RenderWindow&) const;
 	void set_object(ObjectType, const sf::Vector2f&);

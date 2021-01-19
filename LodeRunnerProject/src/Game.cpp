@@ -18,24 +18,13 @@ void Game::run(sf::RenderWindow& window) {
 	}
 }
 
-void Game::load_map() {
-	//we open the level we in
-	//The infinty levels reader
-	char file[] = "D:board2.txt";
-	//file[7] = char(m_level + '0');
-	fs::path p = file;
-	std::ifstream ifile(fs::absolute(p));
-	m_time = m_map.read_from_stream(ifile);
-	ifile.close();
-}
-
 //-----------------run_level-------------------
 void Game::run_level(sf::RenderWindow& window) {
 	sf::Event event;
 	sf::Clock clock;
 	int remaining_coins = 0;
 	//add panel (bottons)
-	load_map();
+	m_map.load_map(m_level);
 	locate_objects();
 	while (window.isOpen()) {
 		window.clear();

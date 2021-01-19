@@ -18,7 +18,8 @@ sf::Font* Textures::get_font() const {
 Textures::Textures() { 
 	// initing the textures object in the array member
 	for (int i = 0; i < NUM_OF_TYPES; i++)
-		m_textures[i] = new sf::Texture();
+		m_textures[i] = new sf::Texture;
+	m_font = new sf::Font;
 	// load the textures from the files
 	(*m_textures[ObjectType::O_Space]).loadFromFile("space.png");
 	(*m_textures[ObjectType::O_Wall]).loadFromFile("wall.png");

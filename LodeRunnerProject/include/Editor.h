@@ -12,16 +12,15 @@ namespace fs = std::filesystem;
 class Editor {
 public:
 	Editor();
-	void run(sf::RenderWindow&);
+	void run(sf::RenderWindow&, int level);
 
 private:
 	void handle_click(const sf::Vector2f&);
 	void initMap();
 	void initPanel();
 	//----------------------------------
-	sf::RenderWindow m_window;
 	Map m_map;
 	Panel m_panel;
-	UserOption m_clickMode = UserOption::Nothing;
+	UserOption m_clickMode;
 	sf::Texture* m_textures[NUM_OF_TYPES];
 };

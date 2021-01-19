@@ -12,7 +12,7 @@ Controller::Controller() {
 
 //-----------------run-----------------
 void Controller::run() {
-	m_editor.run(m_window);
+	m_editor.run(m_window, 1);
 	//m_game.run(m_window);
 	/*
 	UserOption userChoice = m_menu.run(m_window);

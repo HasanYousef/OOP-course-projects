@@ -14,7 +14,6 @@ class Game {
 public:
 	Game();
 	void run(sf::RenderWindow&);
-	void load_map();
 	void run_level(sf::RenderWindow& window);
 	void locate_objects();
 private:

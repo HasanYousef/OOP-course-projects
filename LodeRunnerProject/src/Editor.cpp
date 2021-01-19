@@ -2,12 +2,12 @@
 
 #include "Editor.h"
 
-//--------------------------------------------
 Editor::Editor() :
-	m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Map Editor") {}
+	m_clickMode(UserOption::Nothing)
+{}
 
 //--------------------------------------------
-void Editor::run(sf::RenderWindow& window) {
+void Editor::run(sf::RenderWindow& window, int level) {
 	// set the panel's buttons
 	initPanel();
 	// try to open file to read
@@ -25,25 +25,25 @@ void Editor::run(sf::RenderWindow& window) {
 	// mouse world object hover
 	sf::Sprite hover;
 	bool putHover = false;
-	while (m_window.isOpen()) {
-		m_window.clear();
-		m_map.draw(m_window);
-		m_panel.draw(m_window);
+	while (window.isOpen()) {
+		window.clear();
+		m_map.draw(window);
+		m_panel.draw(window);
 		if (putHover)
-			m_window.draw(hover);
-		m_window.display();
+			window.draw(hover);
+		window.display();
 		// if an event happened
-		if (auto event = sf::Event{}; m_window.waitEvent(event))
+		if (auto event = sf::Event{}; window.waitEvent(event))
 		{
 			//close window
 			switch (event.type) {
 			case sf::Event::Closed:
-				m_window.close();
+				window.close();
 				break;
 
 			//if clicked - the click could be in the panel side or in the board side
 			case sf::Event::MouseButtonReleased: {
-				auto location = m_window.mapPixelToCoords(
+				auto location = window.mapPixelToCoords(
 					{ event.mouseButton.x, event.mouseButton.y });
 				//panel side
 				if (location.x < BOARD_UI_X)
@@ -55,7 +55,7 @@ void Editor::run(sf::RenderWindow& window) {
 			}
 			//hover action
 			case sf::Event::MouseMoved: {
-				auto location = sf::Mouse::getPosition(m_window);
+				auto location = sf::Mouse::getPosition(window);
 				int newCol = int(location.x - BOARD_UI_X) / TEXTURE_SIZE;
 				int newRow = int(location.y) / TEXTURE_SIZE;
 				//if there is a hover in the board side
@@ -103,6 +103,7 @@ void Editor::initMap() {
 //--------------------------------------------
 //we creat new board
 void Editor::initPanel() {
+	m_panel.setPosition(sf::Vector2f(10, 10));
 	m_panel.addTextButton(UserOption::SaveBoard, "Save");
 	m_panel.addTextButton(UserOption::ClearBoard, "Clear");
 

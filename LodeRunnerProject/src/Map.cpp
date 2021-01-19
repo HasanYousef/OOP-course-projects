@@ -24,6 +24,17 @@ Map::Map(int height, int width) {
 	m_map = newBoard;
 }
 
+int Map::load_map(int level) {
+	std::string str = "C:board";
+	str += level;
+	str += ".txt";
+	fs::path p = str;
+	std::ifstream ifile(fs::absolute(p));
+	int time = read_from_stream(ifile);
+	ifile.close();
+	return time;
+}
+
 //-----------------------------------------------
 //here the constructor that we use it if we have 
 //a board file we open the file and do stream 
