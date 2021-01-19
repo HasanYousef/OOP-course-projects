@@ -7,11 +7,12 @@
 //----------------------------------
 class Button {
 public:
-	Button() {}
+	Button();
 	sf::RectangleShape create() const;
-	bool handleClick(const sf::Vector2f location) const;
+	UserOption handle_click(const sf::Vector2f location) const;
 	sf::Vector2f get_position() const;
 	void set_position(sf::Vector2f);
 protected:
+	UserOption m_option;
 	sf::Vector2f m_position;
 };

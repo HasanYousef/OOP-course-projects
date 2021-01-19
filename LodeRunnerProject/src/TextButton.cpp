@@ -2,6 +2,10 @@
 
 #include "TextButton.h"
 
+TextButton::TextButton() :
+	m_string()
+{}
+
 //--------------------------------------------------------
 //this the constructor of the TextButton we take the Font
 //and what we want to write on the botton also the possistion

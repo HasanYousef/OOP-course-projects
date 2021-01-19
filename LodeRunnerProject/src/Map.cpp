@@ -157,3 +157,23 @@ void Map::set_object(ObjectType type, const sf::Vector2f& location) {
 WorldObject Map::get_object(const sf::Vector2f& points) {
 	return m_map[points.y / TEXTURE_SIZE][points.x / TEXTURE_SIZE];
 }
+
+//-----------------------------------------------
+//save the board (print the object on the board file)
+void Map::save(int mapNum) const {
+	//opening the output file stream
+	std::string str = "C:board";
+	str += mapNum;
+	str += ".txt";
+	fs::path p = str;
+	std::ofstream ofile(fs::absolute(p));
+	//writing the chars the represent each object 
+	for (int row = 0; row < m_height; row++) {
+		for (int col = 0; col < m_width; col++) {
+			ofile.put(type_to_char(m_map[row][col].get_type()));
+		}
+		if (row != m_height - 1)
+			ofile.put('\n');
+	}
+	ofile.close();
+}

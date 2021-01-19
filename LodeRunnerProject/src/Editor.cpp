@@ -51,7 +51,7 @@ void Editor::run() {
 				if (location.x < BOARD_UI_X)
 					handleClick(location);
 				//board side
-				else if (m_clickMode < ActionType::SaveBoard)
+				else if (m_clickMode < UserOption::SaveBoard)
 					m_board.set_object(ObjectType(m_clickMode), location, m_textures);
 				break;
 			}
@@ -61,7 +61,7 @@ void Editor::run() {
 				int newCol = int(location.x - BOARD_UI_X) / TEXTURE_SIZE;
 				int newRow = int(location.y) / TEXTURE_SIZE;
 				//if there is a hover in the board side
-				if (m_clickMode < ActionType::SaveBoard && location.x > BOARD_UI_X &&
+				if (m_clickMode < UserOption::SaveBoard && location.x > BOARD_UI_X &&
 					newRow < m_board.getHeight() && newCol < m_board.getWidth()) {
 
 					//put the texture that the user holds with the mouse and wants to put
@@ -83,51 +83,21 @@ void Editor::run() {
 //--------------------------------------------
 //check wich botton the user clicked
 void Editor::handleClick(const sf::Vector2f &location) {
-	ActionType act = m_panel.handleClick(location);
-	if (act == ActionType::SaveBoard)
-		m_board.save();
-	if (act == ActionType::ClearBoard) {
+	UserOption act = m_panel.handle_click(location);
+	if (act == UserOption::SaveBoard)
+		m_map.save();
+	if (act == UserOption::ClearBoard) {
 		initBoard();
 	}
 	//if the user wants to put something in the board
-	if (act != ActionType::Nothing && act < 8) {
-		m_clickMode = ActionType(int(act));
+	if (act != UserOption::Nothing && act < 8) {
+		m_clickMode = UserOption(int(act));
 	}
 }
 
 //--------------------------------------------
 //we creat new board
-void Editor::initBoard() {
-	//writing a message on the window to tell the user to use the other window
-	sf::Font font;
-	font.loadFromFile(FONT_PATH);
-	auto text = sf::Text("Please enter the height and the width of the new board\nin the other window...",
-		font,
-		20);
-	//display the message
-	m_window.clear();
-	m_window.draw(text);
-	m_window.display();
-
-	int height, width;
-	std::cout << "Enter the height and the width of the map that you want to create:\n";
-	std::cin >> height >> width;
-	//making a board with the given size
-	m_board.setNew(height, width, m_textures);
-}
-
-//--------------------------------------------
-//here we load the textures
-void Editor::initializeTextures() {
-	//initing the textures object in the array member
-	for (int i = 0; i < NUM_OF_TYPES; i++)
-		m_textures[i] = new sf::Texture();
-
-	(*m_textures[ObjectType::Space]).loadFromFile("space.png");
-	(*m_textures[ObjectType::Wall]).loadFromFile("wall.png");
-	(*m_textures[ObjectType::Ladder]).loadFromFile("ladder.png");
-	(*m_textures[ObjectType::Rope]).loadFromFile("rope.png");
-	(*m_textures[ObjectType::Money]).loadFromFile("money.png");
-	(*m_textures[ObjectType::Player]).loadFromFile("player.png");
-	(*m_textures[ObjectType::Enemy]).loadFromFile("enemy.png");
+void Editor::init_map() {
+	int height = 12, width = 15;
+	m_map = Map(height, width);
 }

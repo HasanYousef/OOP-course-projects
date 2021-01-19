@@ -15,6 +15,8 @@ void Panel::add_button(ObjectType type) {
 	m_buttons.push_back(button);
 }
 
+//-------------------------------------------------------
+//
 void Panel::add_button(std::string string) {
 	TextButton* button = new TextButton;
 	button->set_string(string);
@@ -30,16 +32,11 @@ void Panel::add_button(std::string string) {
 //in this func we take the location of the pressed mouse
 //and we check wich botton the user pressed
 UserOption Panel::handle_click(const sf::Vector2f& location) const {
-	if (m_Buttons[0].handleClick(location))
-		return UserOption::SaveBoard;
-	else if (m_Buttons[1].handleClick(location))
-		return UserOption::ClearBoard;
-	//checking each textured button if clicked
-	for (int buttonIndex = 0; buttonIndex < NUM_OF_TYPES; buttonIndex++) {
-		if (m_Buttons[buttonIndex].handleClick(location))
-			return UserOption(int(m_Buttons[buttonIndex].getType()));
-	}
-	return Nothing;
+	for (int i = 0; i < m_buttons.size(); i++)
+		if (m_buttons[i]->handle_click(location) != UserOption::Nothing)
+			return m_buttons[i]->handle_click(location);
+
+	return UserOption::Nothing;
 }
 
 //-------------------------------------------------------

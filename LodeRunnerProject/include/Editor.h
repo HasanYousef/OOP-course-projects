@@ -6,7 +6,7 @@
 namespace fs = std::filesystem;
 //----------------------------------
 #include "macros.h"
-#include "Board.h"
+#include "Map.h"
 #include "Panel.h"
 //----------------------------------
 class Editor {
@@ -15,13 +15,12 @@ public:
 	void run();
 
 private:
-	void handleClick(const sf::Vector2f&);
-	void initBoard();
-	void initializeTextures();
+	void handle_click(const sf::Vector2f&);
+	void init_map();
 	//----------------------------------
 	sf::RenderWindow m_window;
-	Board m_board;
+	Map m_map;
 	Panel m_panel;
-	ActionType m_clickMode = ActionType::Nothing;
+	UserOption m_clickMode = UserOption::Nothing;
 	sf::Texture* m_textures[NUM_OF_TYPES];
 };

@@ -2,7 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <string>
 #include <fstream>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "macros.h"
 #include "WorldObject.h"
@@ -23,6 +26,7 @@ public:
 	int get_width() const;
 	int get_height() const;
 	char type_to_char(ObjectType) const;
+	void save(int) const;
 
 private:
 	size_t m_height,
