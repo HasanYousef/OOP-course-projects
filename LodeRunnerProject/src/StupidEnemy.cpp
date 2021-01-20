@@ -10,7 +10,7 @@ StupidEnemy::StupidEnemy(ObjectType t,
 	: Enemy(t, p) {}
 
 //-----------------------------------------------
-void StupidEnemy::move(const Map& map) {
+void StupidEnemy::move(const Map& map, const sf::Vector2f& playerPos) {
 	switch (m_goLeft) {
 	case true:
 		if (if_can_move(map, 'R')) {

@@ -11,7 +11,7 @@ class StandartEnemy: public Enemy {
 public:
 	StandartEnemy();
 	StandartEnemy(ObjectType, const sf::Vector2f&);
-	virtual void move(const Map&);
+	virtual void move(const Map&, const sf::Vector2f&);
 
 private:
 	int m_way = 1;

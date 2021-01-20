@@ -9,7 +9,63 @@ SmartEnemy::SmartEnemy(ObjectType t,
 	const sf::Vector2f& p)
 	: Enemy(t, p) {}
 
+void SmartEnemy::move(const Map& map, const sf::Vector2f& playerPos) {
+	switch (moveDir(map, playerPos)) {
+	case 'U':
+		if (if_can_move(map, 'U')) {
+			m_position.y -= SPEED;
+		}
+		break;
+	case 'D':
+		if (if_can_move(map, 'D')) {
+			m_position.y += SPEED;
+		}
+		break;
+	case 'L':
+		if (if_can_move(map, 'L')) {
+			m_position.x -= SPEED;
+		}
+		break;
+	case 'R':
+		if (if_can_move(map, 'R')) {
+			m_position.x += SPEED;
+		}
+		break;
+	}
+}
+
 //-----------------------------------------------
-void SmartEnemy::move(const Map& map) {
-	
+char SmartEnemy::moveDir(const Map& map, const sf::Vector2f& playerPos)
+{
+	float horizontalDistance = std::abs(m_position.x - playerPos.x),
+		verticalDistance = std::abs(m_position.y - playerPos.y);
+	// in this case the enemy will try to reach teh player height level
+	if (verticalDistance > horizontalDistance) {
+		// if the player is higher than the enemy
+		if (playerPos.y < m_position.y) {
+			if (if_can_move(map, 'U'))
+				return 'U';
+		}
+		// if the enemy is higher than the enemy
+		else {
+			if (if_can_move(map, 'D'))
+				return 'D';
+		}
+		// change direction
+		if (!if_can_move(map, m_dir)) {
+			if (m_dir == 'R')
+				m_dir = 'L';
+			else
+				m_dir = 'R';
+		}
+		return m_dir;
+	}
+	// if the player and the enemy are in the same height level
+	else {
+		// player in the right
+		if (m_position.x > playerPos.x)
+			if (if_can_move(map, 'R'))
+				return 'R';
+		return 'L';
+	}
 }

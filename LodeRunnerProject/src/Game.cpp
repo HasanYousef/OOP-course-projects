@@ -88,7 +88,7 @@ void Game::draw_enemies(sf::RenderWindow& window) {
 //---------------------------------------------
 void Game::move_enemies() {
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
-		m_enemies[enemy]->move(m_map);
+		m_enemies[enemy]->move(m_map, m_player->get_position());
 		m_enemies[enemy]->fall(m_map);
 	}
 }

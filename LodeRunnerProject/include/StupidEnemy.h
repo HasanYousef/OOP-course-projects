@@ -11,7 +11,7 @@ public:
 	StupidEnemy();
 	StupidEnemy(ObjectType, const sf::Vector2f&);
 	//---functions--------------
-	virtual void move(const Map&);
+	virtual void move(const Map&, const sf::Vector2f&);
 private:
 	bool m_goLeft = true;
 };

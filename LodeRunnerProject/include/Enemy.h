@@ -7,5 +7,8 @@ class Enemy : public MoveableObject {
 public:
 	Enemy() {};
 	Enemy(ObjectType, const sf::Vector2f&);
-	virtual void move(const Map&) = 0;
+	virtual void move(const Map&, const sf::Vector2f&) = 0;
+
+protected:
+	char m_dir = 'R';
 };
