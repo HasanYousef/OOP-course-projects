@@ -12,6 +12,7 @@ public:
 	Player(ObjectType, const sf::Vector2f&);
 	//---functions--------------
 	void move(const Map&);
+	sf::Vector2f* dig(Map&);
 	void die();
 	void set_health(int);
 	bool getCoin(const Map&);

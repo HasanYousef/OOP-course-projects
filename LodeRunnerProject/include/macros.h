@@ -7,7 +7,7 @@ const char FONT_PATH[27] = "C:/Windows/Fonts/Arial.ttf";
 const int WINDOW_WIDTH = 640,
 WINDOW_HEIGHT = 500,
 TEXTURE_SIZE = 32,
-NUM_OF_TYPES = 8,
+NUM_OF_TYPES = 9,
 INIT_HEALTH = 3,
 BUTTON_WIDTH = 160,
 BUTTON_HEIGHT = 50,
@@ -50,7 +50,8 @@ enum ObjectType
 	O_Coin,
 	O_Gift,
 	O_Player,
-	O_Enemy
+	O_Enemy,
+	O_Well   //added
 };
 
 //---------------------

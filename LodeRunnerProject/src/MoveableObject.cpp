@@ -9,25 +9,24 @@ MoveableObject::MoveableObject() {}
 
 //-------------------------------------------------
 MoveableObject::MoveableObject(ObjectType type,
-	                        const sf::Vector2f& p)
-	                  : WorldObject(type, p), m_originPosition(p){}
+	                       const sf::Vector2f& p)
+	: WorldObject(type, p), m_originPosition(p) {}
 
 //-------------------------------------------------
 void MoveableObject::move(const Map& map) {}
 
 //-------------------------------------------------
-void MoveableObject::get_on_floor(const Map& map) {
-	sf::Vector2f Mpoints(m_position.x + (TEXTURE_SIZE / 2), m_position.y + (TEXTURE_SIZE / 2)),
-		BLpoints(m_position.x, m_position.y + TEXTURE_SIZE - 1),
+void MoveableObject::fall(const Map& map) {
+	sf::Vector2f BLpoints(m_position.x, m_position.y + TEXTURE_SIZE - 1),
 		BRpoints(m_position.x + TEXTURE_SIZE - 1, m_position.y + TEXTURE_SIZE - 1);
-	while (map.get_type(m_position) != O_Rope &&
+	BLpoints.y += 3 * SPEED;
+	BRpoints.y += 3 * SPEED;
+	if (map.get_type(m_position) != O_Rope &&
 		map.get_type(m_position) != O_Ladder &&
-		map.get_type((BLpoints.y + 1) / TEXTURE_SIZE, BLpoints.x / TEXTURE_SIZE) != O_Wall &&
-		map.get_type((BRpoints.y + 1) / TEXTURE_SIZE, BRpoints.x / TEXTURE_SIZE) != O_Wall)
-	{
-		BLpoints.y += SPEED;
-		BRpoints.y += SPEED;
-		m_position.y += SPEED;
+		map.get_type(m_position) != O_Well &&
+		map.get_type(BLpoints) != O_Wall &&
+		map.get_type(BRpoints) != O_Wall) {
+		m_position.y += 3 * SPEED;
 	}
 }
 

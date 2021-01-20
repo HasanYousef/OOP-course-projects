@@ -15,8 +15,8 @@ void Game::run(sf::RenderWindow& window, int numOfLevels) {
 	while (m_level <= numOfLevels) {
 		run_level(window);
 		if (m_player->get_health() == 0) {
-			//for (int i = 0; i < m_enemies.size(); i++)
-				//delete m_enemies[i];
+			for (int i = 0; i < m_enemies.size(); i++)
+				delete m_enemies[i];
 			delete m_player;
 			m_player = nullptr;
 			break;
@@ -38,21 +38,24 @@ void Game::run_level(sf::RenderWindow& window) {
 	while (window.isOpen()) {
 		window.clear();
 		sf::Time time = clock.getElapsedTime();
-		/*--- WE PRINT THE TIME ---*/
-		m_map.draw(window);
 		window.pollEvent(event);
+		//we draw the objects
+		m_map.draw(window);
 		draw_enemies(window);
 		m_player->draw(window);
 		drawInfoBar(window, time);
 		window.display();
+		//we check different cases
 		switch (event.type) {
 		case sf::Event::Closed:
 			window.close();
 			break;
 		}
+		//move the moveAbleObjects
 		m_player->move(m_map);
+		m_player->fall(m_map);
 		move_enemies();
-		//have to add to be able remove block
+		//m_player->dig(m_map);
   		if (m_player->getCoin(m_map)) {
 			m_player->add_score(2*m_level); //need to add a const for coin value
 			m_remainingMoney--;
@@ -86,6 +89,7 @@ void Game::draw_enemies(sf::RenderWindow& window) {
 void Game::move_enemies() {
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
 		m_enemies[enemy]->move(m_map);
+		m_enemies[enemy]->fall(m_map);
 	}
 }
 
@@ -127,7 +131,7 @@ void Game::locate_objects() {
 				}
 				break;
 			case O_Enemy: //we add the enemy
-				switch (1) {
+				switch (2) {
 				case 0:
 					enemy1 = new StandartEnemy;
 					enemy1->setType(ObjectType::O_Enemy);

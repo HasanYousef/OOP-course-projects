@@ -54,27 +54,22 @@ void Player::add_score(int more_score) {
 void Player::move(const Map& map) 
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		if (if_can_move(map, 'U')) {
+		if (if_can_move(map, 'U'))
 			m_position.y -= SPEED;
-			get_on_floor(map);
-		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		if (if_can_move(map, 'D')) {
 			m_position.y += SPEED;
-			get_on_floor(map);
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		if (if_can_move(map, 'L')) {
 			m_position.x -= SPEED;
-			get_on_floor(map);
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		if (if_can_move(map, 'R')) {
 			m_position.x += SPEED;
-			get_on_floor(map);
 		}
 	}
 }
@@ -87,5 +82,32 @@ bool Player::getCoin(const Map& map) {
 //-------------------------------------------------
 bool Player::getGift(const Map& map) {
 	return (map.get_type(m_position.x / TEXTURE_SIZE, m_position.y / TEXTURE_SIZE) == O_Gift);
+}
+
+//-------------------------------------------------
+sf::Vector2f* Player::dig(Map& map) {
+	sf::Vector2f* points;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+		if (map.get_type({m_position.x + TEXTURE_SIZE,
+			m_position.y + TEXTURE_SIZE}) == O_Wall) {
+			map.set_object(O_Well, { m_position.x + TEXTURE_SIZE,
+			m_position.y + TEXTURE_SIZE });
+			//set points and return
+			points->x = m_position.x + TEXTURE_SIZE;
+			points->y = m_position.y + TEXTURE_SIZE;
+			return points;
+		}
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+		if (map.get_type({ m_position.x - TEXTURE_SIZE,
+			m_position.y - TEXTURE_SIZE }) == O_Wall) {
+			map.set_object(O_Well, { m_position.x - TEXTURE_SIZE,
+			m_position.y - TEXTURE_SIZE });
+			//set points and return
+			points->x = m_position.x + TEXTURE_SIZE;
+			points->y = m_position.y + TEXTURE_SIZE;
+			return points;
+		}
+	}
 }
 

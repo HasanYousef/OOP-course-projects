@@ -29,6 +29,7 @@ Textures::Textures() {
 	(*m_textures[ObjectType::O_Gift]).loadFromFile("gift.png");
 	(*m_textures[ObjectType::O_Player]).loadFromFile("player.png");
 	(*m_textures[ObjectType::O_Enemy]).loadFromFile("enemy.png");
+	(*m_textures[ObjectType::O_Well]).loadFromFile("space.png");
 	// load the font
 	(*m_font).loadFromFile(FONT_PATH);
 }
