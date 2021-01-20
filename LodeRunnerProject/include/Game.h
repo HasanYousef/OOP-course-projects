@@ -13,6 +13,7 @@ namespace fs = std::filesystem;
 #include "SmartEnemy.h"
 #include "Enemy.h"
 #include "Textures.h"
+#include "Sounds.h"
 
 class Game {
 public:

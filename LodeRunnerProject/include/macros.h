@@ -13,7 +13,8 @@ BUTTON_WIDTH = 160,
 BUTTON_HEIGHT = 50,
 BUTTON_MARGIN = 15,
 ANIMATION_SIZE = 5,
-ANIMATION_IMAGE_COUNT = 5;
+ANIMATION_IMAGE_COUNT = 5,
+NUM_OF_SOUNDS = 3;
 
 const float ANIMATION_SWITCH_TIME = 0.2,
             SPEED = 0.2f;
@@ -52,6 +53,13 @@ enum ObjectType
 	O_Player,
 	O_Enemy,
 	O_Well   //added
+};
+
+enum SoundType
+{
+	GetHit,
+	GetCoin,
+	Theme
 };
 
 //---------------------

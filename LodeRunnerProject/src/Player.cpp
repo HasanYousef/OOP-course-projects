@@ -81,7 +81,7 @@ bool Player::getCoin(const Map& map) {
 
 //-------------------------------------------------
 bool Player::getGift(const Map& map) {
-	return (map.get_type(m_position.x / TEXTURE_SIZE, m_position.y / TEXTURE_SIZE) == O_Gift);
+	return (map.get_type(m_position) == O_Gift);
 }
 
 //-------------------------------------------------

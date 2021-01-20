@@ -6,3 +6,7 @@ configure_file ("coin.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("gift.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("player.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
+configure_file ("getHit.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("getCoin.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("theme.ogg" ${CMAKE_BINARY_DIR} COPYONLY)

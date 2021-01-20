@@ -12,6 +12,7 @@ Game::Game() :
 
 //-----------------start_game------------------
 void Game::run(sf::RenderWindow& window, int numOfLevels) {
+	Sounds::instance().getSound(SoundType::Theme)->play();
 	while (m_level <= numOfLevels) {
 		run_level(window);
 		if (m_player->get_health() == 0) {
@@ -57,6 +58,7 @@ void Game::run_level(sf::RenderWindow& window) {
 		move_enemies();
 		//m_player->dig(m_map);
   		if (m_player->getCoin(m_map)) {
+			Sounds::instance().getSound(SoundType::GetCoin)->play();
 			m_player->add_score(2*m_level); //need to add a const for coin value
 			m_remainingMoney--;
 			m_map.set_object(O_Space, m_player->get_position());
@@ -65,6 +67,7 @@ void Game::run_level(sf::RenderWindow& window) {
 			//give him a gift
 		}
 		if (((time.asSeconds() >= m_time && m_time != -1)) || player_get_hit()) {
+			Sounds::instance().getSound(SoundType::GetHit)->play();
 			m_player->die();
 			if (m_player->get_health() == 0) {
 				return;

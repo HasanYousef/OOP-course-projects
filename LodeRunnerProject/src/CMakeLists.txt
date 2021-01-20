@@ -12,6 +12,7 @@
 										  "SmartEnemy.cpp"
 										  "StupidEnemy.cpp"
 										  "Textures.cpp"
+										  "Sounds.cpp"
 										  "Animation.cpp"
 										  "Panel.cpp"
 										  "Button.cpp"
