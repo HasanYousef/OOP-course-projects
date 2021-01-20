@@ -7,4 +7,5 @@ class Enemy : public MoveableObject {
 public:
 	Enemy() {};
 	Enemy(ObjectType, const sf::Vector2f&);
+	virtual void move(const Map&) = 0;
 };

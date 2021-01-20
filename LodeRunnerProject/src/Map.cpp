@@ -23,6 +23,12 @@ Map::Map(int height, int width) {
 	m_map = newBoard;
 }
 
+Map::~Map() {
+	for (int row = 0; row <= m_height; row++)
+		for (int col = 0; col <= m_width; col++)
+			delete m_map[row][col];
+}
+
 //-----------------------------------------------
 int Map::load_map(int level) {
 	std::string str = "C:board";

@@ -3,7 +3,9 @@
 #include "Player.h"
 
 //-------------------------------------------------
-Player::Player() : m_health(INIT_HEALTH) {}
+Player::Player() :
+	m_health(INIT_HEALTH)
+{}
 
 //-------------------------------------------------
 Player::Player(ObjectType type, const sf::Vector2f& p)

@@ -1,19 +1,23 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+
 #include <vector>
+#include <string>
 #include <filesystem>
 namespace fs = std::filesystem;
 
-//#include "Menu.h"
 #include "Map.h"
 #include "Player.h"
+#include "StupidEnemy.h"
+#include "StandartEnemy.h"
+#include "SmartEnemy.h"
 #include "Enemy.h"
+#include "Textures.h"
 
 class Game {
 public:
 	Game();
-	void run(sf::RenderWindow&);
+	void run(sf::RenderWindow&, int);
 	void run_level(sf::RenderWindow& window);
 	void locate_objects();
 private:
@@ -21,15 +25,13 @@ private:
 	void draw_enemies(sf::RenderWindow&);
 	void move_enemies();
 	bool player_get_hit();
-	//void pause_menu();
-	//PauseMenu m_pauseMenu;
+	void drawInfoBar(sf::RenderWindow&) const;
 	//---Members------------
 	int m_level,
-		m_numOfLevels,
 		m_remainingMoney,
 		m_time;
 	Map m_map;
-	Player m_player;
+	Player* m_player;
 	//---Arrays_for_members-
-	std::vector <Enemy> m_enemies;
+	std::vector <Enemy*> m_enemies;
 };

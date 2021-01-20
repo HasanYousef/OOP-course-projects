@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Controller.h"
-
+#include "SFML/Audio.hpp"
 //-----------------structor-----------------
 //in the Controller structor, the maps file will be open
 //and it's stream will be stored in the map stream variable
@@ -17,7 +17,7 @@ void Controller::run() {
 	while (userChoice != UserOption::Exit) {
 		switch (userChoice) {
 		case UserOption::StartGame:
-			m_game.run(m_window);
+			m_game.run(m_window, m_numOfLevels);
 		case UserOption::EditMaps:
 			m_editor.run(m_window, 1);
 		case UserOption::AddNewMap:

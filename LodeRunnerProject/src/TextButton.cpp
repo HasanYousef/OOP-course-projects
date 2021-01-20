@@ -23,7 +23,6 @@ void TextButton::draw(sf::RenderWindow& window) const {
 
 	auto text = sf::Text(m_string, *(Textures::instance().get_font()));
 	text.setPosition({ m_position.x + 20, m_position.y + 4 });
-	const auto rect = text.getLocalBounds();
 	window.draw(text);
 }
 

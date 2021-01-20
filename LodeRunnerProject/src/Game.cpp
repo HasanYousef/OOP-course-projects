@@ -4,17 +4,18 @@
 
 //---------------------------------------------
 Game::Game() :
-	m_level(1), m_numOfLevels(5), m_remainingMoney(0), m_time(-1) {}
+	m_level(1), m_remainingMoney(0), m_time(-1) {}
 
 //-----------------start_game------------------
-void Game::run(sf::RenderWindow& window) {
-	while (m_level <= m_numOfLevels) {
+void Game::run(sf::RenderWindow& window, int numOfLevels) {
+	while (m_level <= numOfLevels) {
 		run_level(window);
-		if (m_player.get_health() == 0) {
-			exit(EXIT_SUCCESS);
+		if (m_player->get_health() == 0) {
+			break;
 		}
-		m_player.add_score(50);
-		//m_level++;         //added
+		m_player->add_score(50);
+		if (m_remainingMoney == 0)
+			m_level++;
 	}
 }
 
@@ -33,38 +34,32 @@ void Game::run_level(sf::RenderWindow& window) {
 		m_map.draw(window);
 		window.pollEvent(event);
 		draw_enemies(window);
-		m_player.draw(window);
-		//draw panel
+		m_player->draw(window);
+		drawInfoBar(window);
 		window.display();
 		switch (event.type) {
 		case sf::Event::Closed:
 			window.close();
 			break;
-		case sf::Event::MouseButtonReleased:
-			/*
-			* check if panel bottons pressed
-			*/
-			break;
 		}
-		m_player.move(m_map);
+		m_player->move(m_map);
 		move_enemies();
 		//have to add to be able remove block
-  		if (m_player.getCoin(m_map)) {
-			m_player.add_score(2*m_level); //need to add a const for coin value
+  		if (m_player->getCoin(m_map)) {
+			m_player->add_score(2*m_level); //need to add a const for coin value
 			m_remainingMoney--;
-			m_map.set_object(O_Space, m_player.get_position());
+			m_map.set_object(O_Space, m_player->get_position());
 		}
-		if (m_player.getGift(m_map)) {
+		if (m_player->getGift(m_map)) {
 			//give him a gift
 		}
-		if (time.asSeconds() >= m_time && m_time != -1 || player_get_hit()) {
-			m_player.die();
-			if (m_player.get_health() == 0) {
+		if ((time.asSeconds() >= m_time && m_time != -1) || player_get_hit()) {
+			m_player->die();
+			if (m_player->get_health() == 0) {
 				return;
 			}
-			//we set the origin points to enemy and player
-			//m_player.set_position();
-			//enemies_origin_position();
+			clock.restart();
+			locate_objects();
 		}
 		if (m_remainingMoney == 0) {
 			return;
@@ -75,22 +70,22 @@ void Game::run_level(sf::RenderWindow& window) {
 //---------------------------------------------
 void Game::draw_enemies(sf::RenderWindow& window) {
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
-		m_enemies[enemy].draw(window);
+		m_enemies[enemy]->draw(window);
 	}
 }
 
 //---------------------------------------------
 void Game::move_enemies() {
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
-		m_enemies[enemy].move(m_map);
+		m_enemies[enemy]->move(m_map);
 	}
 }
 
 //---------------------------------------------
 bool Game::player_get_hit() {
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
-		if (m_enemies[enemy].create().getGlobalBounds()
-			.intersects(m_player.create().getGlobalBounds()) ) {
+		if (m_enemies[enemy]->create().getGlobalBounds()
+			.intersects(m_player->create().getGlobalBounds()) ) {
 			return true;
 		}
 	}
@@ -108,14 +103,36 @@ void Game::locate_objects() {
 	for (int row = 0; row < m_map.get_height(); row++) {
 		for (int col = 0; col < m_map.get_width(); col++) {
 			sf::Vector2f points(col * TEXTURE_SIZE, row * TEXTURE_SIZE);
+			StandartEnemy* enemy1;
+			StupidEnemy* enemy2;
+			SmartEnemy* enemy3;
 			switch (m_map.get_type(row,col)) {
 			case O_Player: //we add the player
-				m_player = Player(O_Player, points);
-				m_map.set_object(O_Space, points);
+				m_player = new Player;
+				m_player->set_position(points);
+				m_player->setType(ObjectType::O_Player);
 				break;
 			case O_Enemy: //we add the enemy
-				m_enemies.push_back(Enemy(O_Enemy, points));
-				m_map.set_object(O_Space, points);
+				switch (m_enemies.size() % 3) {
+				case 0:
+					enemy1 = new StandartEnemy;
+					enemy1->setType(ObjectType::O_Enemy);
+					enemy1->set_position(points);
+					m_enemies.push_back(enemy1);
+					break;
+				case 1:
+					enemy2 = new StupidEnemy;
+					enemy2->setType(ObjectType::O_Enemy);
+					enemy2->set_position(points);
+					m_enemies.push_back(enemy2);
+					break;
+				case 2:
+					enemy3 = new SmartEnemy;
+					enemy3->setType(ObjectType::O_Enemy);
+					enemy3->set_position(points);
+					m_enemies.push_back(enemy3);
+					break;
+				};
 				break;
 			case O_Coin: //we add money
 				m_remainingMoney++;
@@ -123,4 +140,14 @@ void Game::locate_objects() {
 			}
 		}
 	}
+}
+
+void Game::drawInfoBar(sf::RenderWindow& window) const {
+	std::string str = "Health: ";
+	str += std::to_string(m_player->get_health());
+	str += "         Score: ";
+	str += std::to_string(m_player->get_score());
+	auto text = sf::Text(str, *(Textures::instance().get_font()));
+	text.setPosition({ 10, 400 });
+	window.draw(text);
 }

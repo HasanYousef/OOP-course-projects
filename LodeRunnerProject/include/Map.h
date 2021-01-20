@@ -5,7 +5,7 @@
 #include <fstream>
 #include <filesystem>
 namespace fs = std::filesystem;
-
+#include "TakeableObject.h"
 #include "macros.h"
 #include "WorldObject.h"
 
@@ -13,6 +13,7 @@ class Map {
 public:
 	Map();
 	Map(int, int);
+	~Map();
 	//----------------------------------
 	ObjectType get_type(int, int) const;
 	ObjectType get_type(const sf::Vector2f& ) const;
