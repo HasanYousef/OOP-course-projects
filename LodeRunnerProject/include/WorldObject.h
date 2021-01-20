@@ -12,6 +12,7 @@ public:
 	sf::Vector2f get_position() const;
 	void set_position(const sf::Vector2f&);
 	ObjectType get_type() const;
+	void setType(ObjectType type);
 	WorldObject& operator=(const WorldObject&);
 	//---build-body-----------
 	sf::Sprite create() const;

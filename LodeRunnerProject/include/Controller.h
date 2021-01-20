@@ -13,8 +13,10 @@ public:
 	Controller();
 	void run();
 	UserOption runMenu();
+	int countLevels();
 private:
 	Game m_game;
 	Editor m_editor;
 	sf::RenderWindow m_window;
+	int m_numOfLevels;
 };

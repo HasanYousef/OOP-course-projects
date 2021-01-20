@@ -26,6 +26,11 @@ void WorldObject::set_position(const sf::Vector2f& position) {
 }
 
 //-------------------------------------------------
+void WorldObject::setType(ObjectType type) {
+	m_objectType = type;
+}
+
+//-------------------------------------------------
 //this func draw the object
 void WorldObject::draw(sf::RenderWindow& window) const {
 	window.draw(create());

@@ -5,27 +5,33 @@
 //-----------------structor-----------------
 //in the Controller structor, the maps file will be open
 //and it's stream will be stored in the map stream variable
-Controller::Controller() {
+Controller::Controller()
+{
+	m_numOfLevels = countLevels();
 	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_WIDTH), "LodeRunner");
-	//open_maps_stream();
 }
 
 //-----------------run-----------------
 void Controller::run() {
 	UserOption userChoice = runMenu();
-	while(userChoice != UserOption::Exit)
-	switch (userChoice) { // we make it to start the game 
+	while (userChoice != UserOption::Exit) {
+		switch (userChoice) {
 		case UserOption::StartGame:
 			m_game.run(m_window);
 		case UserOption::EditMaps:
 			m_editor.run(m_window, 1);
+		case UserOption::AddNewMap:
+			m_editor.run(m_window, m_numOfLevels + 1);
+		}
+		userChoice = runMenu();
 	}
 }
 
 UserOption Controller::runMenu() {
 	Panel panel;
 	panel.setPosition({ 10, 10 });
-	panel.addTextButton(UserOption::StartGame, "Start game");
+	if(m_numOfLevels > 0)
+		panel.addTextButton(UserOption::StartGame, "Start game");
 	panel.addTextButton(UserOption::EditMaps, "Edit levels");
 	panel.addTextButton(UserOption::AddNewMap, "Add a new level");
 	panel.addTextButton(UserOption::Exit, "Exit game");
@@ -51,4 +57,20 @@ UserOption Controller::runMenu() {
 	}
 
 	return UserOption::Nothing;
+}
+
+int Controller::countLevels() {
+	int level = 1;
+	while (true) {
+		std::string str = "C:board";
+		str += std::to_string(level);
+		str += ".txt";
+		fs::path p = str;
+		std::ifstream ifile(fs::absolute(p));
+		if (!ifile)
+			break;
+		ifile.close();
+		level++;
+	}
+	return level - 1;
 }

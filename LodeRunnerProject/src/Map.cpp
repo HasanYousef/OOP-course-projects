@@ -11,19 +11,19 @@ Map::Map() :m_height(0), m_width(0) {}
 Map::Map(int height, int width) {
 	m_height = height;
 	m_width = width;
-	std::vector<std::vector<WorldObject>> newBoard;
+	std::vector<std::vector<WorldObject*>> newBoard;
 	for (int row = 0; row <= m_height; row++) {
 		std::vector<WorldObject> tempRow;
 		//creating a line of objects
 		for (int col = 0; col <= m_width; col++) {
-			tempRow.push_back(WorldObject(ObjectType::O_Space,
-				sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE)));
+			*newBoard[row][col] = WorldObject(ObjectType::O_Space,
+				sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE));
 		}
-		newBoard.push_back(tempRow);
 	}
 	m_map = newBoard;
 }
 
+//-----------------------------------------------
 int Map::load_map(int level) {
 	std::string str = "C:board";
 	str += std::to_string(level);
@@ -50,10 +50,12 @@ int Map::read_from_stream(std::ifstream& stream) {
 	for (int row = 0; row < m_height; row++) {
 		//jumping over the new line char
 		stream.get();
-		std::vector<WorldObject> tempRow;
+		std::vector<WorldObject*> tempRow;
 		for (int col = 0; col < m_width; col++) {
-			tempRow.push_back(WorldObject(char_to_type(stream.get()), 
-				sf::Vector2f(col * TEXTURE_SIZE, row * TEXTURE_SIZE)));
+			WorldObject* object = new WorldObject;
+			object->set_position(sf::Vector2f(col * TEXTURE_SIZE, row * TEXTURE_SIZE));
+			object->setType(char_to_type(stream.get()));
+			tempRow.push_back(object);
 		}
 		m_map.push_back(tempRow);
 	}
@@ -66,9 +68,9 @@ int Map::read_from_stream(std::ifstream& stream) {
 void Map::draw(sf::RenderWindow& window) const {
 	for (int row = 0; row < m_height; row++)
 		for (int col = 0; col < m_width; col++) {
-			ObjectType type = m_map[row][col].get_type();
+			ObjectType type = m_map[row][col]->get_type();
 			if (type != ObjectType::O_Player && type != ObjectType::O_Enemy)
-				m_map[row][col].draw(window);
+				m_map[row][col]->draw(window);
 		}
 }
 
@@ -117,7 +119,7 @@ char Map::type_to_char(ObjectType type) const {
 
 //-----------------------------------------------
 ObjectType Map::get_type(int row,int col) const {
-	return m_map[row][col].get_type();
+	return m_map[row][col]->get_type();
 }
 
 //-----------------------------------------------
@@ -160,11 +162,11 @@ void Map::set_object(ObjectType type, const sf::Vector2f& location, sf::Texture*
 
 //-----------------------------------------------
 void Map::set_object(ObjectType type, const sf::Vector2f& location) {
-	m_map[location.y / TEXTURE_SIZE][location.x / TEXTURE_SIZE] =
+	*m_map[location.y / TEXTURE_SIZE][location.x / TEXTURE_SIZE] =
 		WorldObject(type, location);
 }
 
 //-----------------------------------------------
 ObjectType Map::get_type(const sf::Vector2f& points) const {
-	return m_map[points.y / TEXTURE_SIZE][points.x / TEXTURE_SIZE].get_type();
+	return m_map[points.y / TEXTURE_SIZE][points.x / TEXTURE_SIZE]->get_type();
 }
