@@ -11,7 +11,7 @@ void Editor::run(sf::RenderWindow& window, int level) {
 	// set the panel's buttons
 	initPanel();
 	
-	m_map.load_map(level);
+	m_map.load_map(level, BUTTON_WIDTH + 10);
 
 	// mouse world object hover
 	sf::Sprite hover;
@@ -37,25 +37,28 @@ void Editor::run(sf::RenderWindow& window, int level) {
 				auto location = window.mapPixelToCoords(
 					{ event.mouseButton.x, event.mouseButton.y });
 				//panel side
-				if (location.x < BOARD_UI_X)
+				if (location.x < BUTTON_WIDTH + 10)
 					handle_click(location);
 				//board side
-				else if (m_clickMode < UserOption::SaveBoard)
-					m_map.set_object(ObjectType(m_clickMode), location);
+				else if (m_clickMode < UserOption::SaveBoard) {
+					location.x = ((int(location.x) - (BUTTON_WIDTH + 10)) / TEXTURE_SIZE) * TEXTURE_SIZE + (BUTTON_WIDTH + 10);
+					location.y = (int(location.y) / TEXTURE_SIZE) * TEXTURE_SIZE;
+					m_map.setObjectWithMargin(ObjectType(m_clickMode), location, BUTTON_WIDTH + 10);
+				}
 				break;
 			}
 			//hover action
 			case sf::Event::MouseMoved: {
 				auto location = sf::Mouse::getPosition(window);
-				int newCol = int(location.x - BOARD_UI_X) / TEXTURE_SIZE;
+				int newCol = int(location.x - BUTTON_WIDTH + 10) / TEXTURE_SIZE;
 				int newRow = int(location.y) / TEXTURE_SIZE;
 				//if there is a hover in the board side
-				if (m_clickMode < UserOption::SaveBoard && location.x > BOARD_UI_X &&
+				if (m_clickMode < UserOption::SaveBoard && location.x > BUTTON_WIDTH + 10 &&
 					newRow < m_map.get_height() && newCol < m_map.get_width()) {
 
 					//put the texture that the user holds with the mouse and wants to put
-					hover = sf::Sprite(*m_textures[m_clickMode]);
-					int xPos = ((int(location.x) - BOARD_UI_X) / TEXTURE_SIZE) * TEXTURE_SIZE + BOARD_UI_X;
+					hover = sf::Sprite(*(Textures::instance().get_texture(ObjectType(m_clickMode))));
+					int xPos = ((int(location.x) - BUTTON_WIDTH + 10) / TEXTURE_SIZE) * TEXTURE_SIZE + BUTTON_WIDTH + 10;
 					int yPos = (int(location.y) / TEXTURE_SIZE) * TEXTURE_SIZE;
 					hover.setPosition(sf::Vector2f(xPos , yPos));
 					putHover = true;

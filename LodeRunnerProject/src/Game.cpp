@@ -4,13 +4,21 @@
 
 //---------------------------------------------
 Game::Game() :
-	m_level(1), m_remainingMoney(0), m_time(-1) {}
+	m_level(1),
+	m_remainingMoney(0),
+	m_time(-1),
+	m_player(nullptr)
+{}
 
 //-----------------start_game------------------
 void Game::run(sf::RenderWindow& window, int numOfLevels) {
 	while (m_level <= numOfLevels) {
 		run_level(window);
 		if (m_player->get_health() == 0) {
+			//for (int i = 0; i < m_enemies.size(); i++)
+				//delete m_enemies[i];
+			delete m_player;
+			m_player = nullptr;
 			break;
 		}
 		m_player->add_score(50);
@@ -25,7 +33,7 @@ void Game::run_level(sf::RenderWindow& window) {
 	sf::Clock clock;
 	int remaining_coins = 0;
 	//add panel (bottons)
-	m_map.load_map(m_level);
+	m_time = m_map.load_map(m_level, 0);
 	locate_objects();
 	while (window.isOpen()) {
 		window.clear();
@@ -35,7 +43,7 @@ void Game::run_level(sf::RenderWindow& window) {
 		window.pollEvent(event);
 		draw_enemies(window);
 		m_player->draw(window);
-		drawInfoBar(window);
+		drawInfoBar(window, time);
 		window.display();
 		switch (event.type) {
 		case sf::Event::Closed:
@@ -53,7 +61,7 @@ void Game::run_level(sf::RenderWindow& window) {
 		if (m_player->getGift(m_map)) {
 			//give him a gift
 		}
-		if ((time.asSeconds() >= m_time && m_time != -1) || player_get_hit()) {
+		if (((time.asSeconds() >= m_time && m_time != -1)) || player_get_hit()) {
 			m_player->die();
 			if (m_player->get_health() == 0) {
 				return;
@@ -100,6 +108,7 @@ bool Game::player_get_hit() {
 //m_remainingMoney 1 this is how its work
 void Game::locate_objects() {
 	m_remainingMoney = 0;
+	m_enemies.clear();
 	for (int row = 0; row < m_map.get_height(); row++) {
 		for (int col = 0; col < m_map.get_width(); col++) {
 			sf::Vector2f points(col * TEXTURE_SIZE, row * TEXTURE_SIZE);
@@ -108,9 +117,14 @@ void Game::locate_objects() {
 			SmartEnemy* enemy3;
 			switch (m_map.get_type(row,col)) {
 			case O_Player: //we add the player
-				m_player = new Player;
-				m_player->set_position(points);
-				m_player->setType(ObjectType::O_Player);
+				if (!m_player) {
+					m_player = new Player;
+					m_player->set_position(points);
+					m_player->setType(ObjectType::O_Player);
+				}
+				else {
+					m_player->set_position(points);
+				}
 				break;
 			case O_Enemy: //we add the enemy
 				switch (m_enemies.size() % 3) {
@@ -142,11 +156,15 @@ void Game::locate_objects() {
 	}
 }
 
-void Game::drawInfoBar(sf::RenderWindow& window) const {
+void Game::drawInfoBar(sf::RenderWindow& window, sf::Time time) const {
 	std::string str = "Health: ";
 	str += std::to_string(m_player->get_health());
-	str += "         Score: ";
+	str += "   Score: ";
 	str += std::to_string(m_player->get_score());
+	str += "   Level: ";
+	str += std::to_string(m_level);
+	str += "   Time: ";
+	str += std::to_string(int(time.asSeconds()));
 	auto text = sf::Text(str, *(Textures::instance().get_font()));
 	text.setPosition({ 10, 400 });
 	window.draw(text);

@@ -25,7 +25,7 @@ private:
 	void draw_enemies(sf::RenderWindow&);
 	void move_enemies();
 	bool player_get_hit();
-	void drawInfoBar(sf::RenderWindow&) const;
+	void drawInfoBar(sf::RenderWindow&, sf::Time) const;
 	//---Members------------
 	int m_level,
 		m_remainingMoney,

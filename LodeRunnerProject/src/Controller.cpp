@@ -18,23 +18,27 @@ void Controller::run() {
 		switch (userChoice) {
 		case UserOption::StartGame:
 			m_game.run(m_window, m_numOfLevels);
+			break;
 		case UserOption::EditMaps:
 			m_editor.run(m_window, 1);
+			break;
 		case UserOption::AddNewMap:
 			m_editor.run(m_window, m_numOfLevels + 1);
+			break;
 		}
 		userChoice = runMenu();
 	}
+	m_window.close();
 }
 
 UserOption Controller::runMenu() {
 	Panel panel;
 	panel.setPosition({ 10, 10 });
 	if(m_numOfLevels > 0)
-		panel.addTextButton(UserOption::StartGame, "Start game");
-	panel.addTextButton(UserOption::EditMaps, "Edit levels");
-	panel.addTextButton(UserOption::AddNewMap, "Add a new level");
-	panel.addTextButton(UserOption::Exit, "Exit game");
+		panel.addTextButton(UserOption::StartGame, "Start");
+	panel.addTextButton(UserOption::EditMaps, "Edit");
+	panel.addTextButton(UserOption::AddNewMap, "New level");
+	panel.addTextButton(UserOption::Exit, "Exit");
 
 	while (m_window.isOpen()) {
 		m_window.clear();
@@ -47,7 +51,6 @@ UserOption Controller::runMenu() {
 			switch (event.type) {
 			case sf::Event::Closed:
 				return UserOption::Exit;
-
 			case sf::Event::MouseButtonReleased:
 				auto location = m_window.mapPixelToCoords(
 					{ event.mouseButton.x, event.mouseButton.y });

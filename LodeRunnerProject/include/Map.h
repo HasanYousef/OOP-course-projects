@@ -15,12 +15,14 @@ public:
 	Map(int, int);
 	~Map();
 	//----------------------------------
+	void deleteObjects();
 	ObjectType get_type(int, int) const;
 	ObjectType get_type(const sf::Vector2f& ) const;
-	int load_map(int);
-	int read_from_stream(std::ifstream&);
+	int load_map(int, int);
+	int read_from_stream(std::ifstream&, int);
 	void draw(sf::RenderWindow&) const;
 	void set_object(ObjectType, const sf::Vector2f&);
+	void setObjectWithMargin(ObjectType, const sf::Vector2f&, int);
 	//void set_object(ObjectType, const sf::Vector2f&, sf::Texture* textures[]);
 	//ObjectType get_object_type(const sf::Vector2f& location) const;
 	ObjectType char_to_type(char) const;

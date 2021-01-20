@@ -17,26 +17,33 @@ Map::Map(int height, int width) {
 		//creating a line of objects
 		for (int col = 0; col <= m_width; col++) {
 			*newBoard[row][col] = WorldObject(ObjectType::O_Space,
-				sf::Vector2f(col * TEXTURE_SIZE + BOARD_UI_X, row * TEXTURE_SIZE));
+				sf::Vector2f(col * TEXTURE_SIZE + BUTTON_WIDTH + 10, row * TEXTURE_SIZE));
 		}
 	}
 	m_map = newBoard;
 }
 
 Map::~Map() {
-	for (int row = 0; row <= m_height; row++)
-		for (int col = 0; col <= m_width; col++)
+	deleteObjects();
+}
+
+void Map::deleteObjects() {
+	for (int row = 0; row < m_height; row++)
+		for (int col = 0; col < m_width; col++)
 			delete m_map[row][col];
 }
 
 //-----------------------------------------------
-int Map::load_map(int level) {
+int Map::load_map(int level, int leftMargin) {
+	// deletes the old map if exists
+	deleteObjects();
+	m_map.clear();
 	std::string str = "C:board";
 	str += std::to_string(level);
 	str += ".txt";
 	fs::path p = str;
 	std::ifstream ifile(fs::absolute(p));
-	int time = read_from_stream(ifile);
+	int time = read_from_stream(ifile, leftMargin);
 	ifile.close();
 	return time;
 }
@@ -46,7 +53,7 @@ int Map::load_map(int level) {
 //a board file we open the file and do stream 
 //and we read tha map from the file and print 
 //on the window the map to
-int Map::read_from_stream(std::ifstream& stream) {
+int Map::read_from_stream(std::ifstream& stream, int leftMarging) {
 	int time;
 	stream >> m_height;
 	stream >> m_width;
@@ -59,7 +66,7 @@ int Map::read_from_stream(std::ifstream& stream) {
 		std::vector<WorldObject*> tempRow;
 		for (int col = 0; col < m_width; col++) {
 			WorldObject* object = new WorldObject;
-			object->set_position(sf::Vector2f(col * TEXTURE_SIZE, row * TEXTURE_SIZE));
+			object->set_position(sf::Vector2f(col * TEXTURE_SIZE + leftMarging, row * TEXTURE_SIZE));
 			object->setType(char_to_type(stream.get()));
 			tempRow.push_back(object);
 		}
@@ -169,6 +176,12 @@ void Map::set_object(ObjectType type, const sf::Vector2f& location, sf::Texture*
 //-----------------------------------------------
 void Map::set_object(ObjectType type, const sf::Vector2f& location) {
 	*m_map[location.y / TEXTURE_SIZE][location.x / TEXTURE_SIZE] =
+		WorldObject(type, location);
+}
+
+//-----------------------------------------------
+void Map::setObjectWithMargin(ObjectType type, const sf::Vector2f& location, int leftMargin) {
+	*m_map[location.y / TEXTURE_SIZE][(location.x - leftMargin) / TEXTURE_SIZE] =
 		WorldObject(type, location);
 }
 

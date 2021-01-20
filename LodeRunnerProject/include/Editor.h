@@ -22,5 +22,4 @@ private:
 	Map m_map;
 	Panel m_panel;
 	UserOption m_clickMode;
-	sf::Texture* m_textures[NUM_OF_TYPES];
 };
