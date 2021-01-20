@@ -127,7 +127,7 @@ void Game::locate_objects() {
 				}
 				break;
 			case O_Enemy: //we add the enemy
-				switch (m_enemies.size() % 3) {
+				switch (1) {
 				case 0:
 					enemy1 = new StandartEnemy;
 					enemy1->setType(ObjectType::O_Enemy);

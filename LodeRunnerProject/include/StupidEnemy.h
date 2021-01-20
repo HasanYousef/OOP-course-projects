@@ -13,5 +13,5 @@ public:
 	//---functions--------------
 	virtual void move(const Map&);
 private:
-	bool m_goLeft = false;
+	bool m_goLeft = true;
 };
