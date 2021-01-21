@@ -13,6 +13,7 @@ Game::Game() :
 //-----------------start_game------------------
 void Game::run(sf::RenderWindow& window, int numOfLevels) {
 	Sounds::instance().getSound(SoundType::Theme)->play();
+	m_level = 1;
 	while (m_level <= numOfLevels) {
 		run_level(window);
 		if (m_player->get_health() == 0) {
@@ -185,7 +186,7 @@ void Game::drawInfoBar(sf::RenderWindow& window, sf::Time time) const {
 		str += std::to_string(m_time - int(time.asSeconds()));
 	}
 	auto text = sf::Text(str, *(Textures::instance().get_font()));
-	text.setPosition({ 10, 400 });
+	text.setPosition(sf::Vector2f(10, m_map.get_height() * TEXTURE_SIZE + 5));
 	window.draw(text);
 }
 

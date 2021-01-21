@@ -44,12 +44,12 @@ char SmartEnemy::moveDir(const Map& map, const sf::Vector2f& playerPos)
 		// if the player is higher than the enemy
 		if (playerPos.y < m_position.y) {
 			if (if_can_move(map, 'U'))
-				return 'U';
+				m_dir = 'U';
 		}
 		// if the enemy is higher than the enemy
 		else {
 			if (if_can_move(map, 'D'))
-				return 'D';
+				m_dir =  'D';
 		}
 		// change direction
 		if (!if_can_move(map, m_dir)) {
