@@ -58,14 +58,14 @@ char SmartEnemy::moveDir(const Map& map, const sf::Vector2f& playerPos)
 			else
 				m_dir = 'R';
 		}
-		return m_dir;
 	}
 	// if the player and the enemy are in the same height level
 	else {
 		// player in the right
 		if (m_position.x > playerPos.x)
 			if (if_can_move(map, 'R'))
-				return 'R';
-		return 'L';
+				m_dir = 'R';
+		m_dir = 'L';
 	}
+	return m_dir;
 }

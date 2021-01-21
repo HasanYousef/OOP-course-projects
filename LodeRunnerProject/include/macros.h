@@ -17,7 +17,7 @@ ANIMATION_IMAGE_COUNT = 5,
 NUM_OF_SOUNDS = 3;
 
 const float ANIMATION_SWITCH_TIME = 0.2,
-            SPEED = 0.2f;
+            SPEED = 0.1f;
 
 
 //---------------------
