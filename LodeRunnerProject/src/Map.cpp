@@ -174,8 +174,10 @@ void Map::set_object(ObjectType type, const sf::Vector2f& location) {
 
 //-----------------------------------------------
 void Map::setObjectWithMargin(ObjectType type, const sf::Vector2f& location, int leftMargin) {
-	*m_map[location.y / TEXTURE_SIZE][(location.x - leftMargin) / TEXTURE_SIZE] =
-		WorldObject(type, location);
+	int col = (location.x - leftMargin) / TEXTURE_SIZE,
+		row = location.y / TEXTURE_SIZE;
+	if(row < m_height && col < m_width)
+		*m_map[row][col] = WorldObject(type, location);
 }
 
 //-----------------------------------------------

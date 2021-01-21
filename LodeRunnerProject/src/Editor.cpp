@@ -65,7 +65,7 @@ void Editor::run(sf::RenderWindow& window, int level) {
 
 					//put the texture that the user holds with the mouse and wants to put
 					hover = sf::Sprite(*(Textures::instance().get_texture(ObjectType(m_clickMode))));
-					int xPos = ((int(location.x) - BUTTON_WIDTH + 10) / TEXTURE_SIZE) * TEXTURE_SIZE + BUTTON_WIDTH + 10;
+					int xPos = ((int(location.x) - (BUTTON_WIDTH + 10)) / TEXTURE_SIZE) * TEXTURE_SIZE + BUTTON_WIDTH + 10;
 					int yPos = (int(location.y) / TEXTURE_SIZE) * TEXTURE_SIZE;
 					hover.setPosition(sf::Vector2f(xPos , yPos));
 					putHover = true;
