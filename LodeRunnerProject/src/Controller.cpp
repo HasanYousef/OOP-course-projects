@@ -8,24 +8,36 @@
 Controller::Controller()
 {
 	m_numOfLevels = countLevels();
-	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_WIDTH), "LodeRunner");
+	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "LodeRunner");
 }
 
 //-----------------run-----------------
 void Controller::run() {
 	UserOption userChoice = runMenu();
+	UserOption EditorChoice = UserOption::Nothing;
+	int level = 1;
 	while (userChoice != UserOption::Exit) {
 		switch (userChoice) {
 		case UserOption::StartGame:
 			m_game.run(m_window, m_numOfLevels);
 			break;
 		case UserOption::EditMaps:
-			m_editor.run(m_window, 1);
+			EditorChoice = m_editor.run(m_window, level, m_numOfLevels);
 			break;
 		case UserOption::AddNewMap:
 			// negative number so the editor knows that this is a new level
-			m_editor.run(m_window, -1 * (m_numOfLevels + 1));
+			EditorChoice = m_editor.run(m_window, -1 * (m_numOfLevels + 1), m_numOfLevels);
 			break;
+		}
+		while (EditorChoice == UserOption::NextBoard ||
+			EditorChoice == UserOption::PrevBoard) {
+			if (EditorChoice == UserOption::NextBoard) {
+				level++;
+			}
+			if (EditorChoice == UserOption::PrevBoard) {
+				level--;
+			}
+			EditorChoice = m_editor.run(m_window, level, m_numOfLevels);
 		}
 		userChoice = runMenu();
 	}

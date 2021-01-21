@@ -54,3 +54,11 @@ void Panel::draw(sf::RenderWindow& window) const {
 void Panel::setPosition(sf::Vector2f pos) {
 	m_position = pos;
 }
+
+//-------------------------------------------------------
+//
+void Panel::clear() {
+	for (int i = 0; i < m_buttons.size(); i++)
+		delete m_buttons[i];
+	m_buttons.clear();
+}

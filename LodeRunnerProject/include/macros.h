@@ -4,8 +4,8 @@
 const char FONT_PATH[27] = "C:/Windows/Fonts/Arial.ttf";
 
 //---------------------
-const int WINDOW_WIDTH = 640,
-WINDOW_HEIGHT = 500,
+const int WINDOW_WIDTH = 1200,
+WINDOW_HEIGHT = 900,
 TEXTURE_SIZE = 32,
 NUM_OF_TYPES = 9,
 INIT_HEALTH = 3,
@@ -38,6 +38,8 @@ enum UserOption
 	Exit,
 	SaveBoard,
 	ClearBoard,
+	NextBoard,
+	PrevBoard,
 	Nothing
 };
 
@@ -70,5 +72,6 @@ WALL = '#',
 LADDER = 'H',
 ROPE = '-',
 COIN = '*',
+GIFT = '+',
 PLAYER = '@',
 ENEMY = '%';

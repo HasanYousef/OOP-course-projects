@@ -3,21 +3,25 @@
 #include "Editor.h"
 
 Editor::Editor() :
-	m_clickMode(UserOption::Nothing)
+	m_clickMode(UserOption::Nothing),
+	m_numOfLevels(0),
+	m_level(0)
 {}
 
 //--------------------------------------------
-void Editor::run(sf::RenderWindow& window, int level) {
+UserOption Editor::run(sf::RenderWindow& window, int level, int numOfLevels) {
+	m_level = level;
+	m_numOfLevels = numOfLevels;
 	// set the panel's buttons
 	initPanel();
 	
 	// if the usew wants to edit an existing map
-	if (level > 0)
-		m_map.load_map(level, BUTTON_WIDTH + 10);
+	if (m_level > 0)
+		m_map.load_map(m_level, BUTTON_WIDTH + 10);
 	// adding new level
 	else {
 		initMap(window);
-		level *= -1;
+		m_level *= -1;
 	}
 
 	// mouse world object hover
@@ -44,8 +48,14 @@ void Editor::run(sf::RenderWindow& window, int level) {
 				auto location = window.mapPixelToCoords(
 					{ event.mouseButton.x, event.mouseButton.y });
 				//panel side
-				if (location.x < BUTTON_WIDTH + 10)
-					handle_click(location, window, level);
+				if (location.x < BUTTON_WIDTH + 10) {
+					UserOption choice = handle_click(location, window);
+					if (choice == UserOption::Exit ||
+						choice == UserOption::NextBoard ||
+						choice == UserOption::PrevBoard) {
+						return choice;
+					}
+				}
 				//board side
 				else if (m_clickMode < UserOption::SaveBoard) {
 					location.x = ((int(location.x) - (BUTTON_WIDTH + 10)) / TEXTURE_SIZE) * TEXTURE_SIZE + (BUTTON_WIDTH + 10);
@@ -81,12 +91,24 @@ void Editor::run(sf::RenderWindow& window, int level) {
 
 //--------------------------------------------
 //check wich botton the user clicked
-void Editor::handle_click(const sf::Vector2f &location, sf::RenderWindow& window, int level) {
+UserOption Editor::handle_click(const sf::Vector2f &location, sf::RenderWindow& window) {
 	UserOption act = m_panel.handle_click(location);
 	if (act == UserOption::SaveBoard)
-		m_map.save(level);
+		m_map.save(m_level);
 	if (act == UserOption::ClearBoard) {
 		initMap(window);
+	}
+	if (act == UserOption::NextBoard) {
+		m_level++;
+		return UserOption::NextBoard;
+	}
+	if (act == UserOption::PrevBoard) {
+		m_level--;
+		return UserOption::PrevBoard;
+	}
+	if (act == UserOption::Exit) {
+		m_level = 0;
+		return UserOption::Exit;
 	}
 	//if the user wants to put something in the board
 	if (act != UserOption::Nothing && act < 8) {
@@ -119,10 +141,16 @@ void Editor::initMap(sf::RenderWindow& window) {
 //--------------------------------------------
 //we creat new board
 void Editor::initPanel() {
+	m_panel.clear();
 	m_panel.setPosition(sf::Vector2f(10, 10));
 	m_panel.addTextButton(UserOption::SaveBoard, "Save");
 	m_panel.addTextButton(UserOption::ClearBoard, "Clear");
+	if(m_level < m_numOfLevels && m_level > 0)
+		m_panel.addTextButton(UserOption::NextBoard, "Next");
+	if (1 < m_level || m_level < 0)
+		m_panel.addTextButton(UserOption::PrevBoard, "Previous");
 
 	for (int i = 0; i < NUM_OF_TYPES; i++)
 		m_panel.addTextureButton(UserOption(i));
+	m_panel.addTextButton(UserOption::Exit, "Exit");
 }

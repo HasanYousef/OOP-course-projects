@@ -18,6 +18,7 @@ public:
 	UserOption handle_click(const sf::Vector2f&) const;
 	void draw(sf::RenderWindow&) const;
 	void setPosition(sf::Vector2f);
+	void clear();
 
 private:
 	std::vector<Button*> m_buttons;

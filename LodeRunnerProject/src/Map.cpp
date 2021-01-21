@@ -53,17 +53,15 @@ int Map::read_from_stream(std::ifstream& stream, int leftMarging) {
 	stream >> m_time;
 	char ch;
 	//reading the map's chars line by line
+	m_map.resize(m_height);
 	for (int row = 0; row < m_height; row++) {
 		//jumping over the new line char
 		stream.get();
-		std::vector<WorldObject*> tempRow;
 		for (int col = 0; col < m_width; col++) {
-			WorldObject* object = new WorldObject;
-			object->set_position(sf::Vector2f(col * TEXTURE_SIZE + leftMarging, row * TEXTURE_SIZE));
-			object->setType(char_to_type(stream.get()));
-			tempRow.push_back(object);
+			m_map[row].push_back(new WorldObject);
+			m_map[row][col]->set_position(sf::Vector2f(col * TEXTURE_SIZE + leftMarging, row * TEXTURE_SIZE));
+			m_map[row][col]->setType(char_to_type(stream.get()));
 		}
-		m_map.push_back(tempRow);
 	}
 	return m_time;
 }
@@ -96,6 +94,8 @@ ObjectType Map::char_to_type(char ch) const {
 		return ObjectType::O_Rope;
 	case COIN:
 		return ObjectType::O_Coin;
+	case GIFT:
+		return ObjectType::O_Gift;
 	case PLAYER:
 		return ObjectType::O_Player;
 	case ENEMY:
@@ -115,6 +115,8 @@ char Map::type_to_char(ObjectType type) const {
 		return ROPE;
 	case ObjectType::O_Coin:
 		return COIN;
+	case ObjectType::O_Gift:
+		return GIFT;
 	case ObjectType::O_Player:
 		return PLAYER;
 	case ObjectType::O_Enemy:
@@ -190,7 +192,6 @@ void Map::init(int height, int width, int time) {
 	m_height = height;
 	m_width = width;
 	m_time = time;
-	std::vector<WorldObject*> temp;
 	m_map.resize(m_height);
 
 	for (int row = 0; row < m_height; row++) {
@@ -239,6 +240,8 @@ char Map::typeToChar(ObjectType type) const {
 		return ROPE;
 	case ObjectType::O_Coin:
 		return COIN;
+	case ObjectType::O_Gift:
+		return GIFT;
 	case ObjectType::O_Player:
 		return PLAYER;
 	case ObjectType::O_Enemy:
