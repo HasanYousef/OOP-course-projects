@@ -215,24 +215,38 @@ void Game::fillWell() {
 //---------------------------------------------
 void Game::get_out_well(sf::Vector2f& p) {
 	sf::Vector2f leftP(p.x - TEXTURE_SIZE, p.y),
-		rightP(p.x + TEXTURE_SIZE, p.y);
-	if (m_player->get_position() == p) {
-		if (m_map.get_type({ rightP.x, p.y + TEXTURE_SIZE }) != O_Wall
+		rightP(p.x + TEXTURE_SIZE, p.y),
+		playerP, enemyP;
+	//we creat the right points for enemy
+	playerP.x = int(m_player->get_position().x) / TEXTURE_SIZE;
+	playerP.y = int(m_player->get_position().y) / TEXTURE_SIZE;
+	playerP.x *= TEXTURE_SIZE;
+	playerP.y *= TEXTURE_SIZE;
+	if (playerP == p) {
+		//we check if its the same points
+		if (m_map.get_type((p.y - TEXTURE_SIZE) / TEXTURE_SIZE,
+			rightP.x / TEXTURE_SIZE) != O_Wall
 			&& m_map.get_type(rightP) == O_Wall) {
-			m_player->set_position({ rightP.x, p.y + TEXTURE_SIZE });
+			m_player->set_position({ rightP.x, p.y - TEXTURE_SIZE });
 		}
 		else{
-			m_player->set_position({ leftP.x, p.y + TEXTURE_SIZE });
+			m_player->set_position({ leftP.x, p.y - TEXTURE_SIZE });
 		}
 	}
 	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
-		if (m_enemies[enemy]->get_position() == p) {
-			if (m_map.get_type({ rightP.x, p.y + TEXTURE_SIZE }) != O_Wall
+		//we creat the right points for enemy
+		enemyP.x = int(m_enemies[enemy]->get_position().x) / TEXTURE_SIZE;
+		enemyP.y = int(m_enemies[enemy]->get_position().y) / TEXTURE_SIZE;
+		enemyP.x *= TEXTURE_SIZE;
+		enemyP.y *= TEXTURE_SIZE;
+		//we check if its the same points
+		if (enemyP == p) {
+			if (m_map.get_type({ rightP.x, p.y - TEXTURE_SIZE }) != O_Wall
 				&& m_map.get_type(rightP) == O_Wall) {
-				m_player->set_position({ rightP.x, p.y + TEXTURE_SIZE });
+				m_enemies[enemy]->set_position({ rightP.x, p.y - TEXTURE_SIZE });
 			}
 			else {
-				m_player->set_position({ leftP.x, p.y + TEXTURE_SIZE });
+				m_enemies[enemy]->set_position({ leftP.x, p.y - TEXTURE_SIZE });
 			}
 		}
 	}

@@ -61,7 +61,9 @@ bool MoveableObject::if_can_move(const Map& map, char way) {
 		TRpoints(m_position.x + TEXTURE_SIZE - 1, m_position.y),
 		BLpoints(m_position.x, m_position.y + TEXTURE_SIZE - 1),
 		BRpoints(m_position.x + TEXTURE_SIZE - 1, m_position.y + TEXTURE_SIZE - 1);
-
+	if (map.get_type(m_position) == O_Well){
+		return false;
+	}
 	//check if we can not go to the way we want
 	switch (way) {
 	case 'U': //UP

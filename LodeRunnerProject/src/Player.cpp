@@ -89,7 +89,12 @@ bool Player::getGift(const Map& map) {
 //-------------------------------------------------
 sf::Vector2f* Player::dig(Map& map) {
 	sf::Vector2f* points = new sf::Vector2f;
+	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+		if ((m_position.y + TEXTURE_SIZE) / TEXTURE_SIZE >= map.get_height() ||
+			(m_position.x + TEXTURE_SIZE) / TEXTURE_SIZE >= map.get_width()) {
+			return NULL;
+		}
 		if (map.get_type((m_position.y + TEXTURE_SIZE) / TEXTURE_SIZE,
 			(m_position.x + TEXTURE_SIZE) / TEXTURE_SIZE) == O_Wall &&
 			map.get_type(m_position.y / TEXTURE_SIZE,
@@ -101,6 +106,10 @@ sf::Vector2f* Player::dig(Map& map) {
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+		if ((m_position.y + TEXTURE_SIZE) / TEXTURE_SIZE >= map.get_height() ||
+			(m_position.x - TEXTURE_SIZE) / TEXTURE_SIZE < 0) {
+			return NULL;
+		}
 		if (map.get_type((m_position.y + TEXTURE_SIZE) / TEXTURE_SIZE,
 			(m_position.x - TEXTURE_SIZE) / TEXTURE_SIZE) == O_Wall &&
 			map.get_type(m_position.y / TEXTURE_SIZE,
