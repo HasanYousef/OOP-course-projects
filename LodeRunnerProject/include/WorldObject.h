@@ -15,7 +15,7 @@ public:
 	void setType(ObjectType type);
 	WorldObject& operator=(const WorldObject&);
 	//---build-body-----------
-	sf::Sprite create() const;
+	virtual sf::Sprite create() const;
 protected:
 	//---members--------------
 	ObjectType m_objectType;

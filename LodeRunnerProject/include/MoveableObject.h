@@ -4,6 +4,7 @@
 #include "SFML/Graphics.hpp"
 #include "WorldObject.h"
 #include "Map.h"
+#include "Textures.h"
 
 class MoveableObject : public WorldObject {
 public:
@@ -15,6 +16,8 @@ public:
 	bool if_can_move(const Map&, char);
 	//---functions----------------------------
 	virtual void move(const Map&);
-private:
+	sf::Sprite create() const;
+protected:
 	sf::Vector2f m_originPosition;
+	bool m_facingRight = true;
 };

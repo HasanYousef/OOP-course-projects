@@ -26,6 +26,7 @@ void Game::run(sf::RenderWindow& window, int numOfLevels) {
 		if (m_remainingMoney == 0)
 			m_level++;
 	}
+	Sounds::instance().getSound(SoundType::Theme)->stop();
 }
 
 //-----------------run_level-------------------

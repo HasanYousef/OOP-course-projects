@@ -65,11 +65,13 @@ void Player::move(const Map& map)
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		if (if_can_move(map, 'L')) {
 			m_position.x -= SPEED;
+			m_facingRight = false;
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		if (if_can_move(map, 'R')) {
 			m_position.x += SPEED;
+			m_facingRight = true;
 		}
 	}
 }
@@ -110,4 +112,3 @@ sf::Vector2f* Player::dig(Map& map) {
 		}
 	}
 }
-
