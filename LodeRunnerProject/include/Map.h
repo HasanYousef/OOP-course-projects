@@ -12,7 +12,7 @@ namespace fs = std::filesystem;
 class Map {
 public:
 	Map();
-	Map(int, int);
+	Map(int, int, int);
 	~Map();
 	//----------------------------------
 	void deleteObjects();
@@ -29,11 +29,14 @@ public:
 	int get_width() const;
 	int get_height() const;
 	char type_to_char(ObjectType) const;
-	void init(int, int);
+	void init(int, int, int);
+	void save(int) const;
+	char typeToChar(ObjectType) const;
 	Map& operator=(const Map&);
 
 private:
 	size_t m_height,
 		m_width;
+	int m_time;
 	std::vector<std::vector<WorldObject*>> m_map;
 };

@@ -15,7 +15,7 @@ public:
 	void run(sf::RenderWindow&, int level);
 
 private:
-	void handle_click(const sf::Vector2f&, sf::RenderWindow&);
+	void handle_click(const sf::Vector2f&, sf::RenderWindow&, int);
 	void initMap(sf::RenderWindow&);
 	void initPanel();
 	//----------------------------------

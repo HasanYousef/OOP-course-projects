@@ -11,7 +11,14 @@ void Editor::run(sf::RenderWindow& window, int level) {
 	// set the panel's buttons
 	initPanel();
 	
-	m_map.load_map(level, BUTTON_WIDTH + 10);
+	// if the usew wants to edit an existing map
+	if (level > 0)
+		m_map.load_map(level, BUTTON_WIDTH + 10);
+	// adding new level
+	else {
+		initMap(window);
+		level *= -1;
+	}
 
 	// mouse world object hover
 	sf::Sprite hover;
@@ -38,7 +45,7 @@ void Editor::run(sf::RenderWindow& window, int level) {
 					{ event.mouseButton.x, event.mouseButton.y });
 				//panel side
 				if (location.x < BUTTON_WIDTH + 10)
-					handle_click(location, window);
+					handle_click(location, window, level);
 				//board side
 				else if (m_clickMode < UserOption::SaveBoard) {
 					location.x = ((int(location.x) - (BUTTON_WIDTH + 10)) / TEXTURE_SIZE) * TEXTURE_SIZE + (BUTTON_WIDTH + 10);
@@ -74,10 +81,10 @@ void Editor::run(sf::RenderWindow& window, int level) {
 
 //--------------------------------------------
 //check wich botton the user clicked
-void Editor::handle_click(const sf::Vector2f &location, sf::RenderWindow& window) {
+void Editor::handle_click(const sf::Vector2f &location, sf::RenderWindow& window, int level) {
 	UserOption act = m_panel.handle_click(location);
-	//if (act == UserOption::SaveBoard)
-		//m_map.save();
+	if (act == UserOption::SaveBoard)
+		m_map.save(level);
 	if (act == UserOption::ClearBoard) {
 		initMap(window);
 	}
@@ -99,12 +106,14 @@ void Editor::initMap(sf::RenderWindow& window) {
 	window.draw(text);
 	window.display();
 
-	int height, width;
+	int height, width, time;
 	std::cout << "Enter the height and the width of the map that you want to create:\n";
 	std::cin >> height >> width;
+	std::cout << "Enter the max time of the new level:\n";
+	std::cin >> time;
 	//making a board with the given size
 	m_map.~Map();
-	m_map.init(height, width);
+	m_map.init(height, width, time);
 }
 
 //--------------------------------------------

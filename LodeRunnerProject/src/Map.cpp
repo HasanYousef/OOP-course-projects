@@ -8,9 +8,9 @@ Map::Map() :m_height(0), m_width(0) {}
 //we use this func when the user press the clear
 //botton and we read from it a height and width to
 //creat new window and the window will be empty
-Map::Map(int height, int width)
+Map::Map(int height, int width, int time)
 {
-	init(height, width);
+	init(height, width, time);
 }
 
 //-----------------------------------------------
@@ -48,10 +48,9 @@ int Map::load_map(int level, int leftMargin) {
 //and we read tha map from the file and print 
 //on the window the map to
 int Map::read_from_stream(std::ifstream& stream, int leftMarging) {
-	int time;
 	stream >> m_height;
 	stream >> m_width;
-	stream >> time;
+	stream >> m_time;
 	char ch;
 	//reading the map's chars line by line
 	for (int row = 0; row < m_height; row++) {
@@ -66,7 +65,7 @@ int Map::read_from_stream(std::ifstream& stream, int leftMarging) {
 		}
 		m_map.push_back(tempRow);
 	}
-	return time;
+	return m_time;
 }
 
 //-----------------------------------------------
@@ -184,10 +183,11 @@ ObjectType Map::get_type(const sf::Vector2f& points) const {
 	return m_map[points.y / TEXTURE_SIZE][points.x / TEXTURE_SIZE]->get_type();
 }
 
-void Map::init(int height, int width) {
+void Map::init(int height, int width, int time) {
 	deleteObjects();
 	m_height = height;
 	m_width = width;
+	m_time = time;
 	std::vector<WorldObject*> temp;
 	m_map.resize(m_height);
 
@@ -200,5 +200,46 @@ void Map::init(int height, int width) {
 				sf::Vector2f(col * TEXTURE_SIZE + BUTTON_WIDTH + 10, row * TEXTURE_SIZE)
 			);
 		}
+	}
+}
+
+//-----------------------------------------------
+//save the board (print the object on the board file)
+void Map::save(int level) const {
+	std::string str = "C:board";
+	str += std::to_string(level);
+	str += ".txt";
+	fs::path p = str;
+	std::ofstream ofile(fs::absolute(p));
+	ofile << m_height << " " << m_width << " " << m_time << '\n';
+	//writing the chars the represent each object 
+	for (int row = 0; row < m_height; row++) {
+		for (int col = 0; col < m_width; col++) {
+			ofile.put(typeToChar(m_map[row][col]->get_type()));
+		}
+		if (row != m_height - 1)
+			ofile.put('\n');
+	}
+	ofile.close();
+}
+
+//-----------------------------------------------
+//take the type and return the char of type
+char Map::typeToChar(ObjectType type) const {
+	switch (type) {
+	case ObjectType::O_Space:
+		return SPACE;
+	case ObjectType::O_Wall:
+		return WALL;
+	case ObjectType::O_Ladder:
+		return LADDER;
+	case ObjectType::O_Rope:
+		return ROPE;
+	case ObjectType::O_Coin:
+		return COIN;
+	case ObjectType::O_Player:
+		return PLAYER;
+	case ObjectType::O_Enemy:
+		return ENEMY;
 	}
 }

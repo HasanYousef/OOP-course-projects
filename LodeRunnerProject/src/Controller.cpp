@@ -23,7 +23,8 @@ void Controller::run() {
 			m_editor.run(m_window, 1);
 			break;
 		case UserOption::AddNewMap:
-			m_editor.run(m_window, m_numOfLevels + 1);
+			// negative number so the editor knows that this is a new level
+			m_editor.run(m_window, -1 * (m_numOfLevels + 1));
 			break;
 		}
 		userChoice = runMenu();
