@@ -19,5 +19,4 @@ public:
 	sf::Sprite create() const;
 protected:
 	sf::Vector2f m_originPosition;
-	bool m_facingRight = true;
 };

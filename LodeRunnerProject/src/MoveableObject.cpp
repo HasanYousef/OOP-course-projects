@@ -124,8 +124,6 @@ bool MoveableObject::if_can_move(const Map& map, char way) {
 sf::Sprite MoveableObject::create() const {
 	sf::Sprite result = sf::Sprite(*Textures::instance().
 		get_texture(m_objectType));
-	if(!m_facingRight)
-		result.scale(-1.f, 1.f);
 	result.setPosition(m_position);
 	result.getPosition();
 	return result;

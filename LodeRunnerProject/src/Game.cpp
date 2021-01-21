@@ -69,7 +69,17 @@ void Game::run_level(sf::RenderWindow& window) {
 			m_map.set_object(O_Space, m_player->get_position());
 		}
 		if (m_player->getGift(m_map)) {
-			//give him a gift
+			switch (rand() % 2)
+			{
+			case 0:
+				m_player->add_score(20);
+				break;
+			case 1:
+				m_player->add_health(1);
+				break;
+			}
+
+			m_map.set_object(O_Space, m_player->get_position());
 		}
 		if (((time.asSeconds() >= m_time && m_time != -1)) || player_get_hit()) {
 			Sounds::instance().getSound(SoundType::GetHit)->play();
@@ -139,7 +149,7 @@ void Game::locate_objects() {
 				}
 				break;
 			case O_Enemy: //we add the enemy
-				switch (1) {
+				switch (rand() % 3) {
 				case 0:
 					enemy1 = new StandartEnemy;
 					enemy1->setType(ObjectType::O_Enemy);
@@ -176,8 +186,10 @@ void Game::drawInfoBar(sf::RenderWindow& window, sf::Time time) const {
 	str += std::to_string(m_player->get_score());
 	str += "   Level: ";
 	str += std::to_string(m_level);
-	str += "   Time: ";
-	str += std::to_string(int(time.asSeconds()));
+	if (m_time != -1) {
+		str += "   Time: ";
+		str += std::to_string(m_time - int(time.asSeconds()));
+	}
 	auto text = sf::Text(str, *(Textures::instance().get_font()));
 	text.setPosition({ 10, 400 });
 	window.draw(text);
