@@ -57,7 +57,26 @@ void Game::run_level(sf::RenderWindow& window) {
 		m_player->move(m_map);
 		m_player->fall(m_map);
 		move_enemies();
-		//m_player->dig(m_map);
+		//Player Diging
+		sf::Vector2f* p = m_player->dig(m_map);
+		if (p != NULL) {
+			Well* well = new Well;
+			p->x = int(p->x / TEXTURE_SIZE);
+			p->y = int(p->y / TEXTURE_SIZE);
+			p->x *= TEXTURE_SIZE;
+			p->y *= TEXTURE_SIZE;
+			m_map.set_object(O_Well, *p);
+			well->setPosition(*p);
+			m_wells.push_back(well);
+			sex = true;
+		}
+		if (sex && m_wells[currWell]->stillWell(m_map)) {
+			m_map.set_object(O_Wall,
+				*m_wells[currWell]->getPosition());
+			currWell++;
+			sex = false;
+		}
+		//-------------------------------------
   		if (m_player->getCoin(m_map)) {
 			Sounds::instance().getSound(SoundType::GetCoin)->play();
 			m_player->add_score(2*m_level); //need to add a const for coin value

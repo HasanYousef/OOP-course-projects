@@ -112,3 +112,8 @@ sf::Vector2f* Player::dig(Map& map) {
 		}
 	}
 }
+
+//-------------------------------------------------
+bool Player::getGift(const Map& map) {
+	return (map.get_type(m_position) == O_Gift);
+}

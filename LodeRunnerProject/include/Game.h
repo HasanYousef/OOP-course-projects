@@ -8,6 +8,7 @@ namespace fs = std::filesystem;
 
 #include "Map.h"
 #include "Player.h"
+#include "Well.h"
 #include "StupidEnemy.h"
 #include "StandartEnemy.h"
 #include "SmartEnemy.h"
@@ -35,4 +36,5 @@ private:
 	Player* m_player;
 	//---Arrays_for_members-
 	std::vector <Enemy*> m_enemies;
+	std::vector <Well*> m_wells;
 };

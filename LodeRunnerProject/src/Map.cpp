@@ -8,19 +8,9 @@ Map::Map() :m_height(0), m_width(0) {}
 //we use this func when the user press the clear
 //botton and we read from it a height and width to
 //creat new window and the window will be empty
-Map::Map(int height, int width) {
-	m_height = height;
-	m_width = width;
-	std::vector<std::vector<WorldObject*>> newBoard;
-	for (int row = 0; row <= m_height; row++) {
-		std::vector<WorldObject> tempRow;
-		//creating a line of objects
-		for (int col = 0; col <= m_width; col++) {
-			*newBoard[row][col] = WorldObject(ObjectType::O_Space,
-				sf::Vector2f(col * TEXTURE_SIZE + BUTTON_WIDTH + 10, row * TEXTURE_SIZE));
-		}
-	}
-	m_map = newBoard;
+Map::Map(int height, int width)
+{
+	init(height, width);
 }
 
 //-----------------------------------------------
@@ -33,6 +23,8 @@ void Map::deleteObjects() {
 	for (int row = 0; row < m_height; row++)
 		for (int col = 0; col < m_width; col++)
 			delete m_map[row][col];
+	m_height = 0;
+	m_width = 0;
 }
 
 //-----------------------------------------------
@@ -80,7 +72,7 @@ int Map::read_from_stream(std::ifstream& stream, int leftMarging) {
 //-----------------------------------------------
 //this func move on every elment on the array and
 //print the elment to present it on the window 
-void Map::draw(sf::RenderWindow& window) const {
+void Map::draw(sf::RenderWindow& window) {
 	for (int row = 0; row < m_height; row++)
 		for (int col = 0; col < m_width; col++) {
 			ObjectType type = m_map[row][col]->get_type();
@@ -190,4 +182,22 @@ void Map::setObjectWithMargin(ObjectType type, const sf::Vector2f& location, int
 //-----------------------------------------------
 ObjectType Map::get_type(const sf::Vector2f& points) const {
 	return m_map[points.y / TEXTURE_SIZE][points.x / TEXTURE_SIZE]->get_type();
+}
+
+void Map::init(int height, int width) {
+	deleteObjects();
+	m_height = height;
+	m_width = width;
+	for (int row = 0; row < m_height; row++) {
+		std::vector<WorldObject*> tempRow;
+		//creating a line of objects
+		for (int col = 0; col < m_width; col++) {
+			tempRow.push_back(new WorldObject);
+			tempRow[col]->setType(ObjectType::O_Space);
+			tempRow[col]->set_position(
+				sf::Vector2f(col * TEXTURE_SIZE + BUTTON_WIDTH + 10, row * TEXTURE_SIZE)
+			);
+		}
+		m_map.push_back(tempRow);
+	}
 }

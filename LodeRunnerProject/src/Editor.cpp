@@ -38,7 +38,7 @@ void Editor::run(sf::RenderWindow& window, int level) {
 					{ event.mouseButton.x, event.mouseButton.y });
 				//panel side
 				if (location.x < BUTTON_WIDTH + 10)
-					handle_click(location);
+					handle_click(location, window);
 				//board side
 				else if (m_clickMode < UserOption::SaveBoard) {
 					location.x = ((int(location.x) - (BUTTON_WIDTH + 10)) / TEXTURE_SIZE) * TEXTURE_SIZE + (BUTTON_WIDTH + 10);
@@ -74,12 +74,12 @@ void Editor::run(sf::RenderWindow& window, int level) {
 
 //--------------------------------------------
 //check wich botton the user clicked
-void Editor::handle_click(const sf::Vector2f &location) {
+void Editor::handle_click(const sf::Vector2f &location, sf::RenderWindow& window) {
 	UserOption act = m_panel.handle_click(location);
 	//if (act == UserOption::SaveBoard)
 		//m_map.save();
 	if (act == UserOption::ClearBoard) {
-		initMap();
+		initMap(window);
 	}
 	//if the user wants to put something in the board
 	if (act != UserOption::Nothing && act < 8) {
@@ -89,9 +89,22 @@ void Editor::handle_click(const sf::Vector2f &location) {
 
 //--------------------------------------------
 //we creat new board
-void Editor::initMap() {
-	int height = 12, width = 15;
-	m_map = Map(height, width);
+void Editor::initMap(sf::RenderWindow& window) {
+	//writing a message on the window to tell the user to use the other window
+	auto text = sf::Text("Please enter the height and the width of the new board\nin the other window...",
+		*Textures::instance().get_font(),
+		20);
+	//display the message
+	window.clear();
+	window.draw(text);
+	window.display();
+
+	int height, width;
+	std::cout << "Enter the height and the width of the map that you want to create:\n";
+	std::cin >> height >> width;
+	//making a board with the given size
+	m_map.~Map();
+	m_map.init(height, width);
 }
 
 //--------------------------------------------
