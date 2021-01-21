@@ -71,11 +71,11 @@ int Map::read_from_stream(std::ifstream& stream, int leftMarging) {
 //-----------------------------------------------
 //this func move on every elment on the array and
 //print the elment to present it on the window 
-void Map::draw(sf::RenderWindow& window) {
+void Map::draw(sf::RenderWindow& window, bool showMoveableObjects) {
 	for (int row = 0; row < m_height; row++)
 		for (int col = 0; col < m_width; col++) {
 			ObjectType type = m_map[row][col]->get_type();
-			if (type != ObjectType::O_Player && type != ObjectType::O_Enemy)
+			if (showMoveableObjects || type != ObjectType::O_Player && type != ObjectType::O_Enemy)
 				m_map[row][col]->draw(window);
 		}
 }

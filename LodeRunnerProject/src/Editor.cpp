@@ -25,7 +25,7 @@ void Editor::run(sf::RenderWindow& window, int level) {
 	bool putHover = false;
 	while (window.isOpen()) {
 		window.clear();
-		m_map.draw(window);
+		m_map.draw(window, true);
 		m_panel.draw(window);
 		if (putHover)
 			window.draw(hover);

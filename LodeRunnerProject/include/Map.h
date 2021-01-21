@@ -20,7 +20,7 @@ public:
 	ObjectType get_type(const sf::Vector2f& ) const;
 	int load_map(int, int);
 	int read_from_stream(std::ifstream&, int);
-	void draw(sf::RenderWindow&);
+	void draw(sf::RenderWindow&, bool);
 	void set_object(ObjectType, const sf::Vector2f&);
 	void setObjectWithMargin(ObjectType, const sf::Vector2f&, int);
 	//void set_object(ObjectType, const sf::Vector2f&, sf::Texture* textures[]);

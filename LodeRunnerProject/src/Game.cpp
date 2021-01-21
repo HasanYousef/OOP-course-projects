@@ -43,7 +43,7 @@ void Game::run_level(sf::RenderWindow& window) {
 		sf::Time time = clock.getElapsedTime();
 		window.pollEvent(event);
 		//we draw the objects
-		m_map.draw(window);
+		m_map.draw(window, false);
 		draw_enemies(window);
 		m_player->draw(window);
 		drawInfoBar(window, time);
