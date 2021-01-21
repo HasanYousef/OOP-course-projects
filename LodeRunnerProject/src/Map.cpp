@@ -188,16 +188,17 @@ void Map::init(int height, int width) {
 	deleteObjects();
 	m_height = height;
 	m_width = width;
+	std::vector<WorldObject*> temp;
+	m_map.resize(m_height);
+
 	for (int row = 0; row < m_height; row++) {
-		std::vector<WorldObject*> tempRow;
 		//creating a line of objects
 		for (int col = 0; col < m_width; col++) {
-			tempRow.push_back(new WorldObject);
-			tempRow[col]->setType(ObjectType::O_Space);
-			tempRow[col]->set_position(
+			m_map[row].push_back(new WorldObject);
+			m_map[row][col]->setType(ObjectType::O_Space);
+			m_map[row][col]->set_position(
 				sf::Vector2f(col * TEXTURE_SIZE + BUTTON_WIDTH + 10, row * TEXTURE_SIZE)
 			);
 		}
-		m_map.push_back(tempRow);
 	}
 }

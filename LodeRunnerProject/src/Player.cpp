@@ -88,12 +88,12 @@ bool Player::getGift(const Map& map) {
 
 //-------------------------------------------------
 sf::Vector2f* Player::dig(Map& map) {
-	sf::Vector2f* points;
+	sf::Vector2f* points = new sf::Vector2f;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
-		if (map.get_type({m_position.x + TEXTURE_SIZE,
-			m_position.y + TEXTURE_SIZE}) == O_Wall) {
-			map.set_object(O_Well, { m_position.x + TEXTURE_SIZE,
-			m_position.y + TEXTURE_SIZE });
+		if (map.get_type((m_position.y + TEXTURE_SIZE) / TEXTURE_SIZE,
+			(m_position.x + TEXTURE_SIZE) / TEXTURE_SIZE) == O_Wall &&
+			map.get_type(m_position.y / TEXTURE_SIZE,
+				(m_position.x + TEXTURE_SIZE) / TEXTURE_SIZE) == O_Space) {
 			//set points and return
 			points->x = m_position.x + TEXTURE_SIZE;
 			points->y = m_position.y + TEXTURE_SIZE;
@@ -101,19 +101,16 @@ sf::Vector2f* Player::dig(Map& map) {
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-		if (map.get_type({ m_position.x - TEXTURE_SIZE,
-			m_position.y - TEXTURE_SIZE }) == O_Wall) {
-			map.set_object(O_Well, { m_position.x - TEXTURE_SIZE,
-			m_position.y - TEXTURE_SIZE });
+		if (map.get_type((m_position.y + TEXTURE_SIZE) / TEXTURE_SIZE,
+			(m_position.x - TEXTURE_SIZE) / TEXTURE_SIZE) == O_Wall &&
+			map.get_type(m_position.y / TEXTURE_SIZE,
+				(m_position.x - TEXTURE_SIZE) / TEXTURE_SIZE) == O_Space) {
 			//set points and return
-			points->x = m_position.x + TEXTURE_SIZE;
+			points->x = m_position.x - TEXTURE_SIZE;
 			points->y = m_position.y + TEXTURE_SIZE;
 			return points;
 		}
 	}
-}
-
-//-------------------------------------------------
-bool Player::getGift(const Map& map) {
-	return (map.get_type(m_position) == O_Gift);
+	points = NULL;
+	return points;
 }

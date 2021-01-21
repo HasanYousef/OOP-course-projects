@@ -87,7 +87,8 @@ bool MoveableObject::if_can_move(const Map& map, char way) {
 		BLpoints.y += SPEED;
 		BRpoints.y += SPEED;
 		if (map.get_type(BLpoints) != O_Wall &&
-			map.get_type(BRpoints) != O_Wall)
+			map.get_type(BRpoints) != O_Wall &&
+			map.get_type(m_position) != O_Well)
 		{
 			return true;
 		}

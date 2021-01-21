@@ -24,6 +24,9 @@ public:
 	void locate_objects();
 private:
 	//---Functions----------
+	void get_out_well(sf::Vector2f&);
+	sf::Vector2f* get_dig_points();
+	void fillWell();
 	void draw_enemies(sf::RenderWindow&);
 	void move_enemies();
 	bool player_get_hit();
@@ -31,7 +34,8 @@ private:
 	//---Members------------
 	int m_level,
 		m_remainingMoney,
-		m_time;
+		m_time,
+		m_currWell;
 	Map m_map;
 	Player* m_player;
 	//---Arrays_for_members-

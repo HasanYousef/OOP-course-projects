@@ -23,7 +23,7 @@ public:
 	//---add-functions----------
 	void add_health(int);
 	void add_score(int);
-	bool getGift(const Map&);
+	//bool getGift(const Map&);
 private:
 	int m_health = INIT_HEALTH;
 	int m_score = 0;

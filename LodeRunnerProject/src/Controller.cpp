@@ -65,7 +65,7 @@ UserOption Controller::runMenu() {
 int Controller::countLevels() {
 	int level = 1;
 	while (true) {
-		std::string str = "C:board";
+		std::string str = "D:board";
 		str += std::to_string(level);
 		str += ".txt";
 		fs::path p = str;

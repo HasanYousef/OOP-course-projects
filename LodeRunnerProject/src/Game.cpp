@@ -34,6 +34,7 @@ void Game::run_level(sf::RenderWindow& window) {
 	sf::Event event;
 	sf::Clock clock;
 	int remaining_coins = 0;
+		m_currWell = -1;
 	//add panel (bottons)
 	m_time = m_map.load_map(m_level, 0);
 	locate_objects();
@@ -58,26 +59,10 @@ void Game::run_level(sf::RenderWindow& window) {
 		m_player->fall(m_map);
 		move_enemies();
 		//Player Diging
-		sf::Vector2f* p = m_player->dig(m_map);
-		if (p != NULL) {
-			Well* well = new Well;
-			p->x = int(p->x / TEXTURE_SIZE);
-			p->y = int(p->y / TEXTURE_SIZE);
-			p->x *= TEXTURE_SIZE;
-			p->y *= TEXTURE_SIZE;
-			m_map.set_object(O_Well, *p);
-			well->setPosition(*p);
-			m_wells.push_back(well);
-			sex = true;
-		}
-		if (sex && m_wells[currWell]->stillWell(m_map)) {
-			m_map.set_object(O_Wall,
-				*m_wells[currWell]->getPosition());
-			currWell++;
-			sex = false;
-		}
-		//-------------------------------------
-  		if (m_player->getCoin(m_map)) {
+		sf::Vector2f* p = get_dig_points();
+		fillWell();
+		//--------------------
+		if (m_player->getCoin(m_map)) {
 			Sounds::instance().getSound(SoundType::GetCoin)->play();
 			m_player->add_score(2*m_level); //need to add a const for coin value
 			m_remainingMoney--;
@@ -183,6 +168,7 @@ void Game::locate_objects() {
 	}
 }
 
+//---------------------------------------------
 void Game::drawInfoBar(sf::RenderWindow& window, sf::Time time) const {
 	std::string str = "Health: ";
 	str += std::to_string(m_player->get_health());
@@ -195,4 +181,59 @@ void Game::drawInfoBar(sf::RenderWindow& window, sf::Time time) const {
 	auto text = sf::Text(str, *(Textures::instance().get_font()));
 	text.setPosition({ 10, 400 });
 	window.draw(text);
+}
+
+//---------------------------------------------
+sf::Vector2f* Game::get_dig_points() {
+	sf::Vector2f* p = m_player->dig(m_map);
+	if (p != NULL) {
+		Well* well = new Well;
+		p->x = int(p->x / TEXTURE_SIZE);
+		p->y = int(p->y / TEXTURE_SIZE);
+		p->x *= TEXTURE_SIZE;
+		p->y *= TEXTURE_SIZE;
+		m_map.set_object(O_Well, *p);
+		well->setPosition(*p);
+		m_wells.push_back(well);
+		if (m_currWell == -1) { m_currWell++; }
+	}
+	return p;
+}
+
+//---------------------------------------------
+void Game::fillWell() {
+	if (m_currWell > -1 && m_currWell < m_wells.size() &&
+		m_wells[m_currWell]->stillWell(m_map)) {
+		sf::Vector2f p(*m_wells[m_currWell]->getPosition());
+		get_out_well(p);
+		m_map.set_object(O_Wall, p);
+		delete m_wells[m_currWell];
+		m_currWell++;
+	}
+}
+
+//---------------------------------------------
+void Game::get_out_well(sf::Vector2f& p) {
+	sf::Vector2f leftP(p.x - TEXTURE_SIZE, p.y),
+		rightP(p.x + TEXTURE_SIZE, p.y);
+	if (m_player->get_position() == p) {
+		if (m_map.get_type({ rightP.x, p.y + TEXTURE_SIZE }) != O_Wall
+			&& m_map.get_type(rightP) == O_Wall) {
+			m_player->set_position({ rightP.x, p.y + TEXTURE_SIZE });
+		}
+		else{
+			m_player->set_position({ leftP.x, p.y + TEXTURE_SIZE });
+		}
+	}
+	for (int enemy = 0; enemy < m_enemies.size(); enemy++) {
+		if (m_enemies[enemy]->get_position() == p) {
+			if (m_map.get_type({ rightP.x, p.y + TEXTURE_SIZE }) != O_Wall
+				&& m_map.get_type(rightP) == O_Wall) {
+				m_player->set_position({ rightP.x, p.y + TEXTURE_SIZE });
+			}
+			else {
+				m_player->set_position({ leftP.x, p.y + TEXTURE_SIZE });
+			}
+		}
+	}
 }
