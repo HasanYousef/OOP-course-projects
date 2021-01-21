@@ -18,8 +18,4 @@
 										  "Button.cpp"
 										  "TextButton.cpp"
 										  "TextureButton.cpp"
-										  "Well"
-										  "board1.txt"
-										  "board2.txt"
-										  "board3.txt"
-										  "board4.txt")
+										  "Well")
