@@ -10,3 +10,7 @@ configure_file ("enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("getHit.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("getCoin.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("theme.ogg" ${CMAKE_BINARY_DIR} COPYONLY)
+
+configure_file ("board1.txt" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("board2.txt" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("board3.txt" ${CMAKE_BINARY_DIR} COPYONLY)

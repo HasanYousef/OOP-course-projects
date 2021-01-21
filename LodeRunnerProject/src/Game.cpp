@@ -149,24 +149,18 @@ void Game::locate_objects() {
 				}
 				break;
 			case O_Enemy: //we add the enemy
-				switch (rand() % 3) {
+				switch (rand() % 2) {
 				case 0:
-					enemy1 = new StandartEnemy;
-					enemy1->setType(ObjectType::O_Enemy);
-					enemy1->set_position(points);
-					m_enemies.push_back(enemy1);
+					enemy3 = new SmartEnemy;
+					enemy3->setType(ObjectType::O_Enemy);
+					enemy3->set_position(points);
+					m_enemies.push_back(enemy3);
 					break;
 				case 1:
 					enemy2 = new StupidEnemy;
 					enemy2->setType(ObjectType::O_Enemy);
 					enemy2->set_position(points);
 					m_enemies.push_back(enemy2);
-					break;
-				case 2:
-					enemy3 = new SmartEnemy;
-					enemy3->setType(ObjectType::O_Enemy);
-					enemy3->set_position(points);
-					m_enemies.push_back(enemy3);
 					break;
 				};
 				break;
